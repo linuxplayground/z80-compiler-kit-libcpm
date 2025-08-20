@@ -5,21 +5,21 @@ AR=/usr/bin/ar
 CFLAGS=-mz80 -O2 -I include -I /opt/fcc/lib/z80/include
 
 CRT=crt0.o
+ASMSRC=$(wildcard asm/*.s)
+ASMOBJ=$(ASMSRC:.s=.o)
+CSRC=$(wildcard libsrc/*.c)
+COBJ=$(CSRC:.c=.o)
+
 OBJ=\
-		asm/conout.o \
-		asm/conin.o \
-		asm/writestr.o \
-		asm/readstr.o \
-		asm/constat.o \
-		asm/sio.o \
-		libsrc/printstr.o
+		$(ASMOBJ) \
+		$(COBJ)
 
 all: cpmlib.a
 
 cpmlib.a: $(OBJ) $(CRT)
 	$(AR) qc $@ `$(LORDER) $(OBJ) | tsort`
 
-$(CRT): asm/crt0.s
+$(CRT): crt0.s
 	$(AS) -o $@ $^
 
 clean:
