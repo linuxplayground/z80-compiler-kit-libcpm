@@ -2,3 +2,4 @@
 include
 -I
 /opt/fcc/lib/z80/include
+-nostdlib
