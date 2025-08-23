@@ -1,6 +1,7 @@
 #ifndef _CPM_H
 #define _CPM_H
 
+#include <stdint.h>
 #include <stdbool.h>
 
 extern void conout(char c);
@@ -12,9 +13,146 @@ extern void writestr(char *s);
 extern void readstr(char *buf);
 extern bool constat();
 
-/* Print a regular C string using direct IO rather than via CPM
- * For normal CPM console write, use the writestr(char *c) function.
+/* FCB */
+typedef struct fcb_t {
+  uint8_t dr;    //Drive
+  char    f[8];  // 8 char filename
+  char    t[3];  // 3 char file ext
+  uint8_t ex;
+  uint8_t s1;
+  uint8_t s2;
+  uint8_t rc;
+  uint8_t al[16]; // doubles as new name in f_rename call
+  uint8_t cr;
+  uint16_t rn;
+  uint8_t rn_o;  // holds overflow of random access address
+}FCB;
+
+/* prepares an fcb for f_open, f_make, f_search etc.
+ * returns false if invalid
  */
-void printstr(char *s);
+bool parse_fcb_filename(FCB *fcb, char *filename);
+
+/* Resets disc drives.
+ * Logs out all discs and empties disc buffers. Sets the currently selected
+ * drive to A:. Any drives set to Read-Only in software become Read-Write;
+ * replacement BDOSses tend to leave them Read-Only. Logs in drive A: and
+ * returns 0FFh if there is a file present whose name begins with a $,
+ * otherwise 0.
+ */
+uint8_t drv_allreset();
+
+/* Selectively reset drives by given bitmap.
+ * MSB = drive P, LSB = drive A
+ * Returnes 0 if OK, else 0xFF if error
+ */
+uint8_t drv_reset(uint16_t bitmap);
+
+/* Sets the currently selected drive to the drive
+ * logs in the disc. Returns 0 if successful or 0FFh if error.
+ */
+uint8_t drv_set(uint8_t drive);
+
+/* returns currently selected drive. 0 => A; 1 => B etc.
+ */
+uint8_t drv_get();
+
+/* Opens a file to read or read/write.
+ * The FCB is a 36-byte data structure, most of which is maintained by CP/M.
+ * The FCB should have its DR, Fn and Tn fields filled in, and the four fields
+ * EX, S1, S2 and RC set to zero. Note that CR should normally be reset to zero
+ * if sequential access is to be used. On return from this function, A is 0FFh
+ * for error, or 0-3 for success.
+ */
+uint8_t f_open(FCB *fcb);
+
+/* closes a file, and writes any pending data.
+ * This function should always be
+ * used when a file has been written to. On return from this function, result is
+ * 0FFh for error, or 0-3 for success.*/
+uint8_t f_close(FCB *fcb);
+
+/* Deletes all directory entries matching the specified filename.
+ * The name can contain ? marks. Returns A=0FFh if error, otherwise 0-3
+ */
+uint8_t f_delete(FCB *fcb);
+
+/* Creates the file specified.
+ * Returns 0xFF if directory is full.  If file exists already the default
+ * action is to return to the command prompt... ??
+ */
+uint8_t f_make(FCB *fcb);
+
+/* Renames the file specified to the new name, stored at FCB+16. This function
+ * cannot rename across drives so the "drive" bytes of both filenames should be
+ * identical. Returns A=0-3 if successful; A=0FFh if error.
+ *
+ * FCB+16 == fcb->al which is 16 bytes long. The values in these 16 bytes
+ * should match the same format as the first 16 bytes of the FCB struct but
+ * with the desired new name. 
+ * TODO: Check that this is accurate.
+ */
+uint8_t f_rename(FCB *fcb);
+
+/* Set the Direct Memory Access address; a pointer to where CP/M should read or
+ * write data. Initially used for the transfer of 128-byte records between
+ * memory and disc, but over the years has gained many more functions.
+ */
+void f_dmaoff(char *buf);
+
+/* Set DMA offset
+ * Search for the first occurrence of the specified file; the filename should
+ * be stored in the supplied FCB. The filename can include ? marks, which match
+ * anything on disc. If the first byte of the FCB is ?, then any directory
+ * entry (including disc labels, date stamps etc.) will match. The EX byte is
+ * also checked; normally it should be set to zero, but if it is set to ? then
+ * all suitable extents are matched.
+
+ Returns A=0FFh if error
+*/
+uint8_t f_sfirst(FCB *fcb);
+
+/* Search for File
+ * This function should only be executed immediately after function f_sfirst or
+ * another invocation of this function. No other disc access functions should
+ * have been used. Behaves exactly as number f_sfirst, but finds the next
+ * occurrence of the specified file after the one returned last time.
+ */
+uint8_t f_snext(FCB *fcb);
+
+/* Load a 128 byte record at the previously specified DMA address. Values returned
+ * are:
+ * - 0: OK,
+ *   1: end of file,
+ *   9: invalid FCB,
+ *   10: (CP/M) media changed,
+ *   0FFh: hardware error.
+ */
+uint8_t f_read(FCB *fcb);
+
+/* Set the random record count bytes of the FCB to the number of 128-byte
+ * records in the file.
+ */
+void f_size(FCB *fcb);
+
+/* Update the random record count bytes of the FCB to the number of the last
+ * record read/written by the sequential I/O calls.
+ */
+void f_randrec(FCB *fcb);
+
+/* Random access read record.
+ * Read the record specified in the random record count area of the FCB, at the
+ * DMA address. The pointers in the FCB will be updated so that the next record
+ * to read using the sequential I/O calls will be the record just read. Error
+ * numbers returned are:
+
+ * 0: OK
+ * 1: Reading unwritten data
+ * 4: Reading unwritten extent (a 16k portion of file does not exist)
+ * 6: Record number out of range
+ * 9: Invalid FCB
+ * 10: Media changed (CP/M);
+ */
+uint8_t f_readrand(FCB *fcb);
 
 #endif //_CPM_H
