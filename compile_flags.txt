@@ -4,3 +4,4 @@ include
 /opt/fcc/lib/z80/include
 -nostdlib
 -fno-builtin
+-Wno-pointer-to-int-cast

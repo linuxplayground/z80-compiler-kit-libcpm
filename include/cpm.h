@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
+#include "core.h"
 
 extern void conout(char c);
 extern char conin();
@@ -24,7 +26,7 @@ typedef struct fcb_t {
   uint8_t rc;
   uint8_t al[16]; // doubles as new name in f_rename call
   uint8_t cr;
-  uint16_t rn;
+  size_t rn;
   uint8_t rn_o;  // holds overflow of random access address
 }FCB;
 
@@ -46,7 +48,7 @@ uint8_t drv_allreset();
  * MSB = drive P, LSB = drive A
  * Returnes 0 if OK, else 0xFF if error
  */
-uint8_t drv_reset(uint16_t bitmap);
+uint8_t drv_reset(size_t bitmap);
 
 /* Sets the currently selected drive to the drive
  * logs in the disc. Returns 0 if successful or 0FFh if error.
@@ -56,6 +58,11 @@ uint8_t drv_set(uint8_t drive);
 /* returns currently selected drive. 0 => A; 1 => B etc.
  */
 uint8_t drv_get();
+
+/* Set the current user number.  num should be 0-15.
+ * Returns set number.
+ */
+uint8_t f_usernum(uint8_t num);
 
 /* Opens a file to read or read/write.
  * The FCB is a 36-byte data structure, most of which is maintained by CP/M.
@@ -94,13 +101,14 @@ uint8_t f_make(FCB *fcb);
  */
 uint8_t f_rename(FCB *fcb);
 
-/* Set the Direct Memory Access address; a pointer to where CP/M should read or
+/* Set DMA offset
+ * Set the Direct Memory Access address; a pointer to where CP/M should read or
  * write data. Initially used for the transfer of 128-byte records between
  * memory and disc, but over the years has gained many more functions.
  */
-void f_dmaoff(char *buf);
+void f_dmaoff(char *dma);
 
-/* Set DMA offset
+/* Search for file.
  * Search for the first occurrence of the specified file; the filename should
  * be stored in the supplied FCB. The filename can include ? marks, which match
  * anything on disc. If the first byte of the FCB is ?, then any directory
@@ -130,6 +138,15 @@ uint8_t f_snext(FCB *fcb);
  */
 uint8_t f_read(FCB *fcb);
 
+/* Write a 128 byte record from the previously defined DMA address. Values returned are:
+ * - 0: OK,
+ *   1: directory full,
+ *   2: disc full,
+ *   9: invalid FCB,
+ *  10: (CP/M) media changed
+ */
+uint8_t f_write(FCB *fcb);
+
 /* Set the random record count bytes of the FCB to the number of 128-byte
  * records in the file.
  */
@@ -145,7 +162,7 @@ void f_randrec(FCB *fcb);
  * DMA address. The pointers in the FCB will be updated so that the next record
  * to read using the sequential I/O calls will be the record just read. Error
  * numbers returned are:
-
+ *
  * 0: OK
  * 1: Reading unwritten data
  * 4: Reading unwritten extent (a 16k portion of file does not exist)
@@ -154,5 +171,31 @@ void f_randrec(FCB *fcb);
  * 10: Media changed (CP/M);
  */
 uint8_t f_readrand(FCB *fcb);
+
+/* Random access write record.
+ * Write the record specified in the random record count area of the FCB, at
+ * the DMA address. The pointers in the FCB will be updated so that the next
+ * record to write using the sequential I/O calls will be the record just
+ * written. Error numbers returned are:
+ *
+ * 0: OK
+ * 2: Disc full
+ * 3: Cannot close extent
+ * 5: Directory full
+ * 6: Record number out of range
+ * 9: Invalid FCB
+ * 10: Media changed
+ *
+ * If the record indicated is beyond the end of the file, the record will be
+ * written and the file may contain a gap; attempting to read this gap may give
+ * "reading unwritten data" errors, or nonsense
+ */
+uint8_t f_writerand(FCB *fcb);
+
+/* Write random zero fill
+ * Same as f_writerand but if the write was to a newly allocated disc block,
+ * the remainder of the block is filled with zeroes.
+ */
+uint8_t f_writezf(FCB *fcb);
 
 #endif //_CPM_H

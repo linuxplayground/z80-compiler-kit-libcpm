@@ -7,7 +7,8 @@ CFLAGS=-O3 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
 LDFLAGS=-b -C0x100 -m console.map
 LIBS=\
 		 $(TOP)/../cpmlib.a \
-		 /opt/fcc/lib/z80/libz80.a
+		 /opt/fcc/lib/z80/libz80.a \
+		 /opt/fcc/lib/z80/libc.a
 
 OBJ=console.o
 CRT=$(TOP)/../crt0.o
