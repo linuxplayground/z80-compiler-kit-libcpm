@@ -24,7 +24,7 @@ extern size_t strlcat(char *dst, const char *src, size_t size);
 extern char *strcpy(char *dst, const char *src);
 
 extern size_t strlen(const char *s);
-void itoa(size_t val, char *buf);
+int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base);
 char toupper(char c);
 
 #endif //_STRING_H
