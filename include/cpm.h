@@ -103,8 +103,7 @@ uint8_t f_rename(FCB *fcb);
 
 /* Set DMA offset
  * Set the Direct Memory Access address; a pointer to where CP/M should read or
- * write data. Initially used for the transfer of 128-byte records between
- * memory and disc, but over the years has gained many more functions.
+ * write data.
  */
 void f_dmaoff(char *dma);
 

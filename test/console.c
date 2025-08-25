@@ -20,7 +20,7 @@ typedef struct s_files{
 
 FILES files;
 
-char buf[64];
+char buf[2048];
 
 bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
   strcpy(buf, k);
@@ -65,7 +65,21 @@ FILE *open(char *path)
 
 void read(char *dest, size_t count, FILE *file)
 {
-  ;;
+  char *d = dest;
+  do
+  {
+    f_dmaoff(file->rec);
+    if (f_read(&file->fcb) > 1)
+      return;
+    if (count >= 128) {
+      memcpy(d, file->rec, 128);
+      count -= 128;
+      d+= 128;
+    } else {
+      memcpy(d, file->rec, count);
+      count = 0;
+    }
+  } while (count > 0);
 }
 
 void main() {
@@ -77,13 +91,14 @@ void main() {
   print_kvh("Here is a number converted to hex 0x", 0x3c);
   printstr("\r\n");
 
-  hello = open("hello.bat");
+  hello = open("hello.txt");
   if (!hello)
   {
     printstr("\r\nCOULD NOT OPEN FILE");
     return;
   }
-  read(buf, 5, hello);
-  buf[6] = '\0';
+  memset(buf, '#', 63);
+  read(buf, 638, hello);
+  buf[639] = '\0';
   printstr(buf);
 }
