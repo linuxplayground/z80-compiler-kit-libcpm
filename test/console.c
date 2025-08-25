@@ -1,21 +1,89 @@
 #include <stddef.h>
 #include <string.h>
-
+#include <stdbool.h>
+#include "cpm.h"
 #include "core.h"
 
-void print_kv(const char *k, size_t v) {
-    char buf[256];
+#define print_kvd(s,v) print_kv(s, v, 5, 10)
+#define print_kvh(s,v) print_kv(s, v, 4, 16)
+
+typedef struct s_file{
+  FCB fcb;
+  char *path;
+  char rec[128];
+} FILE;
+
+typedef struct s_files{
+  FILE openfiles[4];
+  uint8_t index;      // index of free slot
+} FILES;
+
+FILES files;
+
+char buf[64];
+
+bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
   strcpy(buf, k);
-  itoa(v, buf + strlen(k));
+  itoa(v, buf + strlen(k), l , base);
   printstr(buf);
+  return true;
 }
 
-int main() {
+FILE *open(char *path)
+{
+  uint8_t i, res;
+  // Check if we have 4 files open already.
+  if (files.index == 4)
+    return NULL;
+  // return an already open file
+  for (i=0;i<files.index;++i)
+  {
+    if (strcmp(files.openfiles[i].path, path) == 0)
+    {
+      return &files.openfiles[i];
+    }
+  }
+  // reserve a slot
+  files.index ++;
+  // use this new slot to try to open the file.
+  if (!parse_fcb_filename(&files.openfiles[files.index].fcb, path)) {
+    files.index --;
+    return NULL;
+  }
 
-  uintptr_t end = (uintptr_t)&_end;
+  res = f_open(&files.openfiles[files.index].fcb);
+  if (res == 0xFF) {
+    // file does not exist.  Try to make it.
+    res = f_make(&files.openfiles[files.index].fcb);
+    if (res == 0xFF) {
+      files.index --;
+      return NULL;
+    }
+  }
+  return &files.openfiles[files.index];
+}
 
-  print_kv("\r\nSTACK POINTER: ", _STACK);
-  print_kv("\r\nHEAP:          ", (size_t)end);
-  print_kv("\r\nTPA:           ",TPA);
-  return 0;
+void read(char *dest, size_t count, FILE *file)
+{
+  ;;
+}
+
+void main() {
+  FILE *hello;
+  memset(&files, 0, sizeof(FILES));
+
+  print_kvd("Hello, my name is dave and I am ", 50);
+  printstr("\r\n");
+  print_kvh("Here is a number converted to hex 0x", 0x3c);
+  printstr("\r\n");
+
+  hello = open("hello.bat");
+  if (!hello)
+  {
+    printstr("\r\nCOULD NOT OPEN FILE");
+    return;
+  }
+  read(buf, 5, hello);
+  buf[6] = '\0';
+  printstr(buf);
 }

@@ -5,3 +5,4 @@ include
 -nostdlib
 -fno-builtin
 -Wno-pointer-to-int-cast
+-Wno-main-return-type

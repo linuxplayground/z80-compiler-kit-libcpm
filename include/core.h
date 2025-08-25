@@ -5,7 +5,7 @@
 
 typedef uint16_t size_t;
 
-#define TPA (*(uint16_t*)0x0006) - 1
+#define TPA (*(uint16_t*)0x0006)
 extern uint16_t *_end;
 extern uint16_t _STACK;
 
