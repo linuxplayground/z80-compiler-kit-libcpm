@@ -13,7 +13,7 @@ LIBS=\
 OBJ=console.o
 CRT=$(TOP)/../crt0.o
 
-all: console.com
+all: clean console.com copy
 
 console.bin: $(OBJ)
 	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)

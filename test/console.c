@@ -1,104 +1,35 @@
-#include <stddef.h>
-#include <string.h>
-#include <stdbool.h>
-#include "cpm.h"
 #include "core.h"
+#include "string.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdint.h>
+#include "malloc.h"
 
-#define print_kvd(s,v) print_kv(s, v, 5, 10)
-#define print_kvh(s,v) print_kv(s, v, 4, 16)
+#define print_kvd(s, v) print_kv(s, v, 8, 10)
+#define print_kvh(s, v) print_kv(s, v, 5, 16)
 
-typedef struct s_file{
-  FCB fcb;
-  char *path;
-  char rec[128];
-} FILE;
-
-typedef struct s_files{
-  FILE openfiles[4];
-  uint8_t index;      // index of free slot
-} FILES;
-
-FILES files;
-
-char buf[2048];
+char buf[64];
+void *p;
 
 bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
   strcpy(buf, k);
-  itoa(v, buf + strlen(k), l , base);
+  itoa(v, buf + strlen(k), l, base);
   printstr(buf);
   return true;
 }
 
-FILE *open(char *path)
-{
-  uint8_t i, res;
-  // Check if we have 4 files open already.
-  if (files.index == 4)
-    return NULL;
-  // return an already open file
-  for (i=0;i<files.index;++i)
-  {
-    if (strcmp(files.openfiles[i].path, path) == 0)
-    {
-      return &files.openfiles[i];
-    }
-  }
-  // reserve a slot
-  files.index ++;
-  // use this new slot to try to open the file.
-  if (!parse_fcb_filename(&files.openfiles[files.index].fcb, path)) {
-    files.index --;
-    return NULL;
-  }
-
-  res = f_open(&files.openfiles[files.index].fcb);
-  if (res == 0xFF) {
-    // file does not exist.  Try to make it.
-    res = f_make(&files.openfiles[files.index].fcb);
-    if (res == 0xFF) {
-      files.index --;
-      return NULL;
-    }
-  }
-  return &files.openfiles[files.index];
-}
-
-void read(char *dest, size_t count, FILE *file)
-{
-  char *d = dest;
-  do
-  {
-    f_dmaoff(file->rec);
-    if (f_read(&file->fcb) > 1)
-      return;
-    if (count >= 128) {
-      memcpy(d, file->rec, 128);
-      count -= 128;
-      d+= 128;
-    } else {
-      memcpy(d, file->rec, count);
-      count = 0;
-    }
-  } while (count > 0);
-}
 
 void main() {
-  FILE *hello;
-  memset(&files, 0, sizeof(FILES));
-
-  print_kvd("Hello, my name is dave and I am ", 50);
-  printstr("\r\n");
-  print_kvh("Here is a number converted to hex 0x", 0x3c);
-  printstr("\r\n");
-
-  hello = open("hello.txt");
-  if (!hello)
-  {
-    printstr("\r\nCOULD NOT OPEN FILE");
-    return;
-  }
-  memset(buf, '#', 63);
-  read(buf, 638, hello);
-  buf[639] = '\0';
-  printstr(buf);
+  void* b;
+  p = getsp();
+  print_kvh("\r\nsbrk(0x0)      ", (uintptr_t)sbrk(0));
+  //b = malloc(0x200);
+  //print_kvh("\r\nmalloc ret:    ", (uint16_t)&b);
+  b = sbrk(0xc9a8);
+  print_kvh("\r\nsbrk(0xc9a8)   ", (uintptr_t)b);
+  print_kvh("\r\nsbrk(0x0)      ", (uintptr_t)sbrk(0));
+  print_kvh("\r\nStack Pointer: ", _STACK);
+  print_kvh("\r\nNew Stack ptr: ", (size_t)p);
+  free_all();
 }
+

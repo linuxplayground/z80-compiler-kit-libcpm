@@ -11,4 +11,9 @@ extern uint16_t _STACK;
 
 extern int abs(int j);
 
+extern void brk(void *addr);
+extern void *sbrk(uintptr_t incr);
+extern uint16_t _STACK;
+extern uint16_t *getsp();
+
 #endif //_H_CORE
