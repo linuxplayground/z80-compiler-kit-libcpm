@@ -5,6 +5,6 @@
 
 void *malloc(size_t size);
 
-void free_all();
+void free(void* p);
 
 #endif //_MALLOC_H

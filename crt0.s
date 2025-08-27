@@ -1,18 +1,16 @@
-  .export __STACK
-
 stacktop equ 0xD400
 
   .code
   ld  hl, 0
   add hl,sp
-  ld  (__STACK),hl
+  ld  (oldstack),hl
 
   ld  sp,stacktop
   call _main
 
   pop  de
 
-  ld sp,(__STACK)
+  ld sp,(oldstack)
   ret
 
-__STACK: .ds 2
+oldstack: .ds 2

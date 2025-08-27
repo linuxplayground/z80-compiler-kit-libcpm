@@ -6,6 +6,7 @@
 
 _brk:
   ld    (memtop),hl
+  ld    hl,0
   ret
 
 _sbrk:
