@@ -1,7 +1,7 @@
 #include "core.h"
 #include <stddef.h>
 
-/* From K&R ANSI C */
+/* Transcribed from K&R ANSI C by David Latham - 2025 */
 typedef long Align; /* for alignment to long boundary */
 
 union header { /* block header */
@@ -16,7 +16,6 @@ typedef union header Header;
 
 static Header base;          /* empty list to get started */
 static Header *freep = NULL; /* start of free list */
-
 
 /* free: put block ap in the free list */
 void free(void *ap) {
@@ -37,7 +36,6 @@ void free(void *ap) {
     p->s.ptr = bp;
   freep = p;
 }
-
 
 #define NALLOC 256
 
@@ -84,5 +82,3 @@ void *malloc(unsigned nbytes) {
         return NULL; /* none left */
   }
 }
-
-void free_all(void *ptr) { return; }

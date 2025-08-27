@@ -2,7 +2,8 @@ CC=/opt/fcc/bin/fcc
 AS=/opt/fcc/bin/asz80
 LORDER=/opt/fcc/bin/lorderz80
 AR=/usr/bin/ar
-CFLAGS=-mz80 -O2 -I include -I /opt/fcc/lib/z80/include
+
+CFLAGS=-mz80 -O2 $(CONFIG) -I include -I /opt/fcc/lib/z80/include
 
 CRT=crt0.o
 ASMSRC=$(wildcard asm/*.s)

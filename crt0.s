@@ -1,3 +1,4 @@
+; vim: set ft=z80:
 stacktop equ 0xD400
 
   .code
