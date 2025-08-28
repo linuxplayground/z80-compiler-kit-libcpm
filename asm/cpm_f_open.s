@@ -1,9 +1,10 @@
-  .export _f_size
+  .export _cpm_f_open
   .code
-_f_size:
+_cpm_f_open:
   push  bc
-  ld    c,23
+  ld    c,0x0f
   ex    de,hl
   call  5
   pop   bc
   ret
+

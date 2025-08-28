@@ -1,8 +1,8 @@
-  .export _f_snext
+  .export _cpm_f_delete
   .code
-_f_snext:
+_cpm_f_delete:
   push  bc
-  ld    c,0x12
+  ld    c,0x13
   ex    de,hl
   call  5
   ld    l,a

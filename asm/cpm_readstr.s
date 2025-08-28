@@ -1,8 +1,8 @@
-  .export _f_close
+  .export _cpm_readstr
   .code
-_f_close:
+_cpm_readstr:
   push  bc
-  ld    c,0x10
+  ld    c,0xa
   ex    de,hl
   call  5
   pop   bc

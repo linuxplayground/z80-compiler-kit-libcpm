@@ -1,6 +1,6 @@
-  .export _conin
+  .export _cpm_conin
   .code
-_conin:
+_cpm_conin:
   push  bc
   ld    c,1
   call  5

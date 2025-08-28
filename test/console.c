@@ -1,8 +1,10 @@
-#include "core.h"
-#include "malloc.h"
-#include "string.h"
 #include <stdbool.h>
 #include <stdint.h>
+
+#include "core.h"
+#include "malloc.h"
+#include "fcntl.h"
+#include "string.h"
 
 #define print_kvd(s, v) print_kv(s, v, 8, 10)
 #define print_kvh(s, v) print_kv(s, v, 5, 16)
@@ -39,4 +41,6 @@ void main() {
   b = (char *)malloc(0x100);
   print_kvh("\r\nAddress of `b` 0x", (uintptr_t)b);
   print_kvh("\r\nsbrk(0x0) [> malloc 0x100] 0x", (uintptr_t)sbrk(0));
+
+  write(1, "\r\nHello from WRITE()", -1);
 }

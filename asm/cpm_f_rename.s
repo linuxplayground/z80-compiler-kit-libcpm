@@ -1,8 +1,8 @@
-  .export _f_sfirst
+  .export _cpm_f_rename
   .code
-_f_sfirst:
+_cpm_f_rename:
   push  bc
-  ld    c,0x11
+  ld    c,0x17
   ex    de,hl
   call  5
   ld    l,a

@@ -1,10 +1,12 @@
-  .export _drv_get
+  .export _cpm_f_read
   .code
-_drv_get:
+_cpm_f_read:
   push  bc
-  ld    c,0x19
+  ld    c,0x14
+  ex    de,hl
   call  5
   ld    l,a
   ld    h,0
   pop   bc
   ret
+

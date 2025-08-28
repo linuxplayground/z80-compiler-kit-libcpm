@@ -1,9 +1,8 @@
-  .export _f_writezf
+  .export _cpm_f_readrand
   .code
-
-_f_writezf:
-  push bc
-  ld    c,0x28
+_cpm_f_readrand:
+  push  bc
+  ld    c,0x21
   ex    de,hl
   call  5
   ld    l,a

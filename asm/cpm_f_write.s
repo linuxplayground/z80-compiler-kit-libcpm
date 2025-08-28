@@ -1,8 +1,8 @@
-  .export _f_delete
+  .export _cpm_f_write
   .code
-_f_delete:
+_cpm_f_write:
   push  bc
-  ld    c,0x13
+  ld    c,0x15
   ex    de,hl
   call  5
   ld    l,a

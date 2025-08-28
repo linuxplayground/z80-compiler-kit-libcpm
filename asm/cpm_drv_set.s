@@ -1,6 +1,6 @@
-  .export _drv_set
+  .export _cpm_drv_set
   .code
-_drv_set:
+_cpm_drv_set:
   push  bc
   ld    e,l
   ld    c,0x0e

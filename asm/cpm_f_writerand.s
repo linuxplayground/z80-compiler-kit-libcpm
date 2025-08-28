@@ -1,8 +1,8 @@
-  .export _f_readrand
+  .export _cpm_f_writerand
   .code
-_f_readrand:
+_cpm_f_writerand:
   push  bc
-  ld    c,0x21
+  ld    c,0x22
   ex    de,hl
   call  5
   ld    l,a

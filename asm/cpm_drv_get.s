@@ -1,9 +1,8 @@
-  .export _f_writerand
+  .export _cpm_drv_get
   .code
-_f_writerand:
+_cpm_drv_get:
   push  bc
-  ld    c,0x22
-  ex    de,hl
+  ld    c,0x19
   call  5
   ld    l,a
   ld    h,0

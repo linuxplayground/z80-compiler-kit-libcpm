@@ -1,8 +1,8 @@
-  .export _f_make
+  .export _cpm_f_writezf
   .code
-_f_make:
-  push  bc
-  ld    c,0x16
+_cpm_f_writezf:
+  push bc
+  ld    c,0x28
   ex    de,hl
   call  5
   ld    l,a

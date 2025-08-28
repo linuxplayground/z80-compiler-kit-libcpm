@@ -1,8 +1,8 @@
-  .export _drv_reset
+  .export _cpm_f_make
   .code
-_drv_reset:
+_cpm_f_make:
   push  bc
-  ld    c,0x25
+  ld    c,0x16
   ex    de,hl
   call  5
   ld    l,a
