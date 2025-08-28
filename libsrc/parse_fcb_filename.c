@@ -1,7 +1,7 @@
 #include "cpm.h"
 #include "string.h"
 
-bool parse_fcb_filename(FCB *fcb, char *filename) {
+bool set_fcb_file(FCB *fcb, char *filename) {
   uint8_t i;
   char buf[16];
   char *dot;

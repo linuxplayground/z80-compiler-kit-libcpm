@@ -9,7 +9,7 @@ FILE *fopen(char *filename)
   FILE *f = malloc(sizeof(FILE));
 
   memset(f, 0, sizeof(FILE));
-  if (!parse_fcb_filename(&f->fcb, filename)) {
+  if (!set_fcb_file(&f->fcb, filename)) {
     return NULL;
   }
 

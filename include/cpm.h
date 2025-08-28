@@ -32,7 +32,7 @@ typedef struct fcb_t {
 /* prepares an fcb for f_open, f_make, f_search etc.
  * returns false if invalid
  */
-bool parse_fcb_filename(FCB *fcb, char *filename);
+bool set_fcb_file(FCB *fcb, char *filename);
 
 /* Resets disc drives.
  * Logs out all discs and empties disc buffers. Sets the currently selected
