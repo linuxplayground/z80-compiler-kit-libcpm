@@ -1,8 +1,6 @@
 #ifndef _H_STDIO
 #define _H_STDIO
 
-#include <stdint.h>
-#include <stddef.h>
 #include "core.h"
 #include "cpm.h"
 

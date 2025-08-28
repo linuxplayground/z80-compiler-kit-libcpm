@@ -1,10 +1,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "core.h"
-#include "malloc.h"
-#include "fcntl.h"
-#include "string.h"
+#include <core.h>
+#include <malloc.h>
+#include <fcntl.h>
+#include <string.h>
 
 #define print_kvd(s, v) print_kv(s, v, 8, 10)
 #define print_kvh(s, v) print_kv(s, v, 5, 16)

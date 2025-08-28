@@ -19,7 +19,7 @@ _sbrk:
   jr    nz,l1         ; no - skip to incr
   ld    hl,__end      ; yes - set it to end of program bytes
   ld    (memtop),hl
-l1:                   ; incr
+l1:                   ; 
   add   hl,de         ; add argument to hl.
   jr    c,l2          ; if overflow - no more room.
   ld    bc,0x400      ; allow buffer of 1kb between stack and heap

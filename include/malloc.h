@@ -1,5 +1,5 @@
-#ifndef _MALLOC_H
-#define _MALLOC_H
+#ifndef _H_MALLOC
+#define _H_MALLOC
 
 #include <core.h>
 
@@ -14,4 +14,4 @@ void *malloc(size_t size);
 /* Free the memory pointed to by p */
 void free(void *p);
 
-#endif //_MALLOC_H
+#endif //_H_MALLOC
