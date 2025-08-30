@@ -11,6 +11,8 @@
 
 char *b = NULL;
 char *c = NULL;
+char k;
+int8_t n;
 
 bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
   char *buf = malloc(128);
@@ -42,5 +44,20 @@ void main() {
   print_kvh("\r\nAddress of `b` 0x", (uintptr_t)b);
   print_kvh("\r\nsbrk(0x0) [> malloc 0x100] 0x", (uintptr_t)sbrk(0));
 
-  write(1, "\r\nHello from WRITE()", -1);
+  printstr("\r\n");
+  while (true)
+  {
+    if (read(STDIN, &k, 1) == -1)
+    {
+      printstr("ERROR READING FROM STDIN");
+      break;
+    }
+    if (k == 0x1b)
+      break;
+    if (write(STDOUT, &k, 1) == -1)
+    {
+      printstr("ERROR WRITING TO STDOUT");
+      break;
+    }
+  }
 }
