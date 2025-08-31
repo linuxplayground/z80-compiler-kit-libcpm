@@ -2,7 +2,7 @@
   .code
 _cpm_f_size:
   push  bc
-  ld    c,23
+  ld    c,0x23
   ex    de,hl
   call  5
   pop   bc

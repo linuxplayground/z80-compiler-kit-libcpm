@@ -1,9 +1,9 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include "core.h"
-#include <stddef.h>
+#include <core.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 /* Print a regular C string using direct IO rather than via CPM
  * For normal CPM console write, use the writestr(char *c) function.
@@ -26,6 +26,10 @@ extern char *strcpy(char *dst, const char *src);
 extern size_t strlen(const char *s);
 int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base);
 char toupper(char c);
+
+#define print_kvd(s, v) print_kv(s, v, 8, 10)
+#define print_kvh(s, v) print_kv(s, v, 5, 16)
+bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base);
 
 #endif //_STRING_H
 

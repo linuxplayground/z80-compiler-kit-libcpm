@@ -18,21 +18,19 @@ int write(int8_t fd, void *buf, size_t count) {
 
   if ((fd == STDOUT) || (fd==STDERR)) {
     for (n = 0; n < count; ++n) {
-      *b++ = cpm_conin();
+      cpm_conout(*b++);
     }
   } else {
-    f = &sys_open_files[fd];
+    f = &sys_open_files[fd-3];
 
-    if ((fd > MAX_OPEN_FILES) || (!f->used)) {
+    if (((fd-3) > MAX_OPEN_FILES) || (!f->used)) {
       errno = EBADF;
       return -1;
     }
 
-    // FILE should already be open - reset the FCB filepointer.
-    f->fcb.cr = 0;
     while (n < count)
     {
-      memcpy(buf, f->dma, 128);
+      memcpy(f->dma, buf, 128);
       cpm_f_dmaoff(f->dma);
       result = cpm_f_write(&f->fcb);
       if (result > 1) {

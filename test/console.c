@@ -5,25 +5,15 @@
 #include <malloc.h>
 #include <fcntl.h>
 #include <string.h>
-
-#define print_kvd(s, v) print_kv(s, v, 8, 10)
-#define print_kvh(s, v) print_kv(s, v, 5, 16)
+#include <stddef.h>
 
 char *b = NULL;
 char *c = NULL;
 char k;
+size_t i,j, y, z;
+int8_t fd_src, fd_dst;
 int8_t n;
-
-bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
-  char *buf = malloc(128);
-  if (buf == NULL)
-    return false;
-  strcpy(buf, k);
-  itoa(v, buf + strlen(k), l, base);
-  printstr(buf);
-  free(buf);
-  return true;
-}
+char buf[128];
 
 void main() {
   print_kvh("\r\nsbrk(0x0) [end]            0x", (uintptr_t)sbrk(0));
@@ -60,4 +50,30 @@ void main() {
       break;
     }
   }
+
+  // Find size of a file...
+  fd_src = open("dump.asm", O_NULL);
+  if (fd_src == -1) {
+    printstr("\r\nCould not open dump.asm for reading");
+    return;
+  }
+  fd_dst = open("dump2.txt", O_CREAT);
+  if (fd_dst == -1) {
+    printstr("\r\nCould not open dump2.asm for writing.");
+    return;
+  }
+  print_kvd("\r\nFD_SRC: ",fd_src);
+  print_kvd("\r\nFD_DST: ",fd_dst);
+
+  i = f_size(fd_src);
+  print_kvd("\r\nDUMP.ASM is ",i);
+  printstr(" blocks long");
+  for (j=0; j<i; ++j) {
+    read(fd_src, buf, 128);
+    cpm_conout('r');
+    write(fd_dst, buf, 128);
+    cpm_conout('w');
+  }
+  close(fd_dst);
+
 }

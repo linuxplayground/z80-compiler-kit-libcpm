@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "core.h"
+#include <core.h>
 
 extern void cpm_conout(char c);
 extern char cpm_conin();

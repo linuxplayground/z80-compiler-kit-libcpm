@@ -1,9 +1,9 @@
 #include "cpm.h"
+#include <stddef.h>
 #include "string.h"
 
 bool set_fcb_file(FCB *fcb, const char *filename) {
   uint8_t i;
-  char buf[16];
   char *dot;
 
   memset(fcb, 0, sizeof(FCB));
@@ -18,6 +18,7 @@ bool set_fcb_file(FCB *fcb, const char *filename) {
     fcb->dr = 0;
   }
   dot = strchr(filename, '.');
+
   if (dot == NULL) return false;
 
   for (i=0; i<8; ++i) {
@@ -42,3 +43,4 @@ bool set_fcb_file(FCB *fcb, const char *filename) {
   }
   return true;
 }
+

@@ -10,37 +10,34 @@ int read(int8_t fd, void *buf, size_t count) {
   char *b = (char *)buf;
   FILE *f;
 
+  n = 0;
 
-  if ( (fd == STDOUT) || (fd == STDERR) ) {
+  if ((fd == STDOUT) || (fd == STDERR)) {
     errno = EBADF;
     return -1;
   }
-
 
   if (fd == STDIN) {
     for (n = 0; n < count; ++n) {
       *b++ = cpm_conin();
     }
   } else {
-    f = &sys_open_files[fd];
+    f = &sys_open_files[fd-3];
 
-    if ((fd > MAX_OPEN_FILES) || (!f->used)) {
+    if (((fd-3) > MAX_OPEN_FILES) || (!f->used)) {
       errno = EBADF;
       return -1;
     }
-
-    // FILE should already be open - reset the FCB filepointer.
-    f->fcb.cr = 0;
-    while (n < count)
-    {
+    while (n < count) {
       cpm_f_dmaoff(f->dma);
       result = cpm_f_read(&f->fcb);
       if (result > 1) {
         errno = EIO;
+        return n;
       }
       memcpy(buf, f->dma, 128);
-      buf+=128;
-      n+=128;
+      buf += 128;
+      n += 128;
     }
   }
   errno = EOK;

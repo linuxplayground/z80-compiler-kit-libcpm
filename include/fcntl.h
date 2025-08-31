@@ -1,8 +1,9 @@
 #ifndef _H_FCNTL
 #define _H_FCNTL
 
-#include "core.h"
-#include "cpm.h"
+#include <stdint.h>
+#include <core.h>
+#include <cpm.h>
 
 #define STDIN 0
 #define STDOUT 1
@@ -11,6 +12,7 @@
 #define MAX_OPEN_FILES 4
 
 enum t_flags {
+  O_NULL,
   O_CREAT,
 };
 
@@ -49,5 +51,8 @@ int read(int8_t fd, void *buf, size_t count);
 
 /* Close a file, free it from the array of open files */
 int8_t close(int8_t fd);
+
+/* Get the file size in number of 128 byte blocks */
+size_t f_size(int8_t fd);
 
 #endif //_H_FCNTL
