@@ -10,21 +10,20 @@ LIBS=\
 		 /opt/fcc/lib/z80/libz80.a \
 		 /opt/fcc/lib/z80/libc.a
 
-OBJ=console.o
 CRT=$(TOP)/../crt0.o
 
 all: clean console.com copy
 
-console.bin: $(OBJ)
+malloc.bin: malloc.o
 	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
 
-console.com: console.bin
+malloc.com: malloc.bin
 	dd if=$^ of=$@ skip=1 bs=256
 
 clean:
-	rm -fv console.bin console.com
+	rm -fv malloc.bin malloc.com
 	find . -name "*.o" -exec rm -fv {} \;
 
-copy: console.com
-	cpmrm -f z80-retro-8k-8m /dev/loop0p1 0:console.com
-	cpmcp -f z80-retro-8k-8m /dev/loop0p1 console.com 0:
+copy: malloc.com
+	cpmrm -f z80-retro-8k-8m /dev/loop0p1 0:malloc.com
+	cpmcp -f z80-retro-8k-8m /dev/loop0p1 malloc.com 0:
