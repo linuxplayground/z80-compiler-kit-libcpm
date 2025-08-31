@@ -1,3 +1,12 @@
+; vim: set ft=z80
+;
+; This code is copied and adapted from the HIGH-TECH-C Compiler for Z80
+; https://github.com/agn453/HI-TECH-Z80-C/blob/master/gen/SBRK.AS
+;
+; The HI-TECH Z80 CP/M C compiler V3.09 is provided free of charge for
+; any use, private or commercial, strictly as-is.  No warranty or product
+; support is offered or implied.
+;
   .export _sbrk
   .export _brk
   .export memtop
