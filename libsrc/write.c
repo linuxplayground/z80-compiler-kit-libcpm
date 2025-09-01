@@ -50,18 +50,33 @@ int write(int8_t fd, void *buf, size_t count) {
       return -1;
     }
 
-    while (n < count)
-    {
+    n = count;
+    for (;;) {
       memcpy(f->dma, buf, 128);
       cpm_f_dmaoff(f->dma);
       result = cpm_f_write(&f->fcb);
       if (result > 1) {
         errno = EIO;
+        return 0;
       }
       buf+=128;
-      n+=128;
+      n = n - 128;
+      if (n < 128)
+        break;
     }
+    if (n > 0)
+    {
+      // do the remainder (if it exists)
+      memset(f->dma, 0, 128);
+      memcpy(f->dma, buf, n);
+      cpm_f_dmaoff(f->dma);
+      result = cpm_f_write(&f->fcb);
+      if (result > 1) {
+        errno = EIO;
+        return 0;
+      }
+     }
   }
   errno = EOK;
-  return n;
+  return count;
 }

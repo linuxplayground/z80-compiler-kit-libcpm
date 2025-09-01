@@ -45,24 +45,38 @@ int read(int8_t fd, void *buf, size_t count) {
       *b++ = cpm_conin();
     }
   } else {
-    f = &sys_open_files[fd-3];
+    f = &sys_open_files[fd - 3];
 
-    if (((fd-3) > MAX_OPEN_FILES) || (!f->used)) {
+    if (((fd - 3) > MAX_OPEN_FILES) || (!f->used)) {
       errno = EBADF;
       return -1;
     }
-    while (n < count) {
+    n = count;
+    for (;;) {
       cpm_f_dmaoff(f->dma);
       result = cpm_f_read(&f->fcb);
       if (result > 1) {
         errno = EIO;
-        return n;
+        return 0;
       }
       memcpy(buf, f->dma, 128);
       buf += 128;
-      n += 128;
+      n = n - 128;
+      if (n < 128)
+        break;
+    }
+    if (n > 0) {
+      // do the remainder (if it exists)
+      memset(f->dma, 0, 128);
+      cpm_f_dmaoff(f->dma);
+      result = cpm_f_read(&f->fcb);
+      if (result > 1) {
+        errno = EIO;
+        return 0;
+      }
+      memcpy(buf, f->dma, n);
     }
   }
   errno = EOK;
-  return n;
+  return count;
 }

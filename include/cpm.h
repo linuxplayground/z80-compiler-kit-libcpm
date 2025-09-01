@@ -26,24 +26,15 @@
 #ifndef _CPM_H
 #define _CPM_H
 
-#include <stdint.h>
-#include <stdbool.h>
 #include <core.h>
-
-extern void cpm_conout(char c);
-extern char cpm_conin();
-
-/* CPM Writestr expects chars to be terminated with a `$` */
-extern void cpm_writestr(char *s);
-
-extern void cpm_readstr(char *buf);
-extern bool cpm_constat();
+#include <stdbool.h>
+#include <stdint.h>
 
 /* FCB */
 typedef struct fcb_t {
-  uint8_t dr;    //Drive
-  char    f[8];  // 8 char filename
-  char    t[3];  // 3 char file ext
+  uint8_t dr; // Drive
+  char f[8];  // 8 char filename
+  char t[3];  // 3 char file ext
   uint8_t ex;
   uint8_t s1;
   uint8_t s2;
@@ -51,13 +42,41 @@ typedef struct fcb_t {
   uint8_t al[16]; // doubles as new name in f_rename call
   uint8_t cr;
   size_t rn;
-  uint8_t rn_o;  // holds overflow of random access address
-}FCB;
+  uint8_t rn_o; // holds overflow of random access address
+} FCB;
 
 /* prepares an fcb for f_open, f_make, f_search etc.
  * returns false if invalid
  */
 bool set_fcb_file(FCB *fcb, const char *filename);
+
+/*
+ ****************************************************************************
+ * All of the following extern functions are to small assembly code
+ * wrapper calls into CPM via the standard BDOS API
+ ****************************************************************************
+ */
+
+/* Write char C to the terminal */
+extern void cpm_conout(char c);
+
+/* Wait for character from the terminal, blocks */
+extern char cpm_conin();
+
+/* CPM Writestr expects chars to be terminated with a `$` */
+extern void cpm_writestr(char *s);
+
+/* Read a line of text input from the terminal until the ENTER key is pressed.
+ * The first position in the in the buf array at `buf[0]` contains the maximum
+ * length to read. On return the second position buf[1] contains the actual
+ * number of bytes read.
+ */
+extern void cpm_readstr(char *buf);
+
+/* Returns true if a character is waiting in the serial terminal to be
+ * processed.  This is a nonblocking call.
+ */
+extern bool cpm_constat();
 
 /* Resets disc drives.
  * Logs out all discs and empties disc buffers. Sets the currently selected
@@ -120,7 +139,7 @@ uint8_t cpm_f_make(FCB *fcb);
  *
  * FCB+16 == fcb->al which is 16 bytes long. The values in these 16 bytes
  * should match the same format as the first 16 bytes of the FCB struct but
- * with the desired new name. 
+ * with the desired new name.
  * TODO: Check that this is accurate.
  */
 uint8_t cpm_f_rename(FCB *fcb);
@@ -151,8 +170,8 @@ uint8_t cpm_f_sfirst(FCB *fcb);
  */
 uint8_t cpm_f_snext(FCB *fcb);
 
-/* Load a 128 byte record at the previously specified DMA address. Values returned
- * are:
+/* Load a 128 byte record at the previously specified DMA address. Values
+ * returned are:
  * - 0: OK,
  *   1: end of file,
  *   9: invalid FCB,
@@ -161,7 +180,8 @@ uint8_t cpm_f_snext(FCB *fcb);
  */
 uint8_t cpm_f_read(FCB *fcb);
 
-/* Write a 128 byte record from the previously defined DMA address. Values returned are:
+/* Write a 128 byte record from the previously defined DMA address. Values
+ * returned are:
  * - 0: OK,
  *   1: directory full,
  *   2: disc full,

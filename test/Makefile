@@ -12,7 +12,7 @@ LIBS=\
 
 CRT=$(TOP)/../crt0.o
 
-all: clean console.com copy
+all: clean malloc.com fileio.com copy
 
 malloc.bin: malloc.o
 	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
@@ -20,10 +20,18 @@ malloc.bin: malloc.o
 malloc.com: malloc.bin
 	dd if=$^ of=$@ skip=1 bs=256
 
+fileio.bin: fileio.o
+	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+
+fileio.com: fileio.bin
+	dd if=$^ of=$@ skip=1 bs=256
+
 clean:
-	rm -fv malloc.bin malloc.com
+	rm -fv malloc.bin malloc.com fileio.bin fileio.com
 	find . -name "*.o" -exec rm -fv {} \;
 
 copy: malloc.com
 	cpmrm -f z80-retro-8k-8m /dev/loop0p1 0:malloc.com
+	cpmrm -f z80-retro-8k-8m /dev/loop0p1 0:fileio.com
 	cpmcp -f z80-retro-8k-8m /dev/loop0p1 malloc.com 0:
+	cpmcp -f z80-retro-8k-8m /dev/loop0p1 fileio.com 0:

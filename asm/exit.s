@@ -21,22 +21,41 @@
 ; https://github.com/linuxplayground/z80-retro-cpmlib.git
 ;
 ;****************************************************************************
-.export retcpm
-stacktop equ 0xD400
 
+  .export _exit
   .code
-  ld    hl, 0
-  add   hl,sp
-  ld    (oldstack),hl
+_exit:
+  ld    a,l
+  or    a
+  jr    z,done
+  call  PRINT_HEX
+done:
+  jp    retcpm
 
-  ld    sp,stacktop
+; Assume the unsigned char to print is in register A
+PRINT_HEX:
+  push  af                ; save a and flags
+  srl   a                 ; shift high nibble to low position
+  srl   a
+  srl   a
+  srl   a
+  call  nibble_to_ascii   ; convert and print high nibble
 
-  call  __init_sys
-  call  _main
+  pop   af                ; restore a and flags
+  and   0x0f              ; isolate low nibble
+  call  nibble_to_ascii   ; convert and print low nibble
 
-  pop   de
-retcpm:
-  ld    sp,(oldstack)
   ret
 
-oldstack: .ds 2
+nibble_to_ascii:
+  cp    0xa               ; compare with 10
+  jr    c, is_digit       ; if less than 10, it's a digit
+  add   a, 'a' - 0xa      ; convert to a-f (uppercase)
+  jr    print_char
+is_digit:
+  add   a, '0'            ; convert to 0-9
+print_char:
+  ld    l,a
+  call  _chout
+  ret
+
