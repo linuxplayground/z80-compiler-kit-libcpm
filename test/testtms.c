@@ -39,7 +39,7 @@ void g1()
   tms_load_col(colors, 0x20);
 
   tms_print_xy(10,2,"Hello, World!");
-
+  tms_print_xy(10,4, "THAT'S COOL!");
   tms_wait();
   tms_g1flush(tms_buf);
 }
