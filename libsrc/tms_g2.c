@@ -45,6 +45,9 @@ void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_patt_tbl = 0x0;
   tms_sp_attr_tbl = 0x3B00;
   tms_sp_patt_tbl = 0x1800;
+
+  tms_mode = MODE_G2;
+
   tms_set_reg(0, 0x02);
   tms_set_reg(1, 0xE0|sprite_flags); //16K, enable display, enable int + sprite settings
   tms_set_reg(2, 0x0E);

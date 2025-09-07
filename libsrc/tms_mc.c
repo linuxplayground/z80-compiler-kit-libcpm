@@ -50,6 +50,8 @@ void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_sp_attr_tbl = 0x1000;
   tms_sp_patt_tbl = 0x0;
 
+  tms_mode = MODE_MC;
+
   tms_set_reg(0, 0x00);
   tms_set_reg(1, 0xE8|sprite_flags); //16K, enable display, enable int + sprite settings
   tms_set_reg(2, 0x05);
@@ -70,15 +72,24 @@ void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_mcflush(tms_buf);
 }
 
-void tms_plot_mc(uint8_t x, uint8_t y, uint8_t c)
+bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c)
 {
   uint16_t addr;
   uint8_t dot;
+  bool collide = false;
+
   addr = 8 * (x / 2) + y % 8 + 256 * (y / 8);
   dot = tms_buf[addr];
-  if (x & 1) // Odd columns
+
+  if (x & 1) {// Odd columns
+    if ((dot & 0x0F) > BLACK)
+      collide = true;
     tms_buf[addr] = (dot & 0xF0) + (c & 0x0F);
-  else
+  } else {
+    if (((dot & 0xF0) >> 4) > BLACK)
+      collide = true;
     tms_buf[addr] = (dot & 0x0F) + (c << 4);
+  }
+  return collide;
 }
 

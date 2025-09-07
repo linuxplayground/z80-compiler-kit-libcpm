@@ -41,6 +41,8 @@ void tms_init_text(uint8_t fg, uint8_t bg)
   tms_patt_tbl = 0x0;
   // tms_sp_attr_tbl = 0x0; // not used
   // tms_sp_patt_tbl = 0x0; // not used
+  tms_mode = MODE_TEXT;
+
   tms_set_reg(0, 0x00);
   tms_set_reg(1, 0xF0); //16K, enable display, enable int
   tms_set_reg(2, 0x02);

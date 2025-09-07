@@ -34,6 +34,8 @@
 
 char *tms_buf = NULL;
 
+uint8_t tms_mode = 0;
+
 uint16_t tms_name_tbl = 0;    // REG: 2
 uint16_t tms_color_tbl = 0;   // REG: 3
 uint16_t tms_patt_tbl = 0;    // REG: 4
@@ -63,3 +65,23 @@ void tms_load_col(char *color, size_t len)
   } while (p++ < e);
 }
 
+void tms_put_char(uint8_t x, uint8_t y, char c)
+{
+  switch (tms_mode) {
+    case MODE_G1:
+    case MODE_G2:
+      tms_buf[y * 32 + x] = c;
+      break;
+    case MODE_TEXT:
+      tms_buf[y*40 + x] = c;
+      break;
+    default: {}
+  }
+}
+
+void tms_print_xy(uint8_t x, uint8_t y, char *s)
+{
+  while (*s != '\0') {
+    tms_put_char(x++, y, *s++);
+  }
+}

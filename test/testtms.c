@@ -38,9 +38,7 @@ void g1()
   tms_load_pat(patterns, 0x400);
   tms_load_col(colors, 0x20);
 
-  tms_buf[32*10+10] = 'A';
-  tms_buf[32*10+11] = 'B';
-  tms_buf[32*10+12] = 'C';
+  tms_print_xy(10,2,"Hello, World!");
 
   tms_wait();
   tms_g1flush(tms_buf);

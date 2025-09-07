@@ -72,6 +72,8 @@ extern uint16_t tms_patt_tbl;      // REG: 4
 extern uint16_t tms_sp_attr_tbl;   // REG: 5
 extern uint16_t tms_sp_patt_tbl;   // REG: 6
 
+extern uint8_t  tms_mode;
+
 extern uint16_t tms_n_tbl_len;
 extern uint16_t tms_c_tbl_len;
 
@@ -101,8 +103,9 @@ extern void tms_put(uint8_t c);
 /* read a single byte from VRAM at current address */
 extern uint8_t tms_get();
 
-/* plot a single fat pixel in multi color mode */
-void tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
+/* plot a single fat pixel in multi color mode.  Returns true if the pixel at
+ * the given location was greater than BLACK */
+bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
 
 /* wait for vsync and return status of vdp */
 extern uint8_t tms_wait();
@@ -118,5 +121,11 @@ void tms_load_pat(char *pattern, size_t len);
 
 /* Load a color table into the VDP */
 void tms_load_col(char *color, size_t len);
+
+/* Print a single character to the screen at x,y */
+void tms_put_char(uint8_t x, uint8_t y, char c);
+
+/* Print a stirng to the screen starting at location x,y */
+void tms_print_xy(uint8_t x, uint8_t y, char *s);
 
 #endif //_TMS_H
