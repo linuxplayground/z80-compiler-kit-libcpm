@@ -28,6 +28,7 @@
 #define _TMS_H
 
 #include <stdint.h>
+#include <core.h>
 #include <stdbool.h>
 
 #define TMS_COLLISION_BIT 1 << 5
@@ -59,7 +60,9 @@ enum {
   MODE_TEXT
 };
 
-/* global pointer to the framebuffer */
+/* global pointer to the framebuffer which will be allocated in one of the
+ * tms_init_* routines
+ */
 extern char *tms_buf;
 
 /* variables holding the base addresses of VDP memory tables */
@@ -69,8 +72,14 @@ extern uint16_t tms_patt_tbl;      // REG: 4
 extern uint16_t tms_sp_attr_tbl;   // REG: 5
 extern uint16_t tms_sp_patt_tbl;   // REG: 6
 
+extern uint16_t tms_n_tbl_len;
+extern uint16_t tms_c_tbl_len;
+
 /* Initialize the VDP in one of the modes */
-void tms_init(uint8_t mode, uint8_t fg, uint8_t bg, bool largesp, bool mag);
+void tms_init_g1(uint8_t fg, uint8_t bg, bool largesp, bool mag);
+void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag);
+void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag);
+void tms_init_text(uint8_t fg, uint8_t bg);
 
 /* Set a vdp register */
 extern void tms_set_reg(uint8_t reg, uint8_t val);
@@ -98,7 +107,16 @@ void tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
 /* wait for vsync and return status of vdp */
 extern uint8_t tms_wait();
 
-/* flush the MC pattern table from a buffer to the VDP */
+/* flush buffer to VDP */
+extern void tms_g1flush(char *buf);
+extern void tms_g2flush(char *buf);
 extern void tms_mcflush(char *buf);
+extern void tms_txtflush(char *buf);
+
+/* Load a pattern table into the VDP */
+void tms_load_pat(char *pattern, size_t len);
+
+/* Load a color table into the VDP */
+void tms_load_col(char *color, size_t len);
 
 #endif //_TMS_H

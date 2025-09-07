@@ -36,6 +36,9 @@ stacktop equ 0xD400
 
   pop   de
 retcpm:
+  ld    hl,_tms_buf
+  call  _free
+
   ld    sp,(oldstack)
   ret
 

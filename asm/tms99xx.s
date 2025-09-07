@@ -30,7 +30,10 @@
   .export _tms_put
   .export _tms_get
   .export _tms_wait
+  .export _tms_g1flush
+  .export _tms_g2flush
   .export _tms_mcflush
+  .export _tms_txtflush
 
   .export _IO_TMSRAM
   .export _IO_TMSREG
@@ -109,6 +112,26 @@ _tms_wait:
   jp    nz,_tms_wait
   in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
   ret
+
+; Make sure that tms_wait is called immediately prior to thes flush routines.
+
+; extern void tms_g1flush(char *buf);
+_tms_g1flush:
+  ld    de, 0x1400
+  ld    bc, 0x300
+  jp    tms_write_fast
+
+; extern void tms_g2flush(char *buf);
+_tms_g2flush:
+  ld    de, 0x3800
+  ld    bc, 0x300
+  jp    tms_write_fast
+
+; extern void tms_g2flush(char *buf);
+_tms_txtflush:
+  ld    de, 0x800
+  ld    bc, 960
+  jp    tms_write_fast
 
 ; void tms_mcflush(char *buf);
 ; make sure to run tms_wait first

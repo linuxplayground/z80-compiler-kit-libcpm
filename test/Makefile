@@ -4,7 +4,7 @@ AS=/opt/fcc/bin/asz80
 LD=/opt/fcc/bin/ldz80
 
 CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
-LDFLAGS=-b -C0x100 -m console.map
+LDFLAGS=-b -C0x100 -m $@.map
 LIBS=\
 		 $(TOP)/../cpmlib.a \
 		 /opt/fcc/lib/z80/libz80.a \
