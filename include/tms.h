@@ -1,3 +1,4 @@
+// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -32,24 +33,31 @@
 #define TMS_COLLISION_BIT 1 << 5
 #define TMS_5TH_SPRITE_BIT 1 << 4
 
-#define TRANSPRAENT 0
-#define BLACK 1
-#define MEDIUM_GREEN 2
-#define LIGHT_GREEN 3
-#define DARK_BLUE 4
-#define LIGHT_BLUE 5
-#define RARK_RED 6
-#define CYAN 7
-#define MEDIUM_RED 8
-#define LIGHT_RED 9
-#define DARK_YELLOW 10
-#define LIGHT_YELLOW 11
-#define DARK_GREEN 12
-#define MAGENTA 13
-#define GRAY 14
-#define WHITE 15
+enum {
+  TRANSPRAENT=0
+  BLACK
+  MEDIUM_GREEN
+  LIGHT_GREEN
+  DARK_BLUE
+  LIGHT_BLUE
+  RARK_RED
+  CYAN
+  MEDIUM_RED
+  LIGHT_RED
+  DARK_YELLOW
+  LIGHT_YELLOW
+  DARK_GREEN
+  MAGENTA
+  GRAY
+  WHITE
+};
 
-enum { MODE_G1, MODE_G2, MODE_MC, MODE_TEXT };
+enum {
+  MODE_G1 = 0,
+  MODE_G2,
+  MODE_MC,
+  MODE_TEXT
+};
 
 /* global pointer to the framebuffer */
 extern char *tms_buf;
@@ -68,11 +76,29 @@ void tms_init(uint8_t mode, uint8_t fg, uint8_t bg, bool largesp, bool mag);
 extern void tms_set_reg(uint8_t reg, uint8_t val);
 
 /* waits for a VSYNC interrupt from the VDP and retuns the value of the VDP
- * status register */
+ * status register
+ */
 extern uint8_t tms_wait();
+
 /* set the vdp memory write address */
-extern void tms_set_wr_ad(uint16_t addr);
+extern void tms_r_addr(uint16_t addr);
+
 /* set the vdp memory read address */
-extern void tms_set_rd_ad(uint16_t addr);
+extern void tms_w_addr(uint16_t addr);
+
+/* write a single byte to VRAM at current address */
+extern void tms_put(uint8_t c);
+
+/* read a single byte from VRAM at current address */
+extern uint8_t tms_get();
+
+/* plot a single fat pixel in multi color mode */
+void tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
+
+/* wait for vsync and return status of vdp */
+extern uint8_t tms_wait();
+
+/* flush the MC pattern table from a buffer to the VDP */
+extern void tms_mcflush(char *buf);
 
 #endif //_TMS_H

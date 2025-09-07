@@ -25,46 +25,115 @@
 ;****************************************************************************
 
   .export _tms_set_reg
-  .export _tms_set_wr_ad
-  .export _tms_set_rd_ad
+  .export _tms_w_addr
+  .export _tms_r_addr
+  .export _tms_put
+  .export _tms_get
+  .export _tms_wait
+  .export _tms_mcflush
+
   .export _IO_TMSRAM
   .export _IO_TMSREG
+  .export _IO_JOY0
+  .export _IO_JOY1
 
 _IO_TMSRAM equ 0x80
 _IO_TMSREG equ 0x81
+_IO_JOY0   equ 0xA8
+_IO_JOY1   equ 0xA8
 
   .code
 
 ;void tms_set_reg(uint8_t reg, uint8_t val);
 _tms_set_reg:
-  push  bc  ; preserve bc for compilerkit
-  pop   de
-  push  de  ; e = val
-            ; hl = reg
+  pop   bc  ; return
+  pop   hl  ; reg
+  pop   de  ; val
+
+  push  de
+  push  hl
+  push  bc
+
   ld    c,_IO_TMSREG
   out   (c),e
   ld    a,l
   or    0x80
   out   (c),a
-  pop   bc
   ret
 
-;void tms_set_wr_ad(uint16_t addr);
-_tms_set_wr_ad:
-  push  bc  ; preserve bc for compilerkit
+;void tms_set_w_addr(uint16_t addr);
+_tms_w_addr:
   ld    c,_IO_TMSREG
   out   (c),l
   ld    a,h
   or    0x40
   out   (c),a
-  pop   bc
   ret
 
-;void tms_set_rd_ad(uint16_t addr);
-_tms_set_rd_ad:
-  push  bc  ; preserve bc for compilerkit
+;void tms_r_addr(uint16_t addr);
+_tms_r_addr:
   ld    c,_IO_TMSREG
   out   (c),l
   out   (c),h
-  pop   bc
   ret
+
+; void tms_put(uint8_t c);
+_tms_put:
+  ld    a,l
+  out   (_IO_TMSRAM),a
+  push  hl
+  pop   hl
+  push  hl
+  pop   hl
+  push  hl
+  pop   hl
+ret
+
+; uint8_t tms_get();
+_tms_get:
+  in    a,(_IO_TMSRAM)
+  ld    l,a
+  ld    h,0
+  push  hl
+  pop   hl
+  push  hl
+  pop   hl
+  push  hl
+  pop   hl
+  ret
+
+; uint8_t tms_wait();
+_tms_wait:
+  in    a,(_IO_JOY0)   ; read the /INT status via bodge wire 
+  and   0x02           ; check U6, pin 4 (D1)
+  jp    nz,_tms_wait
+  in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
+  ret
+
+; void tms_mcflush(char *buf);
+; make sure to run tms_wait first
+_tms_mcflush:
+  ld    de,0x800
+  ld    bc,0x600
+  ;jp    tms_write_fast
+  ; FALL THROUGH
+tms_write_fast:
+  ex    de,hl
+  call  _tms_w_addr
+  ex    de,hl
+  ld    d,b
+  ld    e,c
+  ld    c,_IO_TMSRAM
+; goldilocks
+  ld    b,e
+  inc   e
+  dec   e
+  jr    z,tms_wrfastlp
+  inc   d
+tms_wrfastlp:
+  outi
+  jp    nz,tms_wrfastlp
+  dec   d
+  jp    nz,tms_wrfastlp
+  ret
+
