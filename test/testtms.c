@@ -25,7 +25,6 @@
 */
 
 #include <tms.h>
-#include <string.h>
 #include "patterns.h"
 
 char txt[64];
@@ -59,5 +58,5 @@ void mc()
 
 void main()
 {
-  g1();
+  mc();
 }

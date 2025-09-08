@@ -22,7 +22,7 @@ the basics.  These are the functions available:
 ### Core
 
 - [x] CRT0 that restores the CPM stack before returning from main
-- [ ] exit()
+- [x] exit()
 
 ### CPM
 
@@ -53,14 +53,19 @@ the basics.  These are the functions available:
 ### Graphics
 
 - [ ] TMS [tms.h](./include/tms.h)
-    - [ ] Init graphics modes: g1, g2, g2.5, mc, text
-    - [ ] framebuffer routines: tms_wait, tms_flush
-    - [ ] set tms ram address: for read and write
-    - [ ] bulk load data: bload
-    - [ ] MC plot xy to framebuffer
+    - [x] Init graphics modes: g1, g2,mc, text
+    - [ ] g2.5 mode
+    - [x] framebuffer routines: tms_wait, tms_flush
+    - [x] set tms ram address: for read and write
+    - [x] load_patterns, load_colors
+    - [x] MC plot xy to framebuffer
     - [ ] G1 and G2.5 plot xy to framebuffer
-    - [ ] G2 plot xy
+    - [ ] G2 plot xy pixel
     - [ ] Flush sprite attributes
+    - [x] Char at location xy G1 mode, text mode
+    - [ ] Char at location xy G2.5 mode
+    - [x] String at location xy G1 mode, text mode
+    - [ ] String at location xy G2.5 mode
 
 ### Joystick
 

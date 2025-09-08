@@ -35,22 +35,22 @@
 #define TMS_5TH_SPRITE_BIT 1 << 4
 
 enum {
-  TRANSPRAENT=0
-  BLACK
-  MEDIUM_GREEN
-  LIGHT_GREEN
-  DARK_BLUE
-  LIGHT_BLUE
-  RARK_RED
-  CYAN
-  MEDIUM_RED
-  LIGHT_RED
-  DARK_YELLOW
-  LIGHT_YELLOW
-  DARK_GREEN
-  MAGENTA
-  GRAY
-  WHITE
+  TRANSPRAENT=0,
+  BLACK,
+  MEDIUM_GREEN,
+  LIGHT_GREEN,
+  DARK_BLUE,
+  LIGHT_BLUE,
+  RARK_RED,
+  CYAN,
+  MEDIUM_RED,
+  LIGHT_RED,
+  DARK_YELLOW,
+  LIGHT_YELLOW,
+  DARK_GREEN,
+  MAGENTA,
+  GRAY,
+  WHITE,
 };
 
 enum {
@@ -110,7 +110,7 @@ bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
 /* wait for vsync and return status of vdp */
 extern uint8_t tms_wait();
 
-/* flush buffer to VDP */
+/* flush buffer to VDP for the different modes */
 extern void tms_g1flush(char *buf);
 extern void tms_g2flush(char *buf);
 extern void tms_mcflush(char *buf);

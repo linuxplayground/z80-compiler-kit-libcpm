@@ -25,10 +25,11 @@
 */
 
 #include <tms.h>
-#include <stddef.h>
 #include <string.h>
 #include <malloc.h>
 
+// Initialise the name table with unique values over each band.
+// https://github.com/michalin/TMS9918_Arduino
 void init_mc_nt()
 {
   size_t i,j;
@@ -72,6 +73,8 @@ void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_mcflush(tms_buf);
 }
 
+// Returns true if a colision with an existing pixel in the buffer was found and the value
+// of the existing pixel was not TRANSPARENT or BLACK
 bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c)
 {
   uint16_t addr;

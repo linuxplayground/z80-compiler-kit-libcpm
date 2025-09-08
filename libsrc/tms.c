@@ -69,7 +69,7 @@ void tms_put_char(uint8_t x, uint8_t y, char c)
 {
   switch (tms_mode) {
     case MODE_G1:
-    case MODE_G2:
+    //case MODE_G2:
       tms_buf[y * 32 + x] = c;
       break;
     case MODE_TEXT:
