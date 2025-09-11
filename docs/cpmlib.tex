@@ -108,22 +108,45 @@ This example does not show the actual FCC commands explicitly.  Make is
 automating that step for us.
 \pagebreak
 
-\section{CP/M}
-The CP/M header provides C wrappers for almost all the CP/M BDOS function calls.
-\pagebreak
+\section{C Runtime}
 
-\section{malloc, free}
-\pagebreak
+\break
 
 \section{string}
-\pagebreak
 
-\section{fcntl}
 \pagebreak
 
 \section{TMS99xx}
 
 \pagebreak
 
-\end{document}
+\section{CP/M}
+The CP/M header provides C wrappers for almost all the CP/M BDOS function calls.
 
+For example, if you want to check for keyboard input without blocking, you can
+call the \texttt{cpm\_rawio()} function which returns the ascii char or 0.
+Unlike \texttt{cpm\_conin()}, this function does not emit the typed character to
+the terminal.
+
+You can find an example of how to use the fileio functions in the "test"
+folder.  The "fcntl.h" header file contains lots of additional information.
+
+\pagebreak
+
+\section{malloc, free}
+There are two parts to the malloc / free implimentation in this library.  The
+first is the implimentation of the "sbrk()" system call and the second is the
+malloc and free functions themselves.
+
+The sbrk() function was copied and adapted from the HiTech C compiler project.
+
+The malloc and free functions are transcribed directly from "The C Programming
+Language - Second Edition" By Biran W. Kernignhan and Dennis M. Ritchie.
+
+There are is no defragmentation or garbage collection.  Malloc doesn't usually
+make all that much sense in embedded environments.
+
+
+\pagebreak
+
+\end{document}

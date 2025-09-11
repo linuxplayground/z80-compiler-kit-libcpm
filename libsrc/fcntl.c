@@ -87,6 +87,7 @@ int8_t open(const char *pathname, uint8_t flags) {
   FILE *f;
 
   uint8_t idx;
+  (void)flags;      // flags are allowed for compatibilty, but ignored
   idx = get_free_idx();
   if (idx == 255) {
     errno = EINVAL;

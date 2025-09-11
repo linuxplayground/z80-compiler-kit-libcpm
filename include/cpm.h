@@ -66,6 +66,9 @@ extern char cpm_conin();
 /* CPM Writestr expects chars to be terminated with a `$` */
 extern void cpm_writestr(char *s);
 
+/* Returns a character from the terminal if one is ready else returns 0 */
+extern void cpm_rawio();
+
 /* Read a line of text input from the terminal until the ENTER key is pressed.
  * The first position in the in the buf array at `buf[0]` contains the maximum
  * length to read. On return the second position buf[1] contains the actual
