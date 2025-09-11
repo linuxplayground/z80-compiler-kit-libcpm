@@ -114,6 +114,9 @@ extern void tms_put(uint8_t c);
 /* read a single byte from VRAM at current address */
 extern uint8_t tms_get();
 
+/* Fill the tms buffer with a single character */
+void tms_fill_buf(const char c);
+
 /* plot a single fat pixel in multi color mode.  Returns true if the pixel at
  * the given location was greater than BLACK */
 bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);

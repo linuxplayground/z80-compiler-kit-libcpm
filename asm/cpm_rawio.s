@@ -7,8 +7,10 @@
   .export _cpm_rawio
   .code
 _cpm_rawio:
-  ld    c,0x6
+  ld    c,6
+  ld    e,0xFF
   call  5
   ld    l,a
   ld    h,0
   ret
+

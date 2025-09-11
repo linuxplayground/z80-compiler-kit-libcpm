@@ -63,6 +63,12 @@ extern void cpm_conout(char c);
 /* Wait for character from the terminal, blocks */
 extern char cpm_conin();
 
+/* Returns characater if one is available else zero
+ * processed.  This is a nonblocking call.
+ */
+extern bool cpm_rawio();
+
+
 /* CPM Writestr expects chars to be terminated with a `$` */
 extern void cpm_writestr(char *s);
 

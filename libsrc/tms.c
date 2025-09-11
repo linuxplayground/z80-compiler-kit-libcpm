@@ -85,3 +85,15 @@ void tms_print_xy(uint8_t x, uint8_t y, char *s)
     tms_put_char(x++, y, *s++);
   }
 }
+
+void tms_fill_buf(const char c)
+{
+  size_t len;
+  switch (tms_mode) {
+    case MODE_G1: len = 768; break;
+    case MODE_TEXT: len = 960; break;
+    case MODE_MC: len = 1536; break;
+    default: return;
+  }
+ memset(tms_buf, c, len);
+}

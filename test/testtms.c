@@ -39,7 +39,12 @@ void g1()
   tms_load_col(colors, 0x20);
 
   tms_print_xy(10,2,"Hello, World!");
-  tms_print_xy(10,4, "THAT'S COOL!");
+  tms_print_xy(10,4, "Press a key to fill");
+  tms_print_xy(10,5, "screen with dots");
+  tms_wait();
+  tms_g1flush(tms_buf);
+  while (!cpm_rawio());
+  tms_fill_buf('.');
   tms_wait();
   tms_g1flush(tms_buf);
 }
@@ -53,6 +58,7 @@ void mc()
   tms_plot_mc(63,47, LIGHT_BLUE);
   tms_wait();
   tms_mcflush(tms_buf);
+
 }
 
 void main()
