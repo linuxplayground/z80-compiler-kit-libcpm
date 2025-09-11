@@ -30,6 +30,7 @@
   .export _tms_put
   .export _tms_get
   .export _tms_wait
+  .export _tms_status
   .export _tms_g1flush
   .export _tms_g2flush
   .export _tms_mcflush
@@ -111,7 +112,10 @@ _tms_wait:
   and   0x02           ; check U6, pin 4 (D1)
   jp    nz,_tms_wait
   in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
+  ld    (_tms_status),a
   ret
+
+_tms_status: .ds 1
 
 ; Make sure that tms_wait is called immediately prior to thes flush routines.
 

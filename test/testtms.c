@@ -25,6 +25,7 @@
 */
 
 #include <tms.h>
+#include <cpm.h>
 #include "patterns.h"
 
 char txt[64];
@@ -46,17 +47,15 @@ void g1()
 void mc()
 {
   tms_init_mc(GRAY, DARK_YELLOW, true, false);
-
   tms_plot_mc( 0, 0, LIGHT_GREEN);
   tms_plot_mc( 0,47, MEDIUM_RED);
   tms_plot_mc(63, 0, DARK_GREEN);
   tms_plot_mc(63,47, LIGHT_BLUE);
-
   tms_wait();
   tms_mcflush(tms_buf);
 }
 
 void main()
 {
-  mc();
+  g1();
 }

@@ -60,6 +60,17 @@ enum {
   MODE_TEXT
 };
 
+typedef struct sprite_s {
+  uint8_t y;          // location in Y axis (can be negative)
+  uint8_t x;          // location in X axis (can be negative - value depends on ECB)
+  uint8_t pattern;    // pattern ID in sprites attribute table
+  uint8_t color;      // 0xE...CCCC : early clock bit + COLOR
+} Sprite;
+
+extern Sprite sprites[32];   // this array of sprites is flushed to the sprite
+                      // attribute table in tms_flush_spr() until a Y value of
+                      // 0xD0 is encountered.
+
 /* global pointer to the framebuffer which will be allocated in one of the
  * tms_init_* routines
  */
@@ -116,11 +127,17 @@ extern void tms_g2flush(char *buf);
 extern void tms_mcflush(char *buf);
 extern void tms_txtflush(char *buf);
 
-/* Load a pattern table into the VDP */
+/* Load a tile pattern table into the VDP */
 void tms_load_pat(char *pattern, size_t len);
 
 /* Load a color table into the VDP */
 void tms_load_col(char *color, size_t len);
+
+/* Initialise the sprite table */
+void tms_init_sprites();
+
+/* Load a sprite pattern table into the VDP */
+void tms_load_spr(char *sprites, size_t len);
 
 /* Print a single character to the screen at x,y */
 void tms_put_char(uint8_t x, uint8_t y, char c);

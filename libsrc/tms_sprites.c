@@ -24,38 +24,57 @@
 *****************************************************************************
 */
 
+/* Using a different translation unit for sprites in case they are not needed.
+*  In which case, this code won't be linked into the final executable.
+*/
+
 #include <stdbool.h>
 #include <core.h>
 #include <tms.h>
+#include <stddef.h>
 #include <string.h>
 #include <malloc.h>
 
+Sprite sprites[32];
 
-void tms_init_g1(uint8_t fg, uint8_t bg, bool largesp, bool mag)
+void tms_flush_sprites()
 {
-  uint8_t sprite_flags = 0;
-  sprite_flags |= largesp << 1;
-  sprite_flags |= mag << 0;
-
-  tms_name_tbl = 0x1400;
-  tms_n_tbl_len = 0x300;
-  tms_color_tbl = 0x2000;
-  tms_c_tbl_len = 0x20;
-  tms_patt_tbl = 0x800;
-  tms_sp_attr_tbl = 0x1000;
-  tms_sp_patt_tbl = 0x0;
-
-  tms_mode = MODE_G1;
-
-  tms_set_reg(0, 0x0);
-  tms_set_reg(1, 0xE0|sprite_flags); //16K, enable display, enable int + sprite settings
-  tms_set_reg(2, 0x05);
-  tms_set_reg(3, 0x80);
-  tms_set_reg(4, 0x01);
-  tms_set_reg(5, 0x20);
-  tms_set_reg(6, 0x00);
-  tms_set_reg(7, bg & 0x0F);
-  tms_buf = malloc(0x300);
-  memset(tms_buf, 0, 0x300);
-  tms_init_sprites();
+  uint8_t i;
+  tms_w_addr(tms_sp_attr_tbl);
+  for (i=0; i<32; ++i) {
+    tms_put(sprites[i].y);
+    tms_put(sprites[i].x);
+    tms_put(sprites[i].pattern);
+    tms_put(sprites[i].color);
+    if (sprites[i].y == 0xD0) break;
+  }
 }
+
+void tms_init_sprites()
+{
+  memset(sprites, 0, 128);
+  sprites[0].y = 0xD0;
+  sprites[0].x = 0x00;
+  sprites[0].pattern = 0x00;
+  sprites[0].color = 0x80;
+
+  tms_w_addr(tms_sp_patt_tble);
+  tms_flush_sprites();
+}
+
+void tms_disable_spr(uint8_t index)
+{
+  sprites[index].y = 192;        // hide below bottom of screen
+  sprites[index].color |= 0x80;  // ECB set to hide sprite off bottom of screen
+}
+
+void tms_load_spr(char *sprites, size_t len)
+{
+  char *p = sprites;
+  char *e = sprites+ len;
+  tms_w_addr(tms_sp_patt_tbl);
+  do {
+    tms_put(*p);
+  } while (p++ < e);
+}
+

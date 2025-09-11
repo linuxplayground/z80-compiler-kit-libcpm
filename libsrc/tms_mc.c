@@ -62,13 +62,13 @@ void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_set_reg(6, 0x00);
   tms_set_reg(7, bg & 0x0F);
 
-  tms_w_addr(tms_sp_attr_tbl);
-  tms_put(0xD0);
 
   init_mc_nt();
-
   tms_buf = malloc(0x600);
   memset(tms_buf, 0x11, 0x600);
+
+  tms_init_sprites();
+
   tms_wait();
   tms_mcflush(tms_buf);
 }

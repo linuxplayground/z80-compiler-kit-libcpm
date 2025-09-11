@@ -1,0 +1,129 @@
+% vim: tw=80 cc=80
+\documentclass[10pt,a4paper]{article}
+\input{preamble.tex}
+\begin{document}
+
+\section{Z80-Reto-cpmlib}
+
+This guide is intended provide some commentary that can be read along with the
+source code to showcase the various components of the library and how they can
+be used in your own applications.
+
+You should read the comments in the header files.  They are updated during
+development and will be the most accurate.
+
+\subsection{What Is Z80-Retro-cpmlib?}
+
+Z80-Retro-cpmlib is a C library that you can link to in your applications for
+use with the
+\href{https://github.com/etchedpixels/fuzix-compiler-kit.git}{FUZIX-Compiler-Kit}.
+The library is specifically targeted at the
+\href{https://github.com/z80-retro}{Z80-Retro!} Single Board Computer by John
+Winans.
+
+Some standard libraries are implimented where they can be easily backed by the
+CP/M 2.2 BDOS function calls.  Additionally the library includes functions for
+working with the TMS9918 and Atari style joystick ports on the VDP daughter
+board designed for the Z80-Retro!.
+
+For instructions on how to install the compiler and this library, see the
+\url{./BUILD.md} documentation.
+
+\subsection{Headers}
+
+The headers are all located in the projects "include" directory.  You just need
+to \texttt{\#include} the ones you need and make sure to link to the
+\texttt{cpmlib.a} library.
+
+As the code is split out into multiple translation units, your resulting binary
+should include almost no wasted code.
+
+\subsection{Usage}
+
+You can use the by including the headers you need, calling the functions in
+your code and finally compilling and linking. See: "Listing: \ref{lst:makefile}
+- Example Makefile" on page \pageref{lst:makefile}
+
+The process is something like this:
+
+\begin{description}
+  \item[Compile] fcc -O2 -mz80 -Iinclude -I /opt/fcc/lib/z80/include -c -o
+    main.o main.c
+  \item[Link] ldz80 -b C0x100 -o main.bin crt0.o main.o libcpm.a
+  \item[Truncate] dd if=main.bin of=main.com skip=1 bs=256
+\end{description}
+
+The linker documentation is very minimal because it's a very minimal linker.
+The \texttt{`-b`} switch tells the linker to output a binary file without
+relocatable code.  The -C0x100 tells the linker to begin the \texttt{`code`}
+segment at 0x100 which is the beginning of the TPA for CP/M.
+
+Because the linker always starts filling code from 0x0000 we need to remove the
+first 256 bytes using the \texttt{`dd`} command.
+\pagebreak
+
+\begin{lstlisting}[language=make, caption=Example Makefile]
+TOP=.
+CC=/opt/fcc/bin/fcc
+AS=/opt/fcc/bin/asz80
+LD=/opt/fcc/bin/ldz80
+
+CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
+LDFLAGS=-b -C0x100
+LIBS=\
+		 $(TOP)/../cpmlib.a \
+		 /opt/fcc/lib/z80/libz80.a \
+		 /opt/fcc/lib/z80/libc.a
+
+CRT=$(TOP)/../crt0.o
+
+all: clean malloc.com fileio.com testtms.com copy
+
+malloc.bin: malloc.o
+	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+
+malloc.com: malloc.bin
+	dd if=$^ of=$@ skip=1 bs=256
+
+fileio.bin: fileio.o
+	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+
+fileio.com: fileio.bin
+	dd if=$^ of=$@ skip=1 bs=256
+
+testtms.bin: testtms.o
+	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+
+testtms.com: testtms.bin
+	dd if=$^ of=$@ skip=1 bs=256
+
+
+clean:
+	rm -fv malloc.bin malloc.com fileio.bin fileio.com
+	find . -name "*.o" -exec rm -fv {} \;
+\end{lstlisting}
+\label{lst:makefile}
+
+This example does not show the actual FCC commands explicitly.  Make is
+automating that step for us.
+\pagebreak
+
+\section{CP/M}
+The CP/M header provides C wrappers for almost all the CP/M BDOS function calls.
+\pagebreak
+
+\section{malloc, free}
+\pagebreak
+
+\section{string}
+\pagebreak
+
+\section{fcntl}
+\pagebreak
+
+\section{TMS99xx}
+
+\pagebreak
+
+\end{document}
+

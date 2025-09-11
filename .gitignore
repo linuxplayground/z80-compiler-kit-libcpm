@@ -4,5 +4,6 @@
 **/*.bin
 **/*.img
 **/*.map
+**/*.swp
 
 test/hello.txt

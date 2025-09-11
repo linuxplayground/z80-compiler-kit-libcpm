@@ -59,7 +59,7 @@ the basics.  These are the functions available:
     - [x] set tms ram address: for read and write
     - [x] load_patterns, load_colors
     - [x] MC plot xy to framebuffer
-    - [ ] G1 and G2.5 plot xy to framebuffer
+    - [x] G1 and G2.5 plot xy to framebuffer
     - [ ] G2 plot xy pixel
     - [ ] Flush sprite attributes
     - [x] Char at location xy G1 mode, text mode
