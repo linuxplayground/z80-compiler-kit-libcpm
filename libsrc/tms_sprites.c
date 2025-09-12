@@ -25,56 +25,51 @@
 */
 
 /* Using a different translation unit for sprites in case they are not needed.
-*  In which case, this code won't be linked into the final executable.
-*/
+ *  In which case, this code won't be linked into the final executable.
+ */
 
-#include <stdbool.h>
 #include <core.h>
-#include <tms.h>
-#include <stddef.h>
-#include <string.h>
 #include <malloc.h>
+#include <stdbool.h>
+#include <string.h>
+#include <tms.h>
 
 Sprite sprites[32];
 
-void tms_flush_sprites()
-{
+void tms_flush_sprites() {
   uint8_t i;
   tms_w_addr(tms_sp_attr_tbl);
-  for (i=0; i<32; ++i) {
+  for (i = 0; i < 32; ++i) {
     tms_put(sprites[i].y);
     tms_put(sprites[i].x);
     tms_put(sprites[i].pattern);
     tms_put(sprites[i].color);
-    if (sprites[i].y == 0xD0) break;
+    if (sprites[i].y == 0xD0)
+      break;
   }
 }
 
-void tms_init_sprites()
-{
+void tms_init_sprites() {
   memset(sprites, 0, 128);
   sprites[0].y = 0xD0;
   sprites[0].x = 0x00;
   sprites[0].pattern = 0x00;
   sprites[0].color = 0x80;
 
-  tms_w_addr(tms_sp_patt_tble);
+  tms_w_addr(tms_sp_patt_tbl);
   tms_flush_sprites();
 }
 
-void tms_disable_spr(uint8_t index)
-{
-  sprites[index].y = 192;        // hide below bottom of screen
-  sprites[index].color |= 0x80;  // ECB set to hide sprite off bottom of screen
+void tms_disable_spr(uint8_t index) {
+  sprites[index].y = 192;       // hide below bottom of screen
+  sprites[index].color |= 0x80; // ECB set to hide sprite off bottom of screen
 }
 
-void tms_load_spr(char *sprites, size_t len)
-{
+void tms_load_spr(char *sprites, size_t len) {
   char *p = sprites;
-  char *e = sprites+ len;
+  char *e = sprites + len;
   tms_w_addr(tms_sp_patt_tbl);
   do {
     tms_put(*p);
   } while (p++ < e);
 }
-

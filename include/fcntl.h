@@ -66,7 +66,7 @@ int8_t creat(const char *pathname, uint8_t mode);
 
 /* opens a file.  adds it to the sys_open_files array if there is room, creates
  * the file if it doesn't exist */
-int8_t open(const char *pathname, uint8_t flags);
+int8_t open(const char *pathname, uint8_t mode);
 
 /* write to open file */
 int write(int8_t fd, void *buf, size_t count);

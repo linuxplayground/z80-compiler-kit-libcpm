@@ -82,12 +82,11 @@ int8_t creat(const char *pathname, uint8_t mode) {
   return idx;
 }
 
-int8_t open(const char *pathname, uint8_t flags) {
+int8_t open(const char *pathname, uint8_t mode) {
   uint8_t result;
   FILE *f;
 
   uint8_t idx;
-  (void)flags;      // flags are allowed for compatibilty, but ignored
   idx = get_free_idx();
   if (idx == 255) {
     errno = EINVAL;
@@ -104,7 +103,7 @@ int8_t open(const char *pathname, uint8_t flags) {
 
   // we succesfully parsed the filename.  Search for the file.
   result = cpm_f_sfirst(&f->fcb);
-  if ((result == 0xFF) && (flags == O_CREAT)) {
+  if ((result == 0xFF) && (mode == O_CREAT)) {
     // need to create the file if O_CREAT
     idx = creat(pathname, 0);
     result = cpm_f_make(&f->fcb);
