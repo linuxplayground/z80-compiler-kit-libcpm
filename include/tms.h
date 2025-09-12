@@ -142,6 +142,9 @@ void tms_init_sprites();
 /* Load a sprite pattern table into the VDP */
 void tms_load_spr(char *sprites, size_t len);
 
+/* flush sprite attributes */
+void tms_flush_sprites();
+
 /* Print a single character to the screen at x,y */
 void tms_put_char(uint8_t x, uint8_t y, char c);
 
