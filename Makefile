@@ -49,7 +49,7 @@ $(CRT): crt0.s
 clean:
 	find . -name "*.o" -exec rm -fv {} \;
 	rm -fv cpmlib.a
-	make -C test clean
+	make -C examples clean
 
 world: clean all
-	make -C test
+	make -C examples all

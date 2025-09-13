@@ -57,7 +57,7 @@ typedef struct s_file {
   bool used;
 } FILE;
 
-extern FILE sys_open_files[MAX_OPEN_FILES]; /* We allow 8 files to be open at once */
+extern FILE sys_open_files[MAX_OPEN_FILES]; /* We allow 4 files to be open at once */
 
 /* creates a new open file description, an entry in the system-wide table of
  * open files All files are created equal. Mode is ignored in the case of CPM.

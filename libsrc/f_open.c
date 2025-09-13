@@ -43,25 +43,6 @@ uint8_t get_free_idx() {
   return idx;
 }
 
-size_t f_size(int8_t fd) {
-  if (fd < 3) {
-    errno = EINVAL;
-    return 0;
-  }
-  cpm_f_size(&sys_open_files[fd-3].fcb);
-  return sys_open_files[fd-3].fcb.rn;
-}
-
-int8_t close(int8_t fd) {
-  if ((fd-3) > MAX_OPEN_FILES) {
-    errno = EINVAL;
-    return -1;
-  }
-  cpm_f_close(&sys_open_files[fd-3].fcb);
-  sys_open_files[fd-3].used=false;
-  return 0;
-}
-
 int8_t creat(const char *pathname, uint8_t mode) {
   uint8_t result;
   FILE *f;
