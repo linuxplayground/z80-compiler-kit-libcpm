@@ -25,7 +25,7 @@
 
 #include "cpm.h"
 
-void printstr(char *s) {
+void puts(char *s) {
   do {
     cpm_conout(*s);
   } while (*s++ != 0);

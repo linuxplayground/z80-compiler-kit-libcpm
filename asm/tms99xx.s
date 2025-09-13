@@ -144,10 +144,14 @@ _tms_mcflush:
   ld    bc,0x600
   ;jp    tms_write_fast
   ; FALL THROUGH
+
 tms_write_fast:
-  ex    de,hl
-  call  _tms_w_addr
-  ex    de,hl
+  ld    a,e
+  out   (_IO_TMSREG),a
+  ld    a,d
+  or    0x40
+  out   (_IO_TMSREG),a
+
   ld    d,b
   ld    e,c
   ld    c,_IO_TMSRAM

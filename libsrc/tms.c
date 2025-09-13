@@ -79,7 +79,7 @@ void tms_put_char(uint8_t x, uint8_t y, char c)
   }
 }
 
-void tms_print_xy(uint8_t x, uint8_t y, char *s)
+void tms_puts_xy(uint8_t x, uint8_t y, char *s)
 {
   while (*s != '\0') {
     tms_put_char(x++, y, *s++);

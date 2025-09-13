@@ -149,6 +149,6 @@ void tms_flush_sprites();
 void tms_put_char(uint8_t x, uint8_t y, char c);
 
 /* Print a stirng to the screen starting at location x,y */
-void tms_print_xy(uint8_t x, uint8_t y, char *s);
+void tms_puts_xy(uint8_t x, uint8_t y, char *s);
 
 #endif //_TMS_H

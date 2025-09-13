@@ -29,6 +29,6 @@ void main() {
     } else
       n += 1;
     itoa(e + (d / f), tb, 5, 10);
-    printstr(tb);
+    puts(tb);
   }
 }

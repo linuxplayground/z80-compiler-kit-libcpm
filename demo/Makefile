@@ -24,6 +24,8 @@ $(APPNAME).com: $(APPNAME).bin
 clean:
 	rm -fv $(APPNAME).bin $(APPNAME).com
 	find . -name "*.o" -exec rm -fv {} \;
+	find . -name "*.map" -exec rm -fv {} \;
+	find . -name "*.bin" -exec rm -fv {} \;
 
 copy: $(APPNAME).com
 	cpmrm -f z80-retro-8k-8m /dev/loop0p1 0:$(APPNAME).com

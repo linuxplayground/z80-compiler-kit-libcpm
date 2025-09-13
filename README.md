@@ -43,7 +43,7 @@ the basics.  These are the functions available:
 - [ ] Additional string functions
     - [x] itoa
     - [x] toupper
-    - [x] printstr - prints null terminated strings - no formatting
+    - [x] puts - prints null terminated strings - no formatting
     - [x] print_kvd print_kvh - prints text followed by integer in decimal (kvd)
       or hex (kvh)
     - [ ] sprintf

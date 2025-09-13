@@ -1,5 +1,5 @@
 % vim: tw=80 cc=80
-\documentclass[10pt,a4paper]{article}
+\documentclass[10pt,a4paper,hidelinks]{article}
 \input{preamble.tex}
 \def\lib{Z80-Retro!-cpmlib }
 
@@ -25,9 +25,9 @@ development and will be the most accurate.
 
 \lib is a C library that you can link to in your applications for
 use with the
-\href{https://github.com/etchedpixels/fuzix-compiler-kit.git}{FUZIX-Compiler-Kit}.
+\href{https://github.com/etchedpixels/fuzix-compiler-kit.git}{FUZIX-Compiler-Kit}.\footnote{https://github.com/etchedpixels/fuzix-compiler-kit.git}
 The library is specifically targeted at the
-\href{https://github.com/z80-retro}{Z80-Retro!} Single Board Computer by John
+\href{https://github.com/z80-retro}{Z80-Retro!}\footnote{https://github.com/z80-retro} Single Board Computer by John
 Winans.
 
 Some standard libraries are implemented where they can be easily backed by the
@@ -63,7 +63,7 @@ first 256 bytes using the \texttt{`dd`} command.
 \pagebreak
 
 \begin{center}
-  \begin{lstlisting}[language=make, caption=Example Makefile]
+  \begin{lstlisting}[caption=Example Makefile]
     TOP=.
     CC=/opt/fcc/bin/fcc
     AS=/opt/fcc/bin/asz80
@@ -151,7 +151,7 @@ BDOS calls for writing text to the terminal.
 The additional functions are:
 
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{red!50!black}]
-  \item[printstr] Print a zero terminated string constant to the screen.  No
+  \item[puts] Print a zero terminated string constant to the screen.  No
     formatting.
   \item[print\_kvh] Prints a string constant followed by a HEX representation of
     a a number.
@@ -170,6 +170,7 @@ the terminal.
 You can find an example of how to use the fileio functions in the "test"
 folder.  The "fcntl.h" header file contains lots of additional information.
 
+\break
 \subsection{malloc, free}
 There are two parts to the malloc / free implementation in this library.  The
 first is the implementation of the "sbrk()" system call and the second is the

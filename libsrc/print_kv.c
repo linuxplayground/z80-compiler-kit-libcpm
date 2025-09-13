@@ -33,7 +33,7 @@ bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
     return false;
   strcpy(buf, k);
   itoa(v, buf + strlen(k), l, base);
-  printstr(buf);
+  puts(buf);
   free(buf);
   return true;
 }

@@ -16,7 +16,7 @@ void main() {
 
   new_file = open("newfile.txt", O_CREAT);
   if (new_file == -1) {
-    printstr("\r\nError opening `newfile.txt`");
+    puts("\r\nError opening `newfile.txt`");
     exit(-2);
   }
 
@@ -34,7 +34,7 @@ void main() {
   free(bigbuf1);
   // close the file.
   if (close(new_file) == -1) {
-    printstr("\r\nError closing new file");
+    puts("\r\nError closing new file");
     exit(-3);
   }
 

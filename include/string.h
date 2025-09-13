@@ -33,7 +33,7 @@
 /* Print a regular C string using direct IO rather than via CPM
  * For normal CPM console write, use the writestr(char *c) function.
  */
-void printstr(char *s);
+void puts(char *s);
 
 /* Convert an integer to an ascii representation. */
 int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base);
