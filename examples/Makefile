@@ -1,7 +1,8 @@
 SUBDIRS = \
 					fileio \
 					malloc \
-					demo
+					demo \
+					tms
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)
