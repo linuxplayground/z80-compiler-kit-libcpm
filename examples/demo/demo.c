@@ -63,7 +63,7 @@ void main() {
 
     if (x <= 0) velx *= -1;
     if (x >= (255-16)) velx *= -1;
-    if (y <= 0) vely *= -1;
+    if (y <= -1) vely *= -1;
     if (y >= (191-16))  vely *= -1;
 
     sprites[0].y = y;
