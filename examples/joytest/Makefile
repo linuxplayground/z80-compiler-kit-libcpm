@@ -4,7 +4,7 @@ CC=/opt/fcc/bin/fcc
 AS=/opt/fcc/bin/asz80
 LD=/opt/fcc/bin/ldz80
 
-APPNAME=fileio
+APPNAME = joytest
 
 CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
 LDFLAGS=-b -C0x100

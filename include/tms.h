@@ -61,8 +61,8 @@ enum {
 };
 
 typedef struct sprite_s {
-  uint8_t y;          // location in Y axis (can be negative)
-  uint8_t x;          // location in X axis (can be negative - value depends on ECB)
+  int y;          // location in Y axis (can be negative)
+  int x;          // location in X axis (can be negative - value depends on ECB)
   uint8_t pattern;    // pattern ID in sprites attribute table
   uint8_t color;      // 0xE...CCCC : early clock bit + COLOR
 } Sprite;

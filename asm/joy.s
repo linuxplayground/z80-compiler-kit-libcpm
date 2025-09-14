@@ -37,7 +37,7 @@ _joy:
   jr  nz,joy1
   ld  c,JOY_0
   jr  readjoy
-joy_1:
+joy1:
   ld  c,JOY_1
 readjoy:
   in  a,(c)

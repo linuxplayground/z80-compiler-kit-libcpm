@@ -40,8 +40,8 @@ void tms_flush_sprites() {
   uint8_t i;
   tms_w_addr(tms_sp_attr_tbl);
   for (i = 0; i < 32; ++i) {
-    tms_put(sprites[i].y);
-    tms_put(sprites[i].x);
+    tms_put(sprites[i].y & 0xFF);
+    tms_put(sprites[i].x & 0xFF);
     tms_put(sprites[i].pattern);
     tms_put(sprites[i].color);
     if (sprites[i].y == 0xD0)
