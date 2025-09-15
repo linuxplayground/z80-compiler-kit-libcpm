@@ -110,7 +110,7 @@ _tms_get:
 _tms_wait:
   in    a,(_IO_JOY0)   ; read the /INT status via bodge wire 
   and   0x02           ; check U6, pin 4 (D1)
-  jp    nz,_tms_wait
+  jr    nz,_tms_wait
   in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
   ld    (_tms_status),a
   ret
@@ -163,6 +163,22 @@ tms_write_fast:
   inc   d
 tms_wrfastlp:
   outi
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
