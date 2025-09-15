@@ -12,15 +12,15 @@
 
 void print_joy(uint8_t j)
 {
-  if (j & JOY_MAP_LEFT)
+  if (j & JOY_MAP_LEFT == JOY_MAP_LEFT)
     puts("LEFT\n");
-  else if (j & JOY_MAP_RIGHT)
+  else if (j & JOY_MAP_RIGHT == JOY_MAP_RIGHT)
     puts("RIGHT\n");
-  else if (j & JOY_MAP_UP)
+  else if (j & JOY_MAP_UP == JOY_MAP_UP)
     puts("UP\n");
-  else if (j & JOY_MAP_DOWN)
+  else if (j & JOY_MAP_DOWN == JOY_MAP_DOWN)
     puts("DOWN\n");
-  else if (j & JOY_MAP_BUTTON)
+  else if (j & JOY_MAP_BUTTON == JOY_MAP_BUTTON)
     puts("BUTTON\n");
 /*
   else if (j & (JOY_MAP_LEFT|JOY_MAP_UP))
@@ -39,14 +39,28 @@ void print_joy(uint8_t j)
 void main()
 {
   uint8_t j0, j1;
+  uint8_t j0p, j1p;
+
+  j0p = 255;
+  j1p = 255;
 
   while (cpm_rawio() != 0x1b)
   {
     j0 = joy(0);
     j1 = joy(1);
-    puts("Joy 0: ");
-    print_joy(j0);
-    puts("Joy 1: ");
-    print_joy(j1);
+    if (j0 != j0p)
+    {
+      puts("Joy 0: ");
+      print_joy(j0);
+      puts("\r\n");
+      j0p = j0;
+    }
+    if (j1 != j1p)
+    {
+      puts("Joy 1: ");
+      print_joy(j1);
+      j1p = j1;
+      puts("\r\n");
+    }
   }
 }

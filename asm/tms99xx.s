@@ -146,38 +146,40 @@ _tms_mcflush:
   ; FALL THROUGH
 
 tms_write_fast:
-  ld    a,e
-  out   (_IO_TMSREG),a
-  ld    a,d
-  or    0x40
-  out   (_IO_TMSREG),a
+ ld    a,e
+ out   (_IO_TMSREG),a
+ ld    a,d
+ or    0x40
+ out   (_IO_TMSREG),a
 
-  ld    d,b
-  ld    e,c
-  ld    c,_IO_TMSRAM
+ ld    d,b
+ ld    e,c
+ ld    c,_IO_TMSRAM
 ; goldilocks
-  ld    b,e
-  inc   e
-  dec   e
-  jr    z,tms_wrfastlp
-  inc   d
+ ld    b,e
+ inc   e
+ dec   e
+ jr    z,tms_wrfastlp
+ inc   d
 tms_wrfastlp:
-  outi
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  nop
-  jp    nz,tms_wrfastlp
-  dec   d
-  jp    nz,tms_wrfastlp
-  ret
+ outi
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ nop
+ jp    nz,tms_wrfastlp
+ dec   d
+ jp    nz,tms_wrfastlp
+ ret
+
 
