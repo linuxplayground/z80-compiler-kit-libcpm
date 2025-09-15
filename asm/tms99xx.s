@@ -176,9 +176,6 @@ tms_wrfastlp:
   nop
   nop
   nop
-  nop
-  nop
-  nop
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
