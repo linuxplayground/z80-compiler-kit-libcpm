@@ -38,37 +38,42 @@ char ball[16 * 4] = {0x07, 0x1F, 0x3E, 0x7C, 0x7F, 0xFF, 0xFF, 0xFF,
 char txt[64];
 size_t i;
 char c;
+uint8_t mag = 1;
 bool running;
 
 void flush() {
   itoa(sprites[0].x & 0xFF, txt, 4, 10);
-  tms_puts_xy(14, 7, "    ");
-  tms_puts_xy(14, 7, txt);
+  tms_puts_xy(13, 7, "    ");
+  tms_puts_xy(13, 7, txt);
   itoa(sprites[0].y & 0xFF, txt, 4, 10);
-  tms_puts_xy(14, 8, "    ");
-  tms_puts_xy(14, 8, txt);
-  tms_puts_xy(14, 9, "    ");
-  tms_puts_xy(14, 9, (sprites[0].color & 0x80) ? "ON" : "OFF");
+  tms_puts_xy(13, 8, "    ");
+  tms_puts_xy(13, 8, txt);
+  tms_puts_xy(13, 9, "    ");
+  tms_puts_xy(13, 9, (sprites[0].color & 0x80) ? "ON" : "OFF");
+  tms_puts_xy(13, 10, "    ");
+  tms_puts_xy(13, 10, (mag) ? "ON" : "OFF");
   tms_wait();
   tms_g1flush(tms_buf);
   tms_flush_sprites();
 }
 
 void g1() {
-  tms_init_g1(GRAY, DARK_YELLOW, true, false);
+  tms_init_g1(GRAY, DARK_YELLOW, true, mag);
   tms_load_pat(patterns, 0x400);
   tms_load_col(colors, 0x20);
   tms_load_spr(ball, 32);
 
   tms_fill_buf(' ');
 
-  tms_puts_xy(10, 14, "WASD : move sprite");
-  tms_puts_xy(10, 15, "C    : toggle ECB");
-  tms_puts_xy(10, 16, "ESC  : quit");
+  tms_puts_xy(9, 14, "WASD : move sprite");
+  tms_puts_xy(9, 15, "C    : toggle ECB");
+  tms_puts_xy(9, 16, "L    : toggle Magnified");
+  tms_puts_xy(9, 17, "ESC  : quit");
 
-  tms_puts_xy(10, 7, "X = ");
-  tms_puts_xy(10, 8, "y = ");
-  tms_puts_xy(10, 9, "ECB ");
+  tms_puts_xy(9, 7,  "X = ");
+  tms_puts_xy(9, 8,  "y = ");
+  tms_puts_xy(9, 9,  "ECB ");
+  tms_puts_xy(9, 10, "MAG ");
 
 
   sprites[0].y = 32; // set up the ball sprite in the middle of the screen
@@ -103,6 +108,9 @@ void g1() {
       case 'c':
         sprites[0].color ^= 0x80;
         break;
+      case 'l':
+        mag = !mag;
+        tms_set_reg(1, 0xE2 | mag);
       }
       flush();
     }
