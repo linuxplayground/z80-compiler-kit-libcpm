@@ -23,38 +23,19 @@
 *****************************************************************************
 */
 
-#ifndef _STRING_H
-#define _STRING_H
+#ifndef _STDIO_H
+#define _STDIO_H
 
 #include <core.h>
 #include <stdbool.h>
 #include <stdint.h>
 
-/* Convert all lowercase letters to upper case.  Other characters are unchanged
+/* This printf implimentation is tiny.  It only supports 3 format specifiers at
+ * this time.
+ * - %s for string literals
+ * - %d for unsigned ints decimal (16bit)
+ * - %x for unsigned ints hexadecimal (16bit)
  */
-char toupper(char c);
+int printf(const char *format, ...);
 
-/* These externs are all provided by the Fuzix-Compiler-Kit but for some reason
- * a header is not provided for them.  So one is provided here.
- */
-
-extern void *memcpy(void *dst, void *src, size_t n);
-extern void *memset(void *dest, uint8_t c, size_t n);
-extern int8_t memcmp(void *s1, void *s2, size_t n);
-
-extern int8_t strcmp(const char *s1, const char *s2);
-extern int8_t strncmp(const char *s1, const char *s2, size_t n);
-
-extern char *strchr(const char *str, int8_t c);
-extern char *strrchr(const char *s, int c);
-extern char *strcpy(char *dst, const char *src);
-
-extern size_t strlcat(char *dst, const char *src, size_t size);
-
-extern size_t strlen(const char *s);
-
-char *strtok(char *s, const char *delim);
-size_t strspn(const char *s, const char *accept);
-char *strpbrk(const char *str, const char *set);
-
-#endif //_STRING_H
+#endif //_STDIO_H

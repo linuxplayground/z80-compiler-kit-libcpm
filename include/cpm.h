@@ -250,6 +250,6 @@ uint8_t cpm_f_writezf(FCB *fcb);
 /* Returns count of arguments parsed and fills the arguments into the argv
  * array
  */
-uint8_t parse_args(char **argv);
+uint8_t cpm_parse_args(char **argv);
 
 #endif //_CPM_H

@@ -27,6 +27,7 @@
 #include "patterns.h"
 #include <cpm.h>
 #include <string.h>
+#include <stdlib.h>
 #include <tms.h>
 //
 // 16x16 ball sprite

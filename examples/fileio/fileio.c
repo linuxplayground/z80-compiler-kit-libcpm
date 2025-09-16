@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <malloc.h>
 #include <string.h>
+#include <stdlib.h>
 
 /* Write some content to a file.
  * Read it back again.

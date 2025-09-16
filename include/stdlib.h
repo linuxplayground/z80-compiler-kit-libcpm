@@ -23,17 +23,24 @@
 *****************************************************************************
 */
 
-#include <string.h>
-#include <malloc.h>
-#include <stddef.h>
+#ifndef _STDLIB_H
+#define _STDLIB_H
 
-bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base) {
-  char *buf = malloc(128);
-  if (buf == NULL)
-    return false;
-  strcpy(buf, k);
-  itoa(v, buf + strlen(k), l, base);
-  puts(buf);
-  free(buf);
-  return true;
-}
+#include <core.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+/* Print a regular C string using direct IO rather than via CPM
+ * For normal CPM console write, use the writestr(char *c) function.
+ */
+void puts(char *s);
+
+/* Convert an integer to an ascii representation. */
+int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base);
+
+// Exit with a code.  Prints code if non-zero
+extern void exit(uint8_t code);
+
+extern int abs(int j);
+
+#endif //_STDLIB_H

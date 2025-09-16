@@ -2,6 +2,7 @@
 #include <cpm.h>
 #include <string.h>
 #include <tms.h>
+#include <stdlib.h>
 
 /* - fill the screen with characters every 8th frame
 *  - move a sprite around the screen and have it bounce off the walls
