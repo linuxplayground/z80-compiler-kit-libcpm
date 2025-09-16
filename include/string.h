@@ -60,6 +60,11 @@ extern char *strcpy(char *dst, const char *src);
 extern size_t strlcat(char *dst, const char *src, size_t size);
 
 extern size_t strlen(const char *s);
+
+char *strtok(char *s, const char *delim);
+size_t strspn(const char *s, const char *accept);
+char *strpbrk(const char *str, const char *set);
+
 #define print_kvd(s, v) print_kv(s, v, 8, 10)
 #define print_kvh(s, v) print_kv(s, v, 5, 16)
 bool print_kv(const char *k, size_t v, uint8_t l, uint8_t base);
