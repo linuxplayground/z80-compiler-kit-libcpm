@@ -51,7 +51,7 @@ int printf(const char *format, ...)
 {
   int len = 0;
   va_list arg_list;
-  size_t i, j;
+  int i, j;
   size_t val;
   char c;
   char *str;
