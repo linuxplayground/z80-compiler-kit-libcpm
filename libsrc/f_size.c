@@ -25,7 +25,7 @@
 
 #include <cpm.h>
 #include <fcntl.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 size_t f_size(int8_t fd) {

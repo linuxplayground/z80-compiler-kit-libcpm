@@ -25,7 +25,7 @@
 
 #include <cpm.h>
 #include <fcntl.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 uint8_t get_free_idx() {

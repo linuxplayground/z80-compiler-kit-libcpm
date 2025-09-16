@@ -28,7 +28,7 @@
 #include <core.h>
 #include <tms.h>
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 
 void tms_init_text(uint8_t fg, uint8_t bg)

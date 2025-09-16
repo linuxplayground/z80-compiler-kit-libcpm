@@ -35,7 +35,7 @@ the basics.  These are the functions available:
 
 ### String and Memory
 
-- [x] malloc and free with supporting sbrk assembly routine [malloc.h](./include/malloc.h)
+- [x] malloc and free with supporting sbrk assembly routine [stdlib.h](./include/stdlib.h)
 - [x] String functions provided by the Fuzix Compiler Kit
 [stirng.h](./include/string.h)
     - [x] strchr strcpy strlcpy strncmp strcmp strlcat strlen strrchr

@@ -26,7 +26,7 @@
 
 #include <tms.h>
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 // Initialise the name table with unique values over each band.
 // https://github.com/michalin/TMS9918_Arduino

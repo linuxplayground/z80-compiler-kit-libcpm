@@ -29,7 +29,6 @@
 #include <stdarg.h>
 #include <cpm.h>
 #include <stddef.h>
-#include <malloc.h>
 
 /* -1 returned means erro of some sort */
 

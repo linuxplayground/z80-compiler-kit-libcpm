@@ -28,7 +28,7 @@
 #include <core.h>
 #include <tms.h>
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 
 void tms_init_g1(uint8_t fg, uint8_t bg, bool largesp, bool mag)
