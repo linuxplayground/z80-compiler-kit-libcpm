@@ -32,7 +32,7 @@ char *cmd_line = (char*)CMDLINE;
 
 static char _cmdcopy[128];
 
-uint8_t cpm_parse_args(char **argv)
+uint8_t cpm_parse_args(char **argv, uint8_t max_args)
 {
   char *tok;
   uint8_t count = 0;
@@ -45,9 +45,10 @@ uint8_t cpm_parse_args(char **argv)
   tok = strtok(&_cmdcopy[1], " "); // tokenize the copy.
   for (;;)
   {
-    if (tok == NULL) break;
     argv[count++] = tok;
-    tok = strtok(NULL, " ");
+    if (tok == NULL) break;
+    if (max_args --) tok = strtok(NULL, " ");
+    else break;
   }
   return count;
 }

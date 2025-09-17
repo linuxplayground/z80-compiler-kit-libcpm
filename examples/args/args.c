@@ -3,20 +3,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define MAX_ARGS 16
 void main()
 {
-  char *argv[16];
+  char *argv[MAX_ARGS];
   char c;
   size_t i;
-  uint8_t argc = cpm_parse_args(argv);
+  uint8_t argc = cpm_parse_args(argv, MAX_ARGS);
 
-  for (i=0; i<argc; ++i)
+  for (i=0; i<argc-1; i++)
   {
     puts("\r\n");
     puts(argv[i]);
   }
   puts("\r\n");
 
+  printf("ARGC = %d\n", argc);
+
+  printf("ARGV[ARGC] = %d\n", (uintptr_t)argv[argc]);
   puts("\r\npress a key\r\n");
   for (;;)
   {

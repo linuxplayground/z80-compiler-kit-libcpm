@@ -248,8 +248,10 @@ uint8_t cpm_f_writerand(FCB *fcb);
 uint8_t cpm_f_writezf(FCB *fcb);
 
 /* Returns count of arguments parsed and fills the arguments into the argv
- * array
+ * array.  Max args is the maximum number of tokens to return.  This should
+ * probably match the size of the argv array you declare before calling this
+ * function.
  */
-uint8_t cpm_parse_args(char **argv);
+uint8_t cpm_parse_args(char **argv, uint8_t max_args);
 
 #endif //_CPM_H

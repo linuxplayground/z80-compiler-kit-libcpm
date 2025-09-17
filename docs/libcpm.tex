@@ -194,6 +194,13 @@ call the \texttt{cpm\_rawio()} function which returns the ascii char or 0.
 Unlike \texttt{cpm\_conin()}, this function does not emit the typed character to
 the terminal.
 
+The standard argc, **argv approach for handling command line arguments is
+currently managed by a seprate function called \texttt{cpm\_parse\_args(char
+**argv, uint8\_t count)}  This will populate an array of pointers with pointers
+to space sperated tokens from the CPM commandline buffer (0x80).  In fact the
+function makes a copy of this buffer first in case CPM needs it for something
+later on.
+
 You can find an example of how to use the fileio functions in the "test"
 folder.  The "fcntl.h" header file contains lots of additional information.
 
