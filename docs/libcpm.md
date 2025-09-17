@@ -150,15 +150,35 @@ There is also (in leu of any kind of `printf` function, to additional
 functions for printing text. Remembering, of course, that CP/M has it's
 own BDOS calls for writing text to the terminal.
 
-The additional functions are:
+## stdlib
+
+There are two parts to the malloc / free implementation in this library.
+The first is the implementation of the \"sbrk()\" system call and the
+second is the malloc and free functions themselves.
+
+The sbrk() function was copied and adapted from the HiTech C compiler
+project.
+
+The malloc and free functions are transcribed directly from \"The C
+Programming Language - Second Edition\" By Biran W. Kernignhan and
+Dennis M. Ritchie.
+
+There are is no defragmentation or garbage collection. Malloc doesn't
+usually make all that much sense in embedded environments.
 
 ::: description
+From The C Programming Language Book
+
+From The C Programming Language Book
+
 Print a zero terminated string constant to the screen. No formatting.
+:::
 
-Prints a string constant followed by a HEX representation of a a number.
+## stdio
 
-Prints a string constant followed by a decimal representation of a
-number.
+::: description
+Simple implimentation of `printf` with support for the %c, %s, %d and %x
+format specifiers only.
 :::
 
 ## cp/m
@@ -174,22 +194,6 @@ to the terminal.
 You can find an example of how to use the fileio functions in the
 \"test\" folder. The \"fcntl.h\" header file contains lots of additional
 information.
-
-## malloc, free
-
-There are two parts to the malloc / free implementation in this library.
-The first is the implementation of the \"sbrk()\" system call and the
-second is the malloc and free functions themselves.
-
-The sbrk() function was copied and adapted from the HiTech C compiler
-project.
-
-The malloc and free functions are transcribed directly from \"The C
-Programming Language - Second Edition\" By Biran W. Kernignhan and
-Dennis M. Ritchie.
-
-There are is no defragmentation or garbage collection. Malloc doesn't
-usually make all that much sense in embedded environments.
 
 # Graphics Programming {#graphicsprogramming}
 

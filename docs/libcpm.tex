@@ -1,7 +1,7 @@
 % vim: tw=80 cc=80
 \documentclass[10pt,a4paper,hidelinks]{article}
 \input{preamble.tex}
-\def\lib{Z80-Retro!-libcpm }
+\def\lib{libcpm }
 
 \title{\lib}
 \author{David Latham}
@@ -21,6 +21,12 @@ be used in your own applications.
 You should read the comments in the header files.  They are updated during
 development and will be the most accurate.
 
+\subsection{About the name}
+
+Naming this is hard.  I know this is a stale meme, but it's true.  I could not
+come up with a meaningful name for this library that would indicate that it's
+for the Z80-Retro! computer \emph{AND} it's for CP/M.
+
 \subsection{What Is \lib?}
 
 \lib is a C library that you can link to in your applications for
@@ -28,7 +34,7 @@ use with the
 \href{https://github.com/etchedpixels/fuzix-compiler-kit.git}{FUZIX-Compiler-Kit}.\footnote{https://github.com/etchedpixels/fuzix-compiler-kit.git}
 The library is specifically targeted at the
 \href{https://github.com/z80-retro}{Z80-Retro!}\footnote{https://github.com/z80-retro} Single Board Computer by John
-Winans.
+Winans and the resident CP/M 2.2 operating sytem.
 
 Some standard libraries are implemented where they can be easily backed by the
 CP/M 2.2 BDOS function calls.  Additionally the library includes functions for
@@ -37,6 +43,7 @@ board designed for the Z80-Retro!.
 
 For instructions on how to install the compiler and this library, see the
 \url{./BUILD.md} documentation.
+% TODO: Include the build documentation as an appendix to this guide.
 
 \subsection{Usage}
 
