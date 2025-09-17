@@ -25,34 +25,40 @@
 
 #include "string.h"
 #include <stdint.h>
+#include <stdlib.h>
 
-static void my_strrev(char *str) {
-  uint16_t len = strlen(str);
-  uint16_t i, j;
-  for (i = 0, j = len - 1; i < j; i++, j--) {
-    uint8_t a = str[i];
-    str[i] = str[j];
-    str[j] = a;
-  }
+static char buf[8];
+
+char *_uitoa(uint16_t i, uint8_t radix) {
+  char *p = buf + sizeof(buf);
+  int c;
+  uint8_t d;
+
+  *--p = '\0';
+  do {
+    d = i % radix;
+    if (d < 0xA)
+      *--p = '0' + d;
+    else
+      *--p = 'A' + d - 0xA;
+    i /= radix;
+  } while (i);
+  return p;
 }
 
-int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base)
-{
-  uint16_t sum = val;
-  uint8_t i = 0;
-  uint8_t digit;
+void uitoa(uint16_t val, char *str) {
+  strcpy(str, _uitoa(val, 10));
+}
 
-  if (len == 0)
-    return -1;
-  do {
-    digit = sum % base;
-    if (digit < 0xA)
-      str[i++] = '0' + digit;
-    else
-      str[i++] = 'A' + digit - 0xA;
-    sum /= base;
-  } while (sum && (i < (len-1)));
-  str[i] = '\0';
-  my_strrev(str);
-  return 0;
+// We don't know if the string passed to us is long enough, so just copy ours anyway.
+void itoa(int16_t val, char *str, uint8_t radix) {
+  char *p;
+  uint8_t flg = 0;
+  if (val < 0 && radix == 10) {
+    flg++;
+    val = -val;
+  }
+  p = _uitoa(val, radix);
+  if (p && flg) *--p = '-';
+  strcpy(str, p);
 }

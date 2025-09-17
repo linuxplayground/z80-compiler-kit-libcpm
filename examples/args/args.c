@@ -28,4 +28,9 @@ void main()
   printf("The number of chars written was: %d\n", i);
   printf("You are %d years old.\n", 50);
   printf("Your rom starts at 0x%x.\n", 0xD400);
+  printf("Zero looks like 0x%x.\n", 0);
+  printf("200-350 = %d.\n", 200-350);
+  printf("signed abs(-150) %d.\n", abs(-150));
+  printf("signed MAX_INT %d.\n", 65535);
+  printf("unsigned MAX_INT %u.\n", 65535);
 }

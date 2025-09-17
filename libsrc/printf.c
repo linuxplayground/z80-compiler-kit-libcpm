@@ -32,12 +32,15 @@
 
 /* -1 returned means erro of some sort */
 
-int format_integer(size_t val, char* b, uint8_t len, uint8_t base)
+int format_integer(int16_t val, char* b, uint8_t base, uint8_t s)
 {
   uint8_t l;
   uint8_t j;
   l = 0;
-  itoa(val, b, len, base);
+  if (s)
+    itoa(val, b, base);
+  else
+    uitoa(val, b);
   for (j = 0; b[j] != '\0'; j++)
   {
     cpm_conout(b[j]);
@@ -83,20 +86,31 @@ int printf(const char *format, ...)
           len ++;
         }
       }
-      // unsigned 16 bit decimal
+      // signed 16 bit decimal
       if (format[i] == 'd')
       {
         val = va_arg(arg_list, size_t);
-        j = format_integer(val, buf, 7, 10);
+        j = format_integer(val, buf, 10, 1);
         if (j == -1)
           return -1;
         len += j;
       }
+
+      // unsigned 16 bit decimal
+      if (format[i] == 'u')
+      {
+        val = va_arg(arg_list, size_t);
+        j = format_integer(val, buf, 10, 0);
+        if (j == -1)
+          return -1;
+        len += j;
+      }
+
       // unsigned 16 bit hexadecimal
       if (format[i] == 'x')
       {
         val = va_arg(arg_list, size_t);
-        j = format_integer(val, buf, 5, 16);
+        j = format_integer(val, buf, 16, 1);
         if (j == -1)
           return -1;
         len += j;

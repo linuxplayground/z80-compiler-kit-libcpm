@@ -43,10 +43,10 @@ uint8_t mag = 1;
 bool running;
 
 void flush() {
-  itoa(sprites[0].x & 0xFF, txt, 4, 10);
+  itoa(sprites[0].x & 0xFF, txt, 10);
   tms_puts_xy(13, 7, "    ");
   tms_puts_xy(13, 7, txt);
-  itoa(sprites[0].y & 0xFF, txt, 4, 10);
+  itoa(sprites[0].y & 0xFF, txt, 10);
   tms_puts_xy(13, 8, "    ");
   tms_puts_xy(13, 8, txt);
   tms_puts_xy(13, 9, "    ");
