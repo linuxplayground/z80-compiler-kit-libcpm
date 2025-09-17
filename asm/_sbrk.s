@@ -1,4 +1,4 @@
-; vim: set ft=z80
+; vim: set ft=z80:
 ;
 ; This code is copied and adapted from the HIGH-TECH-C Compiler for Z80
 ; https://github.com/agn453/HI-TECH-Z80-C/blob/master/gen/SBRK.AS
@@ -7,18 +7,17 @@
 ; any use, private or commercial, strictly as-is.  No warranty or product
 ; support is offered or implied.
 ;
-  .export _sbrk
-  .export _brk
+  .export __sbrk
+  .export __brk
   .export memtop
-  .export _getsp
   .code
 
-_brk:
+__brk:
   ld    (memtop),hl
   ld    hl,0
   ret
 
-_sbrk:
+__sbrk:
   push  bc            ; preserve BC
   ex    de,hl         ; move argument into DE
 
@@ -48,10 +47,5 @@ l3:
   pop   hl            ; return original memtop
   pop   bc            ; restore preserved BC
   ret                 ; return
-
-_getsp:
-  ld  hl,0
-  add hl,sp
-  ret
 
 memtop: .ds 2

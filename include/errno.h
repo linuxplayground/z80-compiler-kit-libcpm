@@ -1,4 +1,3 @@
-// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -24,38 +23,18 @@
 *****************************************************************************
 */
 
-#include <stdbool.h>
-#include <tms.h>
-#include <string.h>
-#include <stdlib.h>
+#ifndef _H_ERRNO
+#define _H_ERRNO
+#include <stdint.h>
 
+enum F_ERRNO {
+  EOK,    // used to indicate that stuff worked.
+  EBADF,  // The provided file descriptor is not a valid open file descriptor.
+  EINVAL, // An invalid argument was provided to fcntl()
+  EFAULT, // flock structure that a bad address was provided as an argument;
+  EIO,    // general IO error used when CPM fails to read or write.
+};
 
-void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag)
-{
-  uint8_t sprite_flags = 0;
-  sprite_flags |= largesp << 1;
-  sprite_flags |= mag << 0;
+extern uint8_t errno;
 
-  tms_name_tbl = 0x3800;
-  tms_n_tbl_len = 0x300;
-  tms_color_tbl = 0x2000;
-  tms_c_tbl_len = 0x1800;
-  tms_patt_tbl = 0x0;
-  tms_sp_attr_tbl = 0x3B00;
-  tms_sp_patt_tbl = 0x1800;
-
-  tms_mode = MODE_G2;
-
-  tms_set_reg(0, 0x02);
-  tms_set_reg(1, 0xE0|sprite_flags); //16K, enable display, enable int + sprite settings
-  tms_set_reg(2, 0x0E);
-  tms_set_reg(3, 0xFF);
-  tms_set_reg(4, 0x03);
-  tms_set_reg(5, 0x76);
-  tms_set_reg(6, 0x03);
-  tms_set_reg(7, bg & 0xF);
-  tms_w_addr(tms_sp_attr_tbl);
-  tms_put(0xD0);
-  tms_buf = malloc(0x300);
-  memset(tms_buf, 0, 0x300);
-}
+#endif //_H_ERRNO

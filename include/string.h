@@ -26,7 +26,7 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include <core.h>
+#include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
 

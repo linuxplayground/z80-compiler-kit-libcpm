@@ -25,7 +25,7 @@
 */
 
 #include <stdbool.h>
-#include <core.h>
+#include <stddef.h>
 #include <tms.h>
 #include <stddef.h>
 #include <string.h>

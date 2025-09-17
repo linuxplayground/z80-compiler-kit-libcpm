@@ -26,7 +26,7 @@
 #ifndef _CPM_H
 #define _CPM_H
 
-#include <core.h>
+#include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
 

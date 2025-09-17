@@ -28,7 +28,7 @@
 #define _TMS_H
 
 #include <stdint.h>
-#include <core.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 #define TMS_COLLISION_BIT 1 << 5

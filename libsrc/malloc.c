@@ -26,8 +26,8 @@
 *****************************************************************************
 */
 
-#include "core.h"
 #include <stddef.h>
+#include <stdlib.h>
 
 typedef long Align; /* for alignment to long boundary */
 
@@ -73,7 +73,7 @@ static Header *morecore(unsigned nu) {
 
   if (nu < NALLOC)
     nu = NALLOC;
-  cp = sbrk(nu * sizeof(Header));
+  cp = _sbrk(nu * sizeof(Header));
   if (cp == (char *)-1) /* no space at all */
     return NULL;
   up = (Header *)cp;
@@ -83,7 +83,7 @@ static Header *morecore(unsigned nu) {
 }
 
 /* malloc: general purpose storage allocator */
-void *malloc(unsigned nbytes) {
+void *malloc(size_t nbytes) {
   Header *p, *prevp;
   unsigned nunits;
 

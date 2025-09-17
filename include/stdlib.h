@@ -26,32 +26,34 @@
 #ifndef _STDLIB_H
 #define _STDLIB_H
 
-#include <core.h>
+#include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
 
-/* Print a regular C string using direct IO rather than via CPM
- * For normal CPM console write, use the writestr(char *c) function.
- */
-void puts(char *s);
+/* Malloc and Free are transcribed from "The C Programming Language - Second
+ * Edition" by Brian W. Kernighan and Dennis M. Ritchie */
+extern int8_t _brk(void *addr);
+extern void *_sbrk(uintptr_t incr);
+
+/* return the absolute value of provided int */
+extern int abs(int j);
+
+/* Exit with a code.  Prints code if non-zero */
+extern void exit(uint8_t code);
+
+/* Free the memory pointed to by p */
+void free(void *p);
 
 /* Convert an integer to an ascii representation. */
 int8_t itoa(uint16_t val, char *str, uint8_t len, uint8_t base);
-
-// Exit with a code.  Prints code if non-zero
-extern void exit(uint8_t code);
-
-extern int abs(int j);
-
-/* Malloc and Free are transcribed from "The C Programming Language - Second
- * Edition" by Brian W. Kernighan and Dennis M. Ritchie */
 
 /* Allocate size_t bytes on the heap and return a pointer to the allocated
  * memory. If the allocation would clash with the stack, the function returns
  * NULL */
 void *malloc(size_t size);
 
-/* Free the memory pointed to by p */
-void free(void *p);
+/* Print a zero terminated C string using CPM conout
+ */
+void puts(char *s);
 
 #endif //_STDLIB_H

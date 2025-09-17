@@ -23,17 +23,23 @@
 *****************************************************************************
 */
 
-#ifndef _H_CORE
-#define _H_CORE
+#ifndef _H_UNISTD
+#define _H_UNISTD
 
 #include <stdint.h>
+#include <fcntl.h>
+#include <cpm.h>
 
-typedef uint16_t size_t;
+/* write to open file */
+int write(int8_t fd, void *buf, size_t count);
 
-#define TPA (*(uint16_t*)0x0006)
+/* read from open file */
+int read(int8_t fd, void *buf, size_t count);
 
-extern int8_t brk(void *addr);
-extern void *sbrk(uintptr_t incr);
+/* Close a file, free it from the array of open files */
+int8_t close(int8_t fd);
 
+/* Get the file size in number of 128 byte blocks */
+size_t f_size(int8_t fd);
 
-#endif //_H_CORE
+#endif //_H_UNISTD

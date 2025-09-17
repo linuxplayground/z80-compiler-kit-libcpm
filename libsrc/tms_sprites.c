@@ -28,7 +28,7 @@
  *  In which case, this code won't be linked into the final executable.
  */
 
-#include <core.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
