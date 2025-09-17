@@ -50,6 +50,10 @@ clean:
 	find . -name "*.o" -exec rm -fv {} \;
 	rm -fv libcpm.a
 	make -C examples clean
+	make -C docs clean
+
+docs:
+	make -B -C docs
 
 world: clean all
 	make -C examples all

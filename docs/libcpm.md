@@ -2,7 +2,7 @@
 author:
 - David Latham
 date: September, 2025
-title: Z80-Retro!-libcpm
+title: libcpm
 ---
 
 # Introduction
@@ -14,14 +14,20 @@ and how they can be used in your own applications.
 You should read the comments in the header files. They are updated
 during development and will be the most accurate.
 
-## What Is Z80-Retro!-libcpm ?
+## About the name
 
-Z80-Retro!-libcpm is a C library that you can link to in your
-applications for use with the
+Naming this is hard. I know this is a stale meme, but it's true. I could
+not come up with a meaningful name for this library that would indicate
+that it's for the Z80-Retro! computer *AND* it's for CP/M.
+
+## What Is libcpm ?
+
+libcpm is a C library that you can link to in your applications for use
+with the
 [FUZIX-Compiler-Kit](https://github.com/etchedpixels/fuzix-compiler-kit.git).[^1]
 The library is specifically targeted at the
 [Z80-Retro!](https://github.com/z80-retro)[^2] Single Board Computer by
-John Winans.
+John Winans and the resident CP/M 2.2 operating sytem.
 
 Some standard libraries are implemented where they can be easily backed
 by the CP/M 2.2 BDOS function calls. Additionally the library includes
@@ -212,9 +218,8 @@ the vertical blanking interval.
 ::: center
 :::
 
-There are a range of TMS99xx functions in the Z80-Retro!-libcpm to
-initialise the VDP in the various display modes and to manage the
-frame-buffer.
+There are a range of TMS99xx functions in the libcpm to initialise the
+VDP in the various display modes and to manage the frame-buffer.
 
 They can be grouped into the following categories:
 
