@@ -11,16 +11,16 @@ void main()
   size_t i;
   uint8_t argc = cpm_parse_args(argv, MAX_ARGS);
 
-  for (i=0; i<argc-1; i++)
+  for (i=0; i<argc; i++)
   {
     puts("\r\n");
     puts(argv[i]);
   }
   puts("\r\n");
 
-  printf("ARGC = %d\n", argc);
+  printf("argc = %d\n", argc);
 
-  printf("ARGV[ARGC] = %d\n", (uintptr_t)argv[argc]);
+  printf("argv[argc] = %s\n", (argv[argc] == 0) ? "NULL" : "NOT NULL"); // dereference a null pointer
   puts("\r\npress a key\r\n");
   for (;;)
   {

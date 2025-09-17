@@ -42,7 +42,7 @@ uint8_t cpm_parse_args(char **argv, uint8_t max_args)
   strcpy(_cmdcopy, &cmd_line[1]);  // make a copy of the commandline
 
 
-  tok = strtok(&_cmdcopy[1], " "); // tokenize the copy.
+  tok = strtok(_cmdcopy, " "); // tokenize the copy.
   for (;;)
   {
     argv[count++] = tok;
@@ -50,5 +50,5 @@ uint8_t cpm_parse_args(char **argv, uint8_t max_args)
     if (max_args --) tok = strtok(NULL, " ");
     else break;
   }
-  return count;
+  return count-1;
 }
