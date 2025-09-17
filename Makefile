@@ -17,7 +17,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
 #    USA
 #
-# https://github.com/linuxplayground/z80-retro-cpmlib.git
+# https://github.com/linuxplayground/z80-retro-libcpm.git
 #
 #****************************************************************************
 
@@ -38,9 +38,9 @@ OBJ=\
 		$(ASMOBJ) \
 		$(COBJ)
 
-all: cpmlib.a
+all: libcpm.a
 
-cpmlib.a: $(OBJ) $(CRT)
+libcpm.a: $(OBJ) $(CRT)
 	$(AR) qc $@ `$(LORDER) $(OBJ) | tsort`
 
 $(CRT): crt0.s
@@ -48,7 +48,7 @@ $(CRT): crt0.s
 
 clean:
 	find . -name "*.o" -exec rm -fv {} \;
-	rm -fv cpmlib.a
+	rm -fv libcpm.a
 	make -C examples clean
 
 world: clean all

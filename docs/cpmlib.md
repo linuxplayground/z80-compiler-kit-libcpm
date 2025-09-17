@@ -2,7 +2,7 @@
 author:
 - David Latham
 date: September, 2025
-title: Z80-Retro!-cpmlib
+title: Z80-Retro!-libcpm
 ---
 
 # Introduction
@@ -14,9 +14,9 @@ and how they can be used in your own applications.
 You should read the comments in the header files. They are updated
 during development and will be the most accurate.
 
-## What Is Z80-Retro!-cpmlib ?
+## What Is Z80-Retro!-libcpm ?
 
-Z80-Retro!-cpmlib is a C library that you can link to in your
+Z80-Retro!-libcpm is a C library that you can link to in your
 applications for use with the
 [FUZIX-Compiler-Kit](https://github.com/etchedpixels/fuzix-compiler-kit.git).[^1]
 The library is specifically targeted at the
@@ -66,7 +66,7 @@ TOP=.
     CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
     LDFLAGS=-b -C0x100
     LIBS=\
-         $(TOP)/../cpmlib.a \
+         $(TOP)/../libcpm.a \
          /opt/fcc/lib/z80/libz80.a \
          /opt/fcc/lib/z80/libc.a
 
@@ -108,7 +108,7 @@ automating that step for us.
 
 The headers are all located in the projects \"include\" directory. You
 just need to `#include` the ones you need and make sure to link to the
-`cpmlib.a` library.
+`libcpm.a` library.
 
 As the code is split out into multiple translation units, your resulting
 binary should include almost no wasted code.
@@ -208,7 +208,7 @@ the vertical blanking interval.
 ::: center
 :::
 
-There are a range of TMS99xx functions in the Z80-Retro!-cpmlib to
+There are a range of TMS99xx functions in the Z80-Retro!-libcpm to
 initialise the VDP in the various display modes and to manage the
 frame-buffer.
 

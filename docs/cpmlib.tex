@@ -1,7 +1,7 @@
 % vim: tw=80 cc=80
 \documentclass[10pt,a4paper,hidelinks]{article}
 \input{preamble.tex}
-\def\lib{Z80-Retro!-cpmlib }
+\def\lib{Z80-Retro!-libcpm }
 
 \title{\lib}
 \author{David Latham}
@@ -72,7 +72,7 @@ first 256 bytes using the \texttt{`dd`} command.
     CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
     LDFLAGS=-b -C0x100
     LIBS=\
-         $(TOP)/../cpmlib.a \
+         $(TOP)/../libcpm.a \
          /opt/fcc/lib/z80/libz80.a \
          /opt/fcc/lib/z80/libc.a
 
@@ -114,7 +114,7 @@ automating that step for us.
 
 The headers are all located in the projects "include" directory.  You just need
 to \texttt{\#include} the ones you need and make sure to link to the
-\texttt{cpmlib.a} library.
+\texttt{libcpm.a} library.
 
 As the code is split out into multiple translation units, your resulting binary
 should include almost no wasted code.

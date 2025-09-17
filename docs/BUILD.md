@@ -37,10 +37,10 @@ sudo apt install libsdl2-dev
 make 2063_sdl2
 ```
 
-## CPMLIB
+## libcpm
 
 Now that the compiler, assembler and linker are installed and we have an
-emulator, it's time to clone and build CPMLIB
+emulator, it's time to clone and build libcpm
 
 In this example, the assumption is a filesystem layout like this.
 
@@ -59,8 +59,8 @@ but this is how I do it.
 ```bash
 sudo apt install cpmtools
 mkdir dev
-git clone https://github.com/linuxplayground/z80retro-cpmlib.git
-cd z80retro-cpmlib
+git clone https://github.com/linuxplayground/z80retro-libcpm.git
+cd z80retro-libcpm
 
 ln -s ${HOME}/tools/EmulatorKit/2063_sdl2
 dd if=/dev/zero of=sdcard.img bs=1024 count=256000
@@ -118,7 +118,7 @@ You can now make the library and the tests.  The tests should be deployed onto
 the CPM filesystem ready for the Emulator
 
 ```bash
-cd dev/cpmlib
+cd dev/libcpm
 
 make world
 ```
@@ -137,10 +137,10 @@ truncate --size=16k boot/firmware.bin
 dd if=filesystem/drive.img of=/dev/loop1p1 bs=512 conv=notrunc,fsync
 ```
 
-Now back to the cpmlib/test and we can run some tests.
+Now back to the libcpm/test and we can run some tests.
 
 ```bash
-cd dev/cpmlib/test
+cd dev/libcpm/test
 ## FOR CONVENIENCE ADD A SYMLINK
 ln -s ${HOME}/dev/2063-z80-cpm/boot/firmware.bin
 ```
@@ -148,9 +148,9 @@ ln -s ${HOME}/dev/2063-z80-cpm/boot/firmware.bin
 ## Running the Emulator
 
 ```bash
-cd dev/cpmlib/test
+cd dev/libcpm/test
 
-## NOTE: NOTE: NOTE: You must update the LOOPDEV variable in the cpmlib/test/Makefile before you start
+## NOTE: NOTE: NOTE: You must update the LOOPDEV variable in the libcpm/test/Makefile before you start
 ## NOTE: NOTE: NOTE: It must match the device you used in the `dd` command to copy the filesystem.img on
 ## NOTE: NOTE: NOTE: to the mounted sdcard image.
 

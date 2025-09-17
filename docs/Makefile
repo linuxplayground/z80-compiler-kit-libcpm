@@ -1,8 +1,8 @@
 .PHONY: all clean
 
 all:
-	latexmk cpmlib.tex
-	pandoc -s cpmlib.tex -o cpmlib.md
+	latexmk libcpm.tex
+	pandoc -s libcpm.tex -o libcpm.md
 
 clean:
 	rm -f *.aux *.fdb_latexmk *.fls *.log *.out *.toc *.gz
