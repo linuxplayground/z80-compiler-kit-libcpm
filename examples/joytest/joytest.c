@@ -1,4 +1,4 @@
-#include <string.h>
+#include <stdlib.h>
 #include <cpm.h>
 #include <joy.h>
 
@@ -12,26 +12,16 @@
 
 void print_joy(uint8_t j)
 {
-  if (j & JOY_MAP_LEFT == JOY_MAP_LEFT)
+  if ((j & JOY_MAP_LEFT) == JOY_MAP_LEFT)
     puts("LEFT\n");
-  else if (j & JOY_MAP_RIGHT == JOY_MAP_RIGHT)
+  else if ((j & JOY_MAP_RIGHT) == JOY_MAP_RIGHT)
     puts("RIGHT\n");
-  else if (j & JOY_MAP_UP == JOY_MAP_UP)
+  else if ((j & JOY_MAP_UP) == JOY_MAP_UP)
     puts("UP\n");
-  else if (j & JOY_MAP_DOWN == JOY_MAP_DOWN)
+  else if ((j & JOY_MAP_DOWN) == JOY_MAP_DOWN)
     puts("DOWN\n");
-  else if (j & JOY_MAP_BUTTON == JOY_MAP_BUTTON)
+  else if ((j & JOY_MAP_BUTTON) == JOY_MAP_BUTTON)
     puts("BUTTON\n");
-/*
-  else if (j & (JOY_MAP_LEFT|JOY_MAP_UP))
-    puts("LEFT UP\n");
-  else if (j & (JOY_MAP_LEFT|JOY_MAP_DOWN))
-    puts("LEFT DOWN\n");
-  else if (j & (JOY_MAP_RIGHT|JOY_MAP_UP))
-    puts("RIGHT UP\n");
-  else if (j & (JOY_MAP_RIGHT|JOY_MAP_DOWN))
-    puts("RIGHT DOWN\n");
-*/
   else
     puts("CENTER\n");
 }
