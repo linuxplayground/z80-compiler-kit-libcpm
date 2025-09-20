@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdio.h>
 #include <cpm.h>
 #include <joy.h>
 
@@ -10,47 +10,24 @@
 #define JOY_MAP_BUTTON    0b00000001
 */
 
-void print_joy(uint8_t j)
-{
-  if ((j & JOY_MAP_LEFT) == JOY_MAP_LEFT)
-    puts("LEFT\n");
-  else if ((j & JOY_MAP_RIGHT) == JOY_MAP_RIGHT)
-    puts("RIGHT\n");
-  else if ((j & JOY_MAP_UP) == JOY_MAP_UP)
-    puts("UP\n");
-  else if ((j & JOY_MAP_DOWN) == JOY_MAP_DOWN)
-    puts("DOWN\n");
-  else if ((j & JOY_MAP_BUTTON) == JOY_MAP_BUTTON)
-    puts("BUTTON\n");
-  else
-    puts("CENTER\n");
-}
-
 void main()
 {
-  uint8_t j0, j1;
-  uint8_t j0p, j1p;
+  uint8_t j0 = 0xFF;
+  uint8_t j1 = 0xFF;
 
-  j0p = 255;
-  j1p = 255;
+  printf("\n\nJOYSTICK TESTER: (ESCAPE TO QUIT)\n\n");
 
   while (cpm_rawio() != 0x1b)
   {
     j0 = joy(0);
-    j1 = joy(1);
-    if (j0 != j0p)
+    if (j0 != j1)
     {
-      puts("Joy 0: ");
-      print_joy(j0);
-      puts("\r\n");
-      j0p = j0;
-    }
-    if (j1 != j1p)
-    {
-      puts("Joy 1: ");
-      print_joy(j1);
-      j1p = j1;
-      puts("\r\n");
+      printf("LEFT  %s - ",  (j0 & JOY_MAP_LEFT) ?   "UP  " :  "DOWN");
+      printf("RIGHT %s - ",  (j0 & JOY_MAP_RIGHT) ?  "UP  " :  "DOWN");
+      printf("UP    %s - ",  (j0 & JOY_MAP_UP) ?     "UP  " :  "DOWN");
+      printf("DOWN  %s - ",  (j0 & JOY_MAP_DOWN) ?   "UP  " :  "DOWN");
+      printf("BTN   %s\n",   (j0 & JOY_MAP_BUTTON) ? "UP  " :  "DOWN");
+      j1 = j0;
     }
   }
 }

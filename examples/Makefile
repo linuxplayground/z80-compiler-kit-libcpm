@@ -3,7 +3,8 @@ SUBDIRS = \
 					malloc \
 					demo \
 					tms \
-					args
+					args \
+					joytest
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)
