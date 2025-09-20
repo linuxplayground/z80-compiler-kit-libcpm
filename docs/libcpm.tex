@@ -1,6 +1,7 @@
 % vim: tw=80 cc=80
 \documentclass[10pt,a4paper,hidelinks]{article}
 \input{preamble.tex}
+\usepackage[toc,title,titletoc,page,header]{appendix}
 \def\lib{libcpm }
 
 \title{\lib}
@@ -146,15 +147,6 @@ linking stage.  The C runtime performs the following actions:
 
 See Graphics Programming on page \pageref{graphicsprogramming} for details.
 
-\subsection{string}
-
-The string library provides basic memory management routines like memset, memcpy
-strlen etc.
-
-There is also (in leu of any kind of \texttt{printf} function, to additional
-functions for printing text.  Remembering, of course, that CP/M has it's own
-BDOS calls for writing text to the terminal.
-
 \subsection{stdlib}
 
 There are two parts to the malloc / free implementation in this library.  The
@@ -185,6 +177,26 @@ make all that much sense in embedded environments.
   \item[printf] Simple implimentation of \texttt{printf} with support for the
     \%c, \%s, \%d and \%x format specifiers only.
 \end{description}
+
+\subsection{joystick}
+
+\begin{description}[font=$\bullet$~\normalfont\scshape\color{red!50!black}]
+  \item[joy(uint8\_t idx)] read the joystick given by idx.  0 = J3, 1 = J4
+\end{description}
+
+Also provided in the \texttt{joy.h} header are the button and axis mappings.
+The bits are aligned with how they are laid out on the 2063 VDP PCB.
+
+\begin{center}
+  \begin{lstlisting}[caption=Joystick Button Mapping]
+    #define JOY_MAP_LEFT      0x04 //0b00000100
+    #define JOY_MAP_RIGHT     0x20 //0b00100000
+    #define JOY_MAP_UP        0x80 //0b10000000
+    #define JOY_MAP_DOWN      0x40 //0b01000000
+    #define JOY_MAP_BUTTON    0x01 //0b00000001
+  \end{lstlisting}
+\end{center}
+\label{lst:joystickmap}
 
 \subsection{cp/m}
 The CP/M header provides C wrappers for almost all the CP/M BDOS function calls.
@@ -263,5 +275,18 @@ They can be grouped into the following categories:
     VDP memory.
 \end{description}
 
+\section{Examples}
 
+There are a few exsamples in the \texttt{Examples} folder in the Git repository.
+Each one is designed to demonstrate specific features of this library.
+
+\newpage
+\begin{appendices}
+\section{Build}
+These are the instructions for getting setup with the compiler-kit so that you
+can build this library and use it in your code.
+
+\section{Skeleton Project}
+Some text
+\end{appendices}
 \end{document}

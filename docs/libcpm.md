@@ -197,17 +197,24 @@ you can call the `cpm_rawio()` function which returns the ascii char or
 0. Unlike `cpm_conin()`, this function does not emit the typed character
 to the terminal.
 
+The standard argc, \*\*argv approach for handling command line arguments
+is currently managed by a seprate function called
+`cpm_parse_args(char **argv, uint8_t count)` This will populate an array
+of pointers with pointers to space sperated tokens from the CPM
+commandline buffer (0x80). In fact the function makes a copy of this
+buffer first in case CPM needs it for something later on.
+
 You can find an example of how to use the fileio functions in the
 \"test\" folder. The \"fcntl.h\" header file contains lots of additional
 information.
 
 # Graphics Programming {#graphicsprogramming}
 
-Figure [\[fig:gameloop\]](#fig:gameloop){reference-type="ref"
-reference="fig:gameloop"} shows the game loop state machine. The game
-state is initialised before entering the loop. The loop itself, consists
-of reading user input, updating the game state and frame-buffer, waiting
-for vsync, rendering the frame-buffer and looping back to user input.
+Figure [1](#fig:gameloop){reference-type="ref" reference="fig:gameloop"}
+shows the game loop state machine. The game state is initialised before
+entering the loop. The loop itself, consists of reading user input,
+updating the game state and frame-buffer, waiting for vsync, rendering
+the frame-buffer and looping back to user input.
 
 The VSYNC signal from the VDP provides a stable 60 ${\\hertz}$ timer
 which is used to normalize game speed on different CPU clock
@@ -215,8 +222,12 @@ frequencies. The standard gameloop waits for the VSYNC signal before
 rendering to the display to leverage the fast write cycle times during
 the vertical blanking interval.
 
-::: center
-:::
+<figure id="fig:gameloop">
+<div class="center">
+
+</div>
+<figcaption>Game Loop</figcaption>
+</figure>
 
 There are a range of TMS99xx functions in the libcpm to initialise the
 VDP in the various display modes and to manage the frame-buffer.
