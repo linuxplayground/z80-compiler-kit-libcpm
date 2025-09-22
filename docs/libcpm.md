@@ -147,15 +147,6 @@ return
 
 See Graphics Programming on page for details.
 
-## string
-
-The string library provides basic memory management routines like
-memset, memcpy strlen etc.
-
-There is also (in leu of any kind of `printf` function, to additional
-functions for printing text. Remembering, of course, that CP/M has it's
-own BDOS calls for writing text to the terminal.
-
 ## stdlib
 
 There are two parts to the malloc / free implementation in this library.
@@ -187,6 +178,27 @@ Simple implimentation of `printf` with support for the %c, %s, %d and %x
 format specifiers only.
 :::
 
+## joystick
+
+::: description
+read the joystick given by idx. 0 = J3, 1 = J4
+:::
+
+Also provided in the `joy.h` header are the button and axis mappings.
+The bits are aligned with how they are laid out on the 2063 VDP PCB.
+
+::: center
+``` {caption="Joystick Button Mapping"}
+#define JOY_MAP_LEFT      0x04 //0b00000100
+    #define JOY_MAP_RIGHT     0x20 //0b00100000
+    #define JOY_MAP_UP        0x80 //0b10000000
+    #define JOY_MAP_DOWN      0x40 //0b01000000
+    #define JOY_MAP_BUTTON    0x01 //0b00000001
+```
+:::
+
+[]{#lst:joystickmap label="lst:joystickmap"}
+
 ## cp/m
 
 The CP/M header provides C wrappers for almost all the CP/M BDOS
@@ -210,11 +222,11 @@ information.
 
 # Graphics Programming {#graphicsprogramming}
 
-Figure [1](#fig:gameloop){reference-type="ref" reference="fig:gameloop"}
-shows the game loop state machine. The game state is initialised before
-entering the loop. The loop itself, consists of reading user input,
-updating the game state and frame-buffer, waiting for vsync, rendering
-the frame-buffer and looping back to user input.
+Figure [\[fig:gameloop\]](#fig:gameloop){reference-type="ref"
+reference="fig:gameloop"} shows the game loop state machine. The game
+state is initialised before entering the loop. The loop itself, consists
+of reading user input, updating the game state and frame-buffer, waiting
+for vsync, rendering the frame-buffer and looping back to user input.
 
 The VSYNC signal from the VDP provides a stable 60 ${\\hertz}$ timer
 which is used to normalize game speed on different CPU clock
@@ -222,12 +234,8 @@ frequencies. The standard gameloop waits for the VSYNC signal before
 rendering to the display to leverage the fast write cycle times during
 the vertical blanking interval.
 
-<figure id="fig:gameloop">
-<div class="center">
-
-</div>
-<figcaption>Game Loop</figcaption>
-</figure>
+::: center
+:::
 
 There are a range of TMS99xx functions in the libcpm to initialise the
 VDP in the various display modes and to manage the frame-buffer.
@@ -246,6 +254,23 @@ Update sprite attributes to move them around or hide them.
 
 Stream the framebuffer into VDP memory and flush the sprites array into
 the Sprite Attribute Table in VDP memory.
+:::
+
+# Examples
+
+There are a few exsamples in the `Examples` folder in the Git
+repository. Each one is designed to demonstrate specific features of
+this library.
+
+::: appendices
+# Build
+
+These are the instructions for getting setup with the compiler-kit so
+that you can build this library and use it in your code.
+
+# Skeleton Project
+
+Some text
 :::
 
 [^1]: https://github.com/etchedpixels/fuzix-compiler-kit.git

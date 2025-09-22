@@ -44,11 +44,8 @@ the basics.  These are the functions available:
     - [x] itoa
     - [x] toupper
     - [x] puts - prints null terminated strings - no formatting
-    - [x] print_kvd print_kvh - prints text followed by integer in decimal (kvd)
-      or hex (kvh)
+    - [x] printf - supports %d, %x, %u and %c formatters.  No support for longs
     - [ ] sprintf
-- [x] Raw SIO routines [sio.h](./include/sio.h)
-    - [x] chin, chout, cstat
 
 ### Graphics
 
@@ -61,7 +58,7 @@ the basics.  These are the functions available:
     - [x] MC plot xy to framebuffer
     - [x] G1 and G2.5 plot xy to framebuffer
     - [ ] G2 plot xy pixel
-    - [ ] Flush sprite attributes
+    - [x] Flush sprite attributes
     - [x] Char at location xy G1 mode, text mode
     - [ ] Char at location xy G2.5 mode
     - [x] String at location xy G1 mode, text mode
@@ -69,6 +66,6 @@ the basics.  These are the functions available:
 
 ### Joystick
 
-- [ ] Joystick [joy.h](./include/joy.h)
-    - [ ] Get Joy Status J0, J1
+- [x] Joystick [joy.h](./include/joy.h)
+    - [x] Get Joy Status J0, J1
 

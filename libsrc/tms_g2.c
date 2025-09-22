@@ -54,8 +54,45 @@ void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_set_reg(5, 0x76);
   tms_set_reg(6, 0x03);
   tms_set_reg(7, bg & 0xF);
-  tms_w_addr(tms_sp_attr_tbl);
-  tms_put(0xD0);
+  // TODO:Support bitmap mode?  The name table must have 3 sets of unique values in it.
   tms_buf = malloc(0x300);
   memset(tms_buf, 0, 0x300);
+  tms_init_sprites();
 }
+
+void tms_init_bitmap_mode()
+{
+  size_t i = 0;
+  // Write 0-255 into the name table 3 times in a row.
+  tms_w_addr(tms_name_tbl);
+  for (i=0; i<256; ++i)
+  {
+    tms_put(i);
+  }
+  tms_w_addr(tms_name_tbl + 256);
+  for (i=0; i<256; ++i)
+  {
+    tms_put(i);
+  }
+  tms_w_addr(tms_name_tbl + 512);
+  for (i=0; i<256; ++i)
+  {
+    tms_put(i);
+  }
+
+  // Fill the pattern table with zeros
+  tms_w_addr(tms_patt_tbl);
+  for (i = 0; i<0x1800; ++i)
+    tms_put(0);
+
+  // Fill the color table with zeros
+  tms_w_addr(tms_color_tbl);
+  for (i = 0; i<0x1800; ++i)
+    tms_put(0);
+}
+
+void tms_plot_g2(uint8_t x, uint8_t y, uint8_t c)
+{
+  ;;
+}
+

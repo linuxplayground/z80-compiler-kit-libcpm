@@ -4,7 +4,8 @@ SUBDIRS = \
 					demo \
 					tms \
 					args \
-					joytest
+					joytest \
+					exit
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)

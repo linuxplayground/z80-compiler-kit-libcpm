@@ -94,6 +94,12 @@ void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag);
 void tms_init_mc(uint8_t fg, uint8_t bg, bool largesp, bool mag);
 void tms_init_text(uint8_t fg, uint8_t bg);
 
+/* Init G2 memory tables for bitmap mode graphics.
+ * Inits the pattern and colour tables to 0
+ * Inits the name table with all unique values in three rows of 0-255
+ */
+void tms_init_bitmap_mode();
+
 /* Set a vdp register */
 extern void tms_set_reg(uint8_t reg, uint8_t val);
 
@@ -116,6 +122,11 @@ extern uint8_t tms_get();
 
 /* Fill the tms buffer with a single character */
 void tms_fill_buf(const char c);
+
+/* plot a single pixel in G2 bitmap mode.  Expects that tms_init_bitmap_mode
+ * has been called to set up the bitmap mode first.
+ */
+void tms_plot_g2(uint8_t x, uint8_t y, uint8_t c);
 
 /* plot a single fat pixel in multi color mode.  Returns true if the pixel at
  * the given location was greater than BLACK */

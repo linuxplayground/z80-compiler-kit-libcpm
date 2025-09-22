@@ -56,6 +56,6 @@ is_digit:
   add   a, '0'            ; convert to 0-9
 print_char:
   ld    l,a
-  call  _chout
+  call  _cpm_conout
   ret
 
