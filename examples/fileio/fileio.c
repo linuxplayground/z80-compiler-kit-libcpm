@@ -52,7 +52,7 @@ void main() {
   // read the whole file
   n = read(new_file, bigbuf2, 1000);
   // write it all to stdout.
-  write(STDOUT, bigbuf2, n);
+  write(stdout, bigbuf2, n);
 
   close(new_file); // Closing the file to free up file handler resources.
   // free ram thats no longer being used.

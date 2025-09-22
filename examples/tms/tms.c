@@ -25,6 +25,7 @@
 */
 
 #include "patterns.h"
+#include <stdio.h>
 #include <cpm.h>
 #include <string.h>
 #include <stdlib.h>
@@ -43,11 +44,10 @@ uint8_t mag = 1;
 bool running;
 
 void flush() {
-  itoa(sprites[0].x & 0xFF, txt, 10);
-  tms_puts_xy(13, 7, "    ");
+  //itoa(sprites[0].x & 0xFF, txt, 10);
+  sprintf(txt, "%d    ", sprites[0].x & 0xFF);
   tms_puts_xy(13, 7, txt);
-  itoa(sprites[0].y & 0xFF, txt, 10);
-  tms_puts_xy(13, 8, "    ");
+  sprintf(txt, "%d    ", sprites[0].y & 0xFF);
   tms_puts_xy(13, 8, txt);
   tms_puts_xy(13, 9, "    ");
   tms_puts_xy(13, 9, (sprites[0].color & 0x80) ? "ON" : "OFF");

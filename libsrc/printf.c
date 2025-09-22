@@ -25,32 +25,33 @@
 *****************************************************************************
 */
 
-#include <stdlib.h>
-#include <stdarg.h>
 #include <cpm.h>
+#include <fcntl.h>
+#include <stdarg.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 /* -1 returned means erro of some sort */
 
-int format_integer(int16_t val, char* b, uint8_t base, uint8_t s)
-{
+static char _buf[16]; // largest number is 15 digits long
+
+int format_integer(char *dst, int16_t val, uint8_t base, uint8_t s) {
   uint8_t l;
   uint8_t j;
   l = 0;
   if (s)
-    itoa(val, b, base);
+    itoa(val, _buf, base);
   else
-    uitoa(val, b);
-  for (j = 0; b[j] != '\0'; j++)
-  {
-    cpm_conout(b[j]);
-    l ++;
+    uitoa(val, _buf);
+
+  for (j = 0; _buf[j] != '\0'; j++) {
+    if (dst == NULL) cpm_conout(_buf[j]);
+    else *dst++ = _buf[j];
+    l++;
   }
   return l;
 }
-
-int printf(const char *format, ...)
-{
+int _printf(char *dst, const char *format, ...) {
   int len = 0;
   va_list arg_list;
   int i, j;
@@ -58,73 +59,77 @@ int printf(const char *format, ...)
   char c;
   char *str;
 
-  char *buf = malloc(16); //largest number is 15 digits long
-  if (buf == NULL)
-    return -1;
-
   va_start(arg_list, format);
 
-  for (i=0; format[i] != '\0'; i++)
-  {
-    if (format[i] == '%')
-    {
+  for (i = 0; format[i] != '\0'; i++) {
+    if (format[i] == '%') {
       i++;
       // char literal
-      if (format[i] == 'c')
-      {
+      if (format[i] == 'c') {
         c = va_arg(arg_list, unsigned char);
-        cpm_conout(c);
-        len ++;
+        if (dst == NULL)
+          cpm_conout(c);
+        else
+          *dst++ = c;
+        len++;
       }
       // string literal
-      if (format[i] == 's')
-      {
+      if (format[i] == 's') {
         str = va_arg(arg_list, char *);
-        for (j = 0; str[j] != '\0'; j++)
-        {
-          cpm_conout(str[j]);
-          len ++;
+        for (j = 0; str[j] != '\0'; j++) {
+          if (dst == NULL)
+            cpm_conout(str[j]);
+          else
+            *dst++ = str[j];
+          len++;
         }
       }
       // signed 16 bit decimal
-      if (format[i] == 'd')
-      {
+      if (format[i] == 'd') {
         val = va_arg(arg_list, size_t);
-        j = format_integer(val, buf, 10, 1);
+        j = format_integer(dst, val, 10, 1);
         if (j == -1)
           return -1;
         len += j;
+        if (dst != NULL) dst += j;
       }
 
       // unsigned 16 bit decimal
-      if (format[i] == 'u')
-      {
+      if (format[i] == 'u') {
         val = va_arg(arg_list, size_t);
-        j = format_integer(val, buf, 10, 0);
+        j = format_integer(dst, val, 10, 0);
         if (j == -1)
           return -1;
         len += j;
+        if (dst != NULL) dst += j;
       }
 
       // unsigned 16 bit hexadecimal
-      if (format[i] == 'x')
-      {
+      if (format[i] == 'x') {
         val = va_arg(arg_list, size_t);
-        j = format_integer(val, buf, 16, 1);
+        j = format_integer(dst, val, 16, 1);
         if (j == -1)
           return -1;
         len += j;
+        if (dst != NULL) dst += j;
       }
       /* other formatters */
-    }
-    else
-    {
-      cpm_conout(format[i]);
-      len ++;
+    } else {
+      if (dst == NULL) cpm_conout(format[i]);
+      else *dst++ = format[i];
+      len++;
     }
   }
   va_end(arg_list);
-  free(buf);
   return len;
+}
+
+int sprintf(char *dst, const char* format, va_list args)
+{
+  return _printf(dst, format, args);
+}
+
+int printf(const char *format, va_list args) {
+  return _printf(NULL, format, args); 
 }
 

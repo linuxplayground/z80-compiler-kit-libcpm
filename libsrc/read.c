@@ -35,12 +35,12 @@ int read(int8_t fd, void *buf, size_t count) {
 
   n = 0;
 
-  if ((fd == STDOUT) || (fd == STDERR)) {
+  if ((fd == stdout) || (fd == stderr)) {
     errno = EBADF;
     return -1;
   }
 
-  if (fd == STDIN) {
+  if (fd == stdin) {
     for (n = 0; n < count; ++n) {
       *b++ = cpm_conin();
     }

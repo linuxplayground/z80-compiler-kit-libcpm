@@ -30,9 +30,9 @@
 #include <errno.h>
 #include <cpm.h>
 
-#define STDIN 0
-#define STDOUT 1
-#define STDERR 2
+#define stdin 0
+#define stdout 1
+#define stderr 2
 
 #define MAX_OPEN_FILES 4
 

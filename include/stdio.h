@@ -30,12 +30,24 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/* This printf implimentation is tiny.  It only supports 3 format specifiers at
- * this time.
+/* This printf implimentation is tiny.  It only supports a few  format
+ * specifiers at this time.
+ *
+ * - %c for single character
  * - %s for string literals
- * - %d for unsigned ints decimal (16bit)
+ * - %d for signed ints decimal (16bit)
  * - %x for unsigned ints hexadecimal (16bit)
+ * - %u for unsigned ints decimal (16bit)
+ *
+ *   uses cpm_conout to print to stdout.
  */
+
 int printf(const char *format, ...);
+
+/* printf into memory buffer instead of stdout.
+ *
+ * UNSAFE as there are no bounds checks.
+ */
+int sprintf(char *dst, const char *format, ...);
 
 #endif //_STDIO_H

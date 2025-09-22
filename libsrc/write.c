@@ -32,13 +32,13 @@ int write(int8_t fd, void *buf, size_t count) {
   char *b = (char *)buf;
   FILE *f;
 
-  if ( fd == STDIN ) {
+  if ( fd == stdin ) {
     errno = EBADF;
     return -1;
   }
 
 
-  if ((fd == STDOUT) || (fd==STDERR)) {
+  if ((fd == stdout) || (fd==stderr)) {
     for (n = 0; n < count; ++n) {
       cpm_conout(*b++);
     }
