@@ -10,8 +10,8 @@ WSL2.
 mkdir tools
 cd tools
 
-git clone https://github.com/EtchedPixels/FUZIX-Bintools.git
-git clone https://github.com/EtchedPixels/FUZIX-Compiler-Kit.git
+git clone https://codeberg.org/etchedPixels/FUZIX-Bintools.git
+git clone https://codeberg.org/etchedPixels/FUZIX-Compiler-Kit.git
 
 sudo mkdir /opt/fcc
 sudo chown ${USER}:${USER} /opt/fcc
@@ -31,7 +31,7 @@ make install
 
 ```bash
 cd tools
-git clone https://github.com/EtchedPixels/EmulatorKit.git
+git clone https://codeberg.org/etchedPixels/EmulatorKit.git
 cd EmulatorKit
 sudo apt install libsdl2-dev
 make 2063_sdl2

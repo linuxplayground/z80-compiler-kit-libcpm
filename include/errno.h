@@ -30,8 +30,7 @@
 enum F_ERRNO {
   EOK,    // used to indicate that stuff worked.
   EBADF,  // The provided file descriptor is not a valid open file descriptor.
-  EINVAL, // An invalid argument was provided to fcntl()
-  EFAULT, // flock structure that a bad address was provided as an argument;
+  EINVAL, // An invalid argument was provided.
   EIO,    // general IO error used when CPM fails to read or write.
 };
 

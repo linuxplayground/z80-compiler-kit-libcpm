@@ -2,7 +2,7 @@
 # Z80-Retro! CPMLIB
 
 As I have been starting to use the [Fuzix Compiler
-Kit](https://github.com/etchedpixels/Fuzix-Compiler-Kit.git) to compile C
+Kit](https://codeberg.org/etchedpixels/Fuzix-Compiler-Kit.git) to compile C
 Programs for the [Z80-Retro](https://github.com/Z80-Retro/2063-Z80) I wanted to
 have some form of standard library for interfacing with CP/M-2.2.  In the past I have used [Z88DK](https://github.com/z88dk/z88dk.git) for this and it has proven
 to be very capable.  It's really just a matter of preference for me.  I prefer

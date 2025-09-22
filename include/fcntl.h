@@ -34,6 +34,7 @@
 #define stdout 1
 #define stderr 2
 
+/* Limits the number of open files to 4.  No reason other than to save ram */
 #define MAX_OPEN_FILES 4
 
 enum t_flags {
@@ -41,6 +42,9 @@ enum t_flags {
   O_CREAT,
 };
 
+/* The FILE type includes a refernce to the file FCB, reserved memory for DMA
+ * ops and a boolean to indicate if the file is in use or not.
+ */
 typedef struct s_file {
   FCB fcb;
   char dma[128];
@@ -50,12 +54,16 @@ typedef struct s_file {
 extern FILE sys_open_files[MAX_OPEN_FILES]; /* We allow 4 files to be open at once */
 
 /* creates a new open file description, an entry in the system-wide table of
- * open files All files are created equal. Mode is ignored in the case of CPM.
+ * open files All files are created equal. Mode is ignored in the case of CPM
+ * and is included here for compatibility.
  */
 int8_t creat(const char *pathname, uint8_t mode);
 
-/* opens a file.  adds it to the sys_open_files array if there is room, creates
- * the file if it doesn't exist */
+/* opens a file.
+ * - adds it to the sys_open_files array if there is room
+ * - creates the file if it doesn't exist 
+ * - returns -1 if the file can not be opened.
+ */
 int8_t open(const char *pathname, uint8_t mode);
 
 #endif //_H_FCNTL
