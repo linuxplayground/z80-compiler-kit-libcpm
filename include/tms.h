@@ -125,11 +125,20 @@ void tms_fill_buf(const char c);
 
 /* plot a single pixel in G2 bitmap mode.  Expects that tms_init_bitmap_mode
  * has been called to set up the bitmap mode first.
+ *
+ * Note: This function is taken from NABU-LIB by DJ Sures at 
+ * https://github.com/djsures/nabu-lib.git before being modified to work
+ * with the Fuzix-Compiler-Kit and the z80-retro-libcpm assembly routines.
  */
-void tms_plot_g2(uint8_t x, uint8_t y, uint8_t c);
+void tms_plot_g2(uint8_t x, uint8_t y, uint8_t fg, uint8_t bg);
 
 /* plot a single fat pixel in multi color mode.  Returns true if the pixel at
- * the given location was greater than BLACK */
+ * the given location was greater than BLACK
+ *
+ * The original version of this function was taken from:
+ * https://github.com/michalin/TMS9918_Arduino before being modified to work
+ * with the Fuzix-Compiler-Kit and the z80-retro-libcpm assembly routines.
+ */
 bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
 
 /* wait for vsync and return status of vdp */

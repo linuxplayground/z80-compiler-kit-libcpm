@@ -45,7 +45,7 @@ the basics.  These are the functions available:
     - [x] toupper
     - [x] puts - prints null terminated strings - no formatting
     - [x] printf - supports %d, %x, %u and %c formatters.  No support for longs
-    - [ ] sprintf
+    - [x] sprintf
 
 ### Graphics
 

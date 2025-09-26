@@ -1,3 +1,6 @@
+# Clang is no actually used to compile anything in this repo.
+# These settings are for when you are using clang for linting etc.
+
 -I
 include
 -I

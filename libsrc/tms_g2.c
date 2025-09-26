@@ -91,8 +91,32 @@ void tms_init_bitmap_mode()
     tms_put(0);
 }
 
-void tms_plot_g2(uint8_t x, uint8_t y, uint8_t c)
+void tms_plot_g2(uint8_t x, uint8_t y, uint8_t fg, uint8_t bg)
 {
-  ;;
-}
+    uint16_t offset = 8 * (x / 8) + y % 8 + 256 * (y / 8);
+    uint8_t pixel;
+    uint8_t color;
+
+    tms_r_addr(tms_patt_tbl + offset);
+    pixel = tms_get();
+
+    tms_r_addr(tms_color_tbl + offset);
+    color = tms_get();
+
+    if (fg != 0) {
+
+      pixel |= 0x80 >> (x % 8); // Set bit a "1"
+      color = (color & 0x0F) | (fg << 4);
+    } else {
+
+      pixel &= ~(0x80 >> (x % 8)); // Set bit as "0"
+      color = (color & 0xF0) | (bg & 0x0F);
+    }
+
+    tms_w_addr(tms_patt_tbl + offset);
+    tms_put(pixel);
+
+    tms_w_addr(tms_color_tbl + offset);
+    tms_put(color);
+  }
 
