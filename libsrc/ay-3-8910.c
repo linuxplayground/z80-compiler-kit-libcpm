@@ -1,3 +1,4 @@
+// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -23,44 +24,34 @@
 *****************************************************************************
 */
 
-#include "string.h"
+#include <ay-3-8910.h>
+#include <ay-notes.h>
 #include <stdint.h>
-#include <stdlib.h>
 
-static char buf[8];
+void ay_play_note_delay(uint8_t key, uint8_t channel, uint16_t delay) {
+  // channel must be 0, 1 or 2 for A, B or C
+  if (channel > 2)
+    return;
 
-char *_uitoa(uint16_t i, uint8_t radix) {
-  char *p = buf + sizeof(buf);
-  int c;
-  uint8_t d;
+  // there are only 88 keys on the keyboard
+  if (key > 88)
+    return;
 
-  memset(buf, 0, 8);
-
-  *--p = '\0';
-  do {
-    d = i % radix;
-    if (d < 0xA)
-      *--p = '0' + d;
-    else
-      *--p = 'A' + d - 0xA;
-    i /= radix;
-  } while (i);
-  return p;
-}
-
-void uitoa(uint16_t val, char *str) {
-  strcpy(str, _uitoa(val, 10));
-}
-
-// We don't know if the string passed to us is long enough, so just copy ours anyway.
-void itoa(int16_t val, char *str, uint8_t radix) {
-  char *p;
-  uint8_t flg = 0;
-  if (val < 0 && radix == 10) {
-    flg++;
-    val = -val;
+  // The zeroth key is for silence. Set the volume of channel to 0
+  if (key == 0) {
+    ay_write(AY_VOLUME_A + channel, 0);
+    return;
   }
-  p = _uitoa(val, radix);
-  if (p && flg) *--p = '-';
-  strcpy(str, p);
+
+  // Write the note values to the register.
+  ay_write(channel * 2, notes_fine[key]);
+  ay_write(channel * 2 + 1, notes_course[key]);
+
+  // only add delay if delay > 0
+  if (delay > 0) {
+    ay_write(AY_VOLUME_A + channel, 0x1F);
+    ay_write(AY_ENVELOPE_C, delay >> 8);
+    ay_write(AY_ENVELOPE_F, delay & 0xFF);
+    ay_write(AY_ENVELOPE_SHAPE, AY_ENV_SHAPE_FADE_OUT);
+  }
 }

@@ -51,15 +51,16 @@ int format_integer(char *dst, int16_t val, uint8_t base, uint8_t s) {
   }
   return l;
 }
-int _printf(char *dst, const char *format, ...) {
+
+va_list arg_list;
+
+int _printf(char *dst, const char *format) {
   int len = 0;
-  va_list arg_list;
   int i, j;
   size_t val;
   char c;
   char *str;
 
-  va_start(arg_list, format);
 
   for (i = 0; format[i] != '\0'; i++) {
     if (format[i] == '%') {
@@ -126,10 +127,12 @@ int _printf(char *dst, const char *format, ...) {
 
 int sprintf(char *dst, const char* format, va_list args)
 {
-  return _printf(dst, format, args);
+  va_start(arg_list, format);
+  return _printf(dst, format);
 }
 
 int printf(const char *format, va_list args) {
-  return _printf(NULL, format, args); 
+  va_start(arg_list, format);
+  return _printf(NULL, format); 
 }
 

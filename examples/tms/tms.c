@@ -24,12 +24,13 @@
 *****************************************************************************
 */
 
-#include "patterns.h"
+#include <tms_patterns.h>
 #include <stdio.h>
 #include <cpm.h>
 #include <string.h>
 #include <stdlib.h>
 #include <tms.h>
+#include "patterns.h"
 //
 // 16x16 ball sprite
 char ball[16 * 4] = {0x07, 0x1F, 0x3E, 0x7C, 0x7F, 0xFF, 0xFF, 0xFF,
@@ -60,7 +61,7 @@ void flush() {
 
 void g1() {
   tms_init_g1(GRAY, DARK_YELLOW, true, mag);
-  tms_load_pat(patterns, 0x400);
+  tms_load_pat(tms_patterns, 0x400);
   tms_load_col(colors, 0x20);
   tms_load_spr(ball, 32);
 

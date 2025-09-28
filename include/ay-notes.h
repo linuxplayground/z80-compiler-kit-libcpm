@@ -1,3 +1,4 @@
+// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -23,44 +24,20 @@
 *****************************************************************************
 */
 
-#include "string.h"
-#include <stdint.h>
-#include <stdlib.h>
+/*
+ * These are the course and fine register values for the 3 tone channels.
+ * The indexes of the array are the piano key numbers.
+ *
+ * The play_note_function takes the index for the note you want to play and
+ * selects the register values from these arrays.
+ *
+ * The worksheet for these values is in the docs directory.
+ */
 
-static char buf[8];
+#ifndef _AYNOTES
+#define _AYNOTES
 
-char *_uitoa(uint16_t i, uint8_t radix) {
-  char *p = buf + sizeof(buf);
-  int c;
-  uint8_t d;
+extern unsigned char notes_course[89];
+extern unsigned char notes_fine[89];
 
-  memset(buf, 0, 8);
-
-  *--p = '\0';
-  do {
-    d = i % radix;
-    if (d < 0xA)
-      *--p = '0' + d;
-    else
-      *--p = 'A' + d - 0xA;
-    i /= radix;
-  } while (i);
-  return p;
-}
-
-void uitoa(uint16_t val, char *str) {
-  strcpy(str, _uitoa(val, 10));
-}
-
-// We don't know if the string passed to us is long enough, so just copy ours anyway.
-void itoa(int16_t val, char *str, uint8_t radix) {
-  char *p;
-  uint8_t flg = 0;
-  if (val < 0 && radix == 10) {
-    flg++;
-    val = -val;
-  }
-  p = _uitoa(val, radix);
-  if (p && flg) *--p = '-';
-  strcpy(str, p);
-}
+#endif //_AYNOTES
