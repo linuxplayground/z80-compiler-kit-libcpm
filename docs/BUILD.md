@@ -58,9 +58,9 @@ but this is how I do it.
 
 ```bash
 sudo apt install cpmtools
-mkdir dev
+cd dev
 git clone https://github.com/linuxplayground/z80retro-libcpm.git
-cd z80retro-libcpm
+cd z80retro-libcpm/examples
 
 ln -s ${HOME}/tools/EmulatorKit/2063_sdl2
 dd if=/dev/zero of=sdcard.img bs=1024 count=256000
@@ -104,28 +104,18 @@ Now the disk image can be mounted on the loopback device.
 ```bash
 sudo losetup --show -Pf sdcard.img
 
-## NOTE NOTE NOTE: Here the command will output something like /dev/loop0 or /dev/loop1.
-## NOTE NOTE NOTE: You need to keep that in mind.
+## XXX: Here the command will output something like /dev/loop0 or /dev/loop0.
+## XXX: You need to keep that in mind.
 
-ls -l /dev/loop1*
-brw-rw---- 1 root       disk         7, 1 Sep  8 09:42 /dev/loop1
-brw-rw---- 1 davelatham davelatham 259, 2 Sep  8 09:42 /dev/loop1p1
+ls -l /dev/loop0*
+brw-rw---- 1 root       disk         7, 1 Sep  8 09:42 /dev/loop0
+brw-rw---- 1 davelatham davelatham 259, 2 Sep  8 09:42 /dev/loop0p1
 
-sudo chown ${USER}:${USER} /dev/loop1p1
+sudo chown ${USER}:${USER} /dev/loop0p1
 ```
 
-You can now make the library and the tests.  The tests should be deployed onto
-the CPM filesystem ready for the Emulator
-
-```bash
-cd dev/libcpm
-
-make world
-```
-
-One final thing that needs to be done is that the 2063-z80-cpm repo must be
-built so we can get the filesystem and boot firmware from there to run the
-emulator.
+The 2063-z80-cpm repo must be built so we can get the filesystem and boot
+firmware from there to run the emulator.
 
 ```bash
 cd dev/
@@ -133,30 +123,44 @@ git clone --recurse https://github.com/z80-retro/2063-z80-cpm.git
 cd 2063-z80-cpm
 sudo apt install z80asm
 make world
-truncate --size=16k boot/firmware.bin
-dd if=filesystem/drive.img of=/dev/loop1p1 bs=512 conv=notrunc,fsync
+dd if=filesystem/drive.img of=/dev/loop0p1 bs=512 conv=notrunc,fsync
 ```
 
-Now back to the libcpm/test and we can run some tests.
+Prepare the virtual filesystem with CPM and get the firmware ready for the
+emulator.
 
 ```bash
-cd dev/libcpm/test
-## FOR CONVENIENCE ADD A SYMLINK
-ln -s ${HOME}/dev/2063-z80-cpm/boot/firmware.bin
+cd dev/libcpm/examples
+## Copy the firmare
+cp ${HOME}/dev/2063-z80-cpm/boot/firmware.bin ./
+## Truncate to meet the needs of the emulator
+truncate --size=16k boot/firmware.bin
+```
+
+You can now make the library and the examples.
+
+```bash
+cd dev/libcpm
+
+make world
+```
+
+Copy the examples into the virtual filesystem.
+
+```bash
+make -C examples copy
 ```
 
 ## Running the Emulator
 
 ```bash
-cd dev/libcpm/test
-
-## NOTE: NOTE: NOTE: You must update the LOOPDEV variable in the libcpm/test/Makefile before you start
-## NOTE: NOTE: NOTE: It must match the device you used in the `dd` command to copy the filesystem.img on
-## NOTE: NOTE: NOTE: to the mounted sdcard image.
-
+cd dev/libcpm/examples
 
 ./2063_sdl2 -r firmware.bin -S sdcard.img -T
 ```
 
-Once booted, you can type `testtms` to test Graphics Mode 1.
+Once booted type `dir` to see the examples.  All the examples should work in the
+emulator except for the joystick ones (unless you figure out how to map your
+joystick with SDL2 and the emulator) and the audio ones as the emulatro does not
+have AY-3-8910 support.
 

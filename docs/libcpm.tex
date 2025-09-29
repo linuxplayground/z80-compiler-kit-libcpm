@@ -22,12 +22,6 @@ be used in your own applications.
 You should read the comments in the header files.  They are updated during
 development and will be the most accurate.
 
-\subsection{About the name}
-
-Naming this is hard.  I know this is a stale meme, but it's true.  I could not
-come up with a meaningful name for this library that would indicate that it's
-for the Z80-Retro! computer \emph{AND} it's for CP/M.
-
 \subsection{What Is \lib?}
 
 \lib is a C library that you can link to in your applications for
@@ -70,52 +64,36 @@ Because the linker always starts filling code from 0x0000 we need to remove the
 first 256 bytes using the \texttt{`dd`} command.
 \pagebreak
 
+Here is an example of one of the Makefiles in the \texttt{examples} directory.
+
 \begin{center}
   \begin{lstlisting}[caption=Example Makefile]
-    TOP=.
-    CC=/opt/fcc/bin/fcc
-    AS=/opt/fcc/bin/asz80
-    LD=/opt/fcc/bin/ldz80
+TOP=..
 
-    CFLAGS=-O2 -mz80 -I $(TOP)/../include -I /opt/fcc/lib/z80/include
-    LDFLAGS=-b -C0x100
-    LIBS=\
-         $(TOP)/../libcpm.a \
-         /opt/fcc/lib/z80/libz80.a \
-         /opt/fcc/lib/z80/libc.a
+include ../Make.rules
 
-    CRT=$(TOP)/../crt0.o
+APPNAME = demo
 
-    all: clean malloc.com fileio.com testtms.com copy
+all: clean $(APPNAME).com
 
-    malloc.bin: malloc.o
-      $(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+$(APPNAME).bin: $(APPNAME).o
+	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
 
-    malloc.com: malloc.bin
-      dd if=$^ of=$@ skip=1 bs=256
+$(APPNAME).com: $(APPNAME).bin
+	dd if=$^ of=$@ skip=1 bs=256
 
-    fileio.bin: fileio.o
-      $(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+clean:
+	rm -fv $(APPNAME).bin $(APPNAME).com
+	find . -name "*.o" -exec rm -fv {} \;
 
-    fileio.com: fileio.bin
-      dd if=$^ of=$@ skip=1 bs=256
-
-    testtms.bin: testtms.o
-      $(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
-
-    testtms.com: testtms.bin
-      dd if=$^ of=$@ skip=1 bs=256
-
-
-    clean:
-      rm -fv malloc.bin malloc.com fileio.bin fileio.com
-      find . -name "*.o" -exec rm -fv {} \;
+copy: $(APPNAME).com
   \end{lstlisting}
 \end{center}
 \label{lst:makefile}
 
 This example does not show the actual FCC commands explicitly.  Make is
 automating that step for us.
+
 \pagebreak
 
 \section{Headers}
@@ -147,6 +125,7 @@ linking stage.  The C runtime performs the following actions:
 
 See Graphics Programming on page \pageref{graphicsprogramming} for details.
 
+
 \subsection{stdlib}
 
 There are two parts to the malloc / free implementation in this library.  The
@@ -176,6 +155,8 @@ make all that much sense in embedded environments.
 \begin{description}[font=$\bullet$~\normalfont\scshape\color{red!50!black}]
   \item[printf] Simple implimentation of \texttt{printf} with support for the
     \%c, \%s, \%d and \%x format specifiers only.
+  \item[sprintf] Same as \texttt{printf} but copies formatted text into memory
+    instead of \texttt{stdout}.
 \end{description}
 
 \subsection{joystick}
@@ -215,6 +196,14 @@ later on.
 
 You can find an example of how to use the fileio functions in the "test"
 folder.  The "fcntl.h" header file contains lots of additional information.
+
+\subsection{ay-3-8910}
+The library has some rudimentary support for the ay-3-8910 PSG as implimented on
+the Z80-Nouveau.
+
+There is no easy way (at the moment) to compile this library for NABU support.
+A request has been made to the maintainer of FUZIX-Compiler-Kit to ask how to
+use the assembler in a more dynamic way.
 
 \break
 \section{Graphics Programming} \label{graphicsprogramming}
@@ -274,6 +263,8 @@ They can be grouped into the following categories:
     into VDP memory and flush the sprites array into the Sprite Attribute Table in
     VDP memory.
 \end{description}
+
+Look at the \texttt{examples/tms} folder for an example of how the gameloop works.
 
 \section{Examples}
 
