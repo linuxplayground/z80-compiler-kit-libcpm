@@ -1,6 +1,8 @@
 .PHONY: all clean
 
-all:
+all: pdf
+
+pdf:
 	latexmk libcpm.tex
 
 clean:

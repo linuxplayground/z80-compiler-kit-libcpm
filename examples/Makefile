@@ -6,7 +6,8 @@ SUBDIRS = \
 					args \
 					joytest \
 					exit \
-					ay38910
+					ay38910 \
+					sprites
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)

@@ -103,11 +103,6 @@ void tms_init_bitmap_mode();
 /* Set a vdp register */
 extern void tms_set_reg(uint8_t reg, uint8_t val);
 
-/* waits for a VSYNC interrupt from the VDP and retuns the value of the VDP
- * status register
- */
-extern uint8_t tms_wait();
-
 /* set the vdp memory write address */
 extern void tms_r_addr(uint16_t addr);
 
@@ -143,6 +138,7 @@ bool tms_plot_mc(uint8_t x, uint8_t y, uint8_t c);
 
 /* wait for vsync and return status of vdp */
 extern uint8_t tms_wait();
+extern uint8_t tms_status;
 
 /* flush buffer to VDP for the different modes */
 extern void tms_g1flush(char *buf);

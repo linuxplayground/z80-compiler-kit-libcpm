@@ -53,7 +53,7 @@ clean:
 	make -C docs clean
 
 docs:
-	make -B -C docs
+	make -C docs
 
 world: clean all
 	make -C examples all
