@@ -17,6 +17,7 @@ char colors[32] = {
 void main()
 {
   uint8_t i;
+  uint8_t c = 1;
   uint8_t status;
 
   tms_init_g1(GRAY, DARK_YELLOW, false, false);
@@ -35,7 +36,8 @@ void main()
     sprites[i].y = 0;
     sprites[i].x = 0 + (i*9);
     sprites[i].pattern = 0;
-    sprites[i].color = 1;
+    sprites[i].color = c;
+    c++;
   }
 
   // Place 5 sprites in the middle of the screen
@@ -44,7 +46,8 @@ void main()
     sprites[i].y = (191/2)-4;
     sprites[i].x = 0 + (i-5)*9;
     sprites[i].pattern = 0;
-    sprites[i].color = 1;
+    sprites[i].color = c;
+    c++;
   }
   // place 5 sprites in the bottom of the screen
   // 9 pixels apart
@@ -52,7 +55,8 @@ void main()
     sprites[i].y = 191-8;
     sprites[i].x = 0 + (i-10)*9;
     sprites[i].pattern = 0;
-    sprites[i].color = 1;
+    sprites[i].color = c;
+    c++;
   }
   sprites[15].y = 0xD0;
 
