@@ -13,4 +13,6 @@ asm/joy.s
 Make.local
 !skeleton_*/crt0.o
 !skeleton_*/*.a
+!testapps/*/crt0.o
+!testapps/*/*.a
 
