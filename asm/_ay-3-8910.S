@@ -24,16 +24,14 @@
 ;
 ;****************************************************************************
 
+#include "io.h"
+
   .export _ay_write
 
-#include "io.h"
   .code
 
 ;void ay_write(uint8_t reg, uint8_t val);
 _ay_write:
-#ifdef _NO_AUDIO
-  ret
-#else
   pop   bc  ; return
   pop   hl  ; reg
   pop   de  ; val
@@ -48,4 +46,3 @@ _ay_write:
   ld    a,e
   out   (c),a
   ret
-#endif
