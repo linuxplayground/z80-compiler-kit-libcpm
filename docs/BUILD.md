@@ -59,7 +59,7 @@ but this is how I do it.
 ```bash
 sudo apt install cpmtools
 cd dev
-git clone https://github.com/linuxplayground/z80retro-libcpm.git
+git clone https://github.com/linuxplayground/z80-compiler-kit-cpmlib.git
 cd z80retro-libcpm/examples
 
 ln -s ${HOME}/tools/EmulatorKit/2063_sdl2

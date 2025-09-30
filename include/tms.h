@@ -103,10 +103,10 @@ void tms_init_bitmap_mode();
 /* Set a vdp register */
 extern void tms_set_reg(uint8_t reg, uint8_t val);
 
-/* set the vdp memory write address */
+/* set the vdp memory read address */
 extern void tms_r_addr(uint16_t addr);
 
-/* set the vdp memory read address */
+/* set the vdp memory write address */
 extern void tms_w_addr(uint16_t addr);
 
 /* write a single byte to VRAM at current address */
