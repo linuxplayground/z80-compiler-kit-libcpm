@@ -36,16 +36,7 @@
   .export _tms_mcflush
   .export _tms_txtflush
 
-  .export _IO_TMSRAM
-  .export _IO_TMSREG
-  .export _IO_JOY0
-  .export _IO_JOY1
-
-_IO_TMSRAM equ 0x80
-_IO_TMSREG equ 0x81
-_IO_JOY0   equ 0xA8
-_IO_JOY1   equ 0xA8
-
+#include "io.h"
   .code
 
 ;void tms_set_reg(uint8_t reg, uint8_t val);

@@ -9,5 +9,5 @@ LIBS=\
 		 /opt/fcc/lib/z80/libz80.a \
 		 /opt/fcc/lib/z80/libc.a
 
-CRT=$(TOP)/../crt0.o
+CRT=$(TOP)/../asm/crt0.o
 

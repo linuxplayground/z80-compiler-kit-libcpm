@@ -20,34 +20,50 @@
 # https://github.com/linuxplayground/z80-retro-libcpm.git
 #
 #****************************************************************************
-
+TOP=.
 CC=/opt/fcc/bin/fcc
 AS=/opt/fcc/bin/asz80
 LORDER=/opt/fcc/bin/lorderz80
 AR=/usr/bin/ar
+CPP=/usr/bin/cpp -undef -nostdinc
 
-CFLAGS=-mz80 -O2 $(CONFIG) -I include -I /opt/fcc/lib/z80/include
+include Make.default
+-include Make.local
+include target/rules.$(TARGET)
 
-CRT=crt0.o
+CFLAGS=-mz80 -O2 -I include -I /opt/fcc/lib/z80/include
+CPPFLAGS=-I$(INCLUDES)
+
+CRT0=crt0.o
+
+ASMPSRCS=$(wildcard asm/*.S)
+ASMPSRC=$(ASMPSRCS:.S=.s)
+ASMPOBJ=$(ASMPSRCS:.S=.o)
+
 ASMSRC=$(wildcard asm/*.s)
 ASMOBJ=$(ASMSRC:.s=.o)
+
 CSRC=$(wildcard libsrc/*.c)
 COBJ=$(CSRC:.c=.o)
 
 OBJ=\
+		$(ASMPOBJ) \
 		$(ASMOBJ) \
 		$(COBJ)
 
+
 all: libcpm.a
 
-libcpm.a: $(OBJ) $(CRT)
+libcpm.a: $(ASMPSRC) $(OBJ) $(CRT)
 	$(AR) qc $@ `$(LORDER) $(OBJ) | tsort`
 
-$(CRT): crt0.s
-	$(AS) -o $@ $^
+%.s: %.S
+	$(CPP) $(CPPFLAGS) $^ > $@
 
 clean:
-	find . -name "*.o" -exec rm -fv {} \;
+	rm -fv $(OBJ)
+	rm -fv $(ASMPSRC)
+
 	rm -fv libcpm.a
 	make -C examples clean
 	make -C docs clean

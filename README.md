@@ -19,6 +19,16 @@ was not successful.
 This is not a full blown standard library.  I have gone for something resembling
 the basics.  These are the functions available:
 
+## Targets
+
+Support for the Z80-Retro! (2063) and the Nouveau is up to date.
+
+TODO ON THE NABU:
+
+- [ ] TMS IO Ports
+- [ ] JOYSTICK Routines are different to those in the retro and nouveau
+- [ ] AY-3-8910 IO Ports
+
 ### Core
 
 - [x] CRT0 that restores the CPM stack before returning from main

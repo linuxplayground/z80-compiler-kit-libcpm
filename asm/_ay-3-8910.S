@@ -20,28 +20,32 @@
 ;
 ; https://github.com/linuxplayground/z80-retro-libcpm.git
 ;
+; Assembly routines for dealing with AY-3-8910 registers
+;
 ;****************************************************************************
 
-JOY_0 equ 0xA8
-JOY_1 equ 0xA9
+  .export _ay_write
 
-
-  .export _joy
-
+#include "io.h"
   .code
 
-; uint8_t joy(uint8_t i);
-_joy:
-  ld  a,l
-  or  a
-  jr  nz,joy1
-  ld  c,JOY_0
-  jr  readjoy
-joy1:
-  ld  c,JOY_1
-readjoy:
-  in  a,(c)
-  ld  l,a
-  ld  h,0
+;void ay_write(uint8_t reg, uint8_t val);
+_ay_write:
+#ifdef _NO_AUDIO
   ret
+#else
+  pop   bc  ; return
+  pop   hl  ; reg
+  pop   de  ; val
 
+  push  de
+  push  hl
+  push  bc
+
+  ld    c,_IO_AYREG
+  out   (c),l
+  inc   c
+  ld    a,e
+  out   (c),a
+  ret
+#endif
