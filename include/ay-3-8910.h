@@ -32,16 +32,12 @@
  *
  * On the Nabu they are 0x40 and 0x41.  I don't know how to manage this in the
  * Fuzix-Compiler-Kit ecosystem.
- *
- * TODO: Make it so users of this library can configure their IO Ports in a
- * more sane manner.
  */
 
 #ifndef _AY38910_H
 #define _AY38910_H
 
 #include <stdint.h>
-#include <stddef.h>
 #include <stdbool.h>
 
 

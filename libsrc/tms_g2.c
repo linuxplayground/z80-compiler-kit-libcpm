@@ -54,7 +54,6 @@ void tms_init_g2(uint8_t fg, uint8_t bg, bool largesp, bool mag)
   tms_set_reg(5, 0x76);
   tms_set_reg(6, 0x03);
   tms_set_reg(7, bg & 0xF);
-  // TODO:Support bitmap mode?  The name table must have 3 sets of unique values in it.
   tms_buf = malloc(0x300);
   memset(tms_buf, 0, 0x300);
   tms_init_sprites();
