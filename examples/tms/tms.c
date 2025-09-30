@@ -56,6 +56,10 @@ void flush() {
   tms_puts_xy(13, 10, (mag) ? "ON" : "OFF");
   tms_wait();
   tms_g1flush(tms_buf);
+  tms_wait();
+  tms_g1flush(tms_buf);
+  tms_wait();
+  tms_g1flush(tms_buf);
   tms_flush_sprites();
 }
 

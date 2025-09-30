@@ -29,6 +29,10 @@ void main()
   tms_fill_buf(0x20);
   tms_wait();
   tms_g1flush(tms_buf);
+  tms_wait();
+  tms_g1flush(tms_buf);
+  tms_wait();
+  tms_g1flush(tms_buf);
 
   // Place 5 sprites on the top row starting at the top left.
   // 9 pixels apart
