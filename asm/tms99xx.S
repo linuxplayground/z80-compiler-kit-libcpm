@@ -104,6 +104,8 @@ _tms_wait:
   jr    nz,_tms_wait
   in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
   ld    (_tms_status),a
+  ld    l,a
+  ld    h,0
   ret
 
 _tms_status: .ds 1
