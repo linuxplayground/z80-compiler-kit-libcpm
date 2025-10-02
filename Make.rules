@@ -1,0 +1,32 @@
+CC=/opt/fcc/bin/fcc
+AS=/opt/fcc/bin/asz80
+LORDER=/opt/fcc/bin/lorderz80
+AR=/usr/bin/ar
+CPP=/usr/bin/cpp -undef -nostdinc
+
+CFLAGS=-mz80 -O2 -I $(TOP)/include -I /opt/fcc/lib/z80/include
+CPPFLAGS=-I$(INCLUDES)
+
+ASMSRC=$(wildcard $(TOP)/asm/*.S)
+ASMINT=$(ASMSRC:.S=.s)
+ASMOBJ=$(ASMSRC:.S=.o)
+
+CSRC=$(wildcard $(TOP)/libsrc/*.c)
+COBJ=$(CSRC:.c=.o)
+
+OBJ=\
+		$(ASMOBJ) \
+		$(COBJ)
+
+.INTERMEDIATE: $(ASMINT) $(OBJ)
+.NOTINTERMEDIATE: $(TOP)/asm/crt0.o
+
+.PHONY: all clean
+
+all: libcpm.a
+
+%.s: %.S
+	$(CPP) $(CPPFLAGS) -o $@ $^
+
+clean:
+	rm -fr libcpm.a crt0.o

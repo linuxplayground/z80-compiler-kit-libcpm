@@ -21,50 +21,17 @@
 #
 #****************************************************************************
 TOP=.
-CC=/opt/fcc/bin/fcc
-AS=/opt/fcc/bin/asz80
-LORDER=/opt/fcc/bin/lorderz80
-AR=/usr/bin/ar
-CPP=/usr/bin/cpp -undef -nostdinc
+all: retro nouveau
 
-include Make.default
--include Make.local
-include target/rules.$(TARGET)
+retro:
+	make -C arch/retro
 
-CFLAGS=-mz80 -O2 -I include -I /opt/fcc/lib/z80/include
-CPPFLAGS=-I$(INCLUDES)
-
-CRT0=crt0.o
-
-ASMPSRCS=$(wildcard asm/*.S)
-ASMPSRC=$(ASMPSRCS:.S=.s)
-ASMPOBJ=$(ASMPSRCS:.S=.o)
-
-ASMSRC=$(wildcard asm/*.s)
-ASMOBJ=$(ASMSRC:.s=.o)
-
-CSRC=$(wildcard libsrc/*.c)
-COBJ=$(CSRC:.c=.o)
-
-OBJ=\
-		$(ASMPOBJ) \
-		$(ASMOBJ) \
-		$(COBJ)
-
-
-all: libcpm.a
-
-libcpm.a: $(ASMPSRC) $(OBJ) $(CRT)
-	$(AR) qc $@ `$(LORDER) $(OBJ) | tsort`
-
-%.s: %.S
-	$(CPP) $(CPPFLAGS) $^ > $@
+nouveau:
+	make -C arch/nouveau
 
 clean:
-	rm -fv $(OBJ)
-	rm -fv $(ASMPSRC)
-
-	rm -fv libcpm.a
+	find arch -name "libcpm.a" -exec rm -fv {} \;
+	find arch -name "crt0.o" -exec rm -fv {} \;
 	make -C examples clean
 	make -C docs clean
 

@@ -1,5 +1,2 @@
 #TARGET=nouveau
-
-#TARGET=nabu
-
 TARGET=retro

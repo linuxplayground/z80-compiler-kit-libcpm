@@ -1,16 +1,29 @@
 TOP=..
+CC=/opt/fcc/bin/fcc
+AS=/opt/fcc/bin/asz80
+LD=/opt/fcc/bin/ldz80
+
+CFLAGS=-O2 -mz80 -I../include
+LDFLAGS=-b -C0x100
+LDLIBS=\
+			 ../arch/nouveau/libcpm.a \
+			 /opt/fcc/lib/z80/libz80.a \
+			 /opt/fcc/lib/z80/libc.a
+
+CRT0=../arch/nouveau/crt0.o
+
 APPNAME=main
 
-include Make.rules
+.INTERMEDIATE: $(APPNAME).o $(APPNAME).bin
 
 all: clean $(APPNAME).com
 
-$(APPNAME).bin: $(APPNAME).o
-	$(LD) $(LDFLAGS) -o $@ $(CRT) $^ $(LIBS)
+$(APPNAME).bin: $(APPNAME).o $(CRT0)
+	$(LD) $(LDFLAGS) -o $@ $< $(LDLIBS)
 
 $(APPNAME).com: $(APPNAME).bin
 	dd if=$^ of=$@ skip=1 bs=256
 
 clean:
-	rm -fv $(APPNAME).bin $(APPNAME).com
+	rm -fv $(APPNAME).com
 

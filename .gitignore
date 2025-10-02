@@ -5,14 +5,7 @@
 **/*.img
 **/*.map
 **/*.swp
+**/*.s
 
-test/hello.txt
-asm/_ay-3-8910.s
-asm/tms99xx.s
-asm/joy.s
 Make.local
-!skeleton_*/crt0.o
-!skeleton_*/*.a
-!testapps/*/crt0.o
-!testapps/*/*.a
 
