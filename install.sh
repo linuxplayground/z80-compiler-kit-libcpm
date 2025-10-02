@@ -20,3 +20,6 @@ echo "Copying files..."
 cp -rv build/arch $1/lib/
 cp -rv include/* $1/include/
 
+sed "s#INSTALLDIR#$1#" skeleton_nouveau/Makefile.template > skeleton_nouveau/Makefile
+sed "s#INSTALLDIR#$1#" skeleton_retro/Makefile.template > skeleton_retro/Makefile
+

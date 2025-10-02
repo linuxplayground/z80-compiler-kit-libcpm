@@ -8,4 +8,6 @@
 **/*.s
 
 **/Make.local
+skeleton_retro/Makefile
+skeleton_nouveau/Makefile
 
