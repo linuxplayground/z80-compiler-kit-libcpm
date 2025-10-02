@@ -1,6 +1,14 @@
 <-- vim: set ft=markdown ts=4 sw=4 et tw=80 cc=80: -->
 # Z80-Retro! CPMLIB
 
+## TLDR:
+
+- Clone
+- Make
+- Binaries end up in `arch/<arch>/libcpm.a` and `arch/<arch>/crt0.o`
+
+## What is it?
+
 As I have been starting to use the [Fuzix Compiler
 Kit](https://codeberg.org/etchedpixels/Fuzix-Compiler-Kit.git) to compile C
 Programs for the [Z80-Retro](https://github.com/Z80-Retro/2063-Z80) I wanted to

@@ -1,6 +1,20 @@
 <-- vim: set ft=markdown ts=4 sw=4 et tw=80 cc=80: -->
 # Build
 
+Just run `make`
+
+The library an crt0.o files will be in `arch/<arch>/`  IE: `arch/retro/libcpm.a`
+
+To make the examples, go into the examples directory and set up which target you
+want the examples for in `Make.default` then type make.
+
+The headers are in `include`
+
+## TODO: THERE IS NO MAKE INSTALL YET.
+
+# Build and Install FCC
+
+
 These instructions are all gathered from a fresh install of Ubuntu-24.04 on
 WSL2.
 
@@ -27,6 +41,9 @@ make bootstuff
 make install
 ```
 
+
+# Continue here if you want the emulator.
+
 ## Emulator Kit
 
 ```bash
@@ -39,8 +56,6 @@ make 2063_sdl2
 
 ## libcpm
 
-Now that the compiler, assembler and linker are installed and we have an
-emulator, it's time to clone and build libcpm
 
 In this example, the assumption is a filesystem layout like this.
 
