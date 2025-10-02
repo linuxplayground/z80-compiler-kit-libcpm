@@ -1,4 +1,4 @@
-TOP=..
+TOP=../..
 APPNAME=main
 TARGET=retro
 

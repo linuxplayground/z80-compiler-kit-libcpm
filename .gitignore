@@ -7,5 +7,5 @@
 **/*.swp
 **/*.s
 
-Make.local
+**/Make.local
 

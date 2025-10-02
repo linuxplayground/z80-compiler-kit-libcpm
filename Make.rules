@@ -21,7 +21,7 @@ OBJ=\
 .INTERMEDIATE: $(ASMINT) $(OBJ)
 .NOTINTERMEDIATE: $(TOP)/asm/crt0.o
 
-.PHONY: all clean
+.PHONY: all
 
 all: libcpm.a
 

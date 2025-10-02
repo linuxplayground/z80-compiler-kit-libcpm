@@ -6,10 +6,10 @@ CFLAGS=-O2 -mz80 -I ../../include
 LDFLAGS=-b -C0x100
 
 LDLIBS=\
-		 ../../arch/$(TARGET)/libcpm.a \
+		 $(TOP)/build/arch/$(TARGET)/libcpm.a \
 		 /opt/fcc/lib/z80/libz80.a \
 		 /opt/fcc/lib/z80/libc.a
 
-CRT0=../../arch/$(TARGET)/crt0.o
+CRT0=$(TOP)/build/arch/$(TARGET)/crt0.o
 
 .INTERMEDIATE: $(APPNAME).bin $(APPNAME).o

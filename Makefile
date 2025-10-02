@@ -21,6 +21,10 @@
 #
 #****************************************************************************
 TOP=.
+
+include Make.default
+-include Make.local
+
 all: retro nouveau
 
 retro:
@@ -37,6 +41,9 @@ clean:
 
 docs:
 	make -C docs
+
+install: ./install.sh
+	./install.sh $(INSTALLDIR)
 
 world: clean all
 	make -C examples all

@@ -6,11 +6,11 @@ LD=/opt/fcc/bin/ldz80
 CFLAGS=-O2 -mz80 -I../include
 LDFLAGS=-b -C0x100
 LDLIBS=\
-			 ../arch/nouveau/libcpm.a \
+			 $(TOP)/build//arch/nouveau/libcpm.a \
 			 /opt/fcc/lib/z80/libz80.a \
 			 /opt/fcc/lib/z80/libc.a
 
-CRT0=../arch/nouveau/crt0.o
+CRT0=$(TOP)/build/arch/nouveau/crt0.o
 
 APPNAME=main
 
