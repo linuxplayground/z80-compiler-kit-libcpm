@@ -1,5 +1,6 @@
-TOP=..
-APPNAME=tms
+TOP=../..
+
+APPNAME = tms
 
 include ../Make.rules
 

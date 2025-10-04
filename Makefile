@@ -25,25 +25,28 @@ TOP=.
 include Make.default
 -include Make.local
 
-all: retro nouveau
+all:: retro nouveau
 
 retro:
-	make -C arch/retro
+	make -C arch/RETRO
 
 nouveau:
-	make -C arch/nouveau
+	make -C arch/NOUVEAU
 
-clean:
-	find arch -name "libcpm.a" -exec rm -fv {} \;
-	find arch -name "crt0.o" -exec rm -fv {} \;
-	make -C examples clean
-	make -C docs clean
+examples:
+	make -C examples
+
+clean::
+	make -C arch/RETRO clean
+	make -C arch/NOUVEAU clean
 
 docs:
 	make -C docs
 
 install: ./install.sh
 	./install.sh $(INSTALLDIR)
+uninstall:
+	rm -fr $(INSTALLDIR)
 
 world: clean all
 	make -C examples all

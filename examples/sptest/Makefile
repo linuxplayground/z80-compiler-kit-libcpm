@@ -1,6 +1,6 @@
 TOP=../..
 
-APPNAME=joytest
+APPNAME = sptest
 
 include ../Make.rules
 

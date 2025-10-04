@@ -1,2 +1,2 @@
-#TARGET=nouveau
-TARGET=retro
+#ARCH=NOUVEAU
+ARCH=RETRO

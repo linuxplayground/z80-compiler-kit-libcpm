@@ -7,7 +7,8 @@ SUBDIRS = \
 					joytest \
 					exit \
 					ay38910 \
-					sprites
+					sprites \
+					sptest
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)

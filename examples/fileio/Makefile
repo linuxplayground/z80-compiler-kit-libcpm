@@ -1,6 +1,6 @@
-TOP=..
+TOP=../..
 
-APPNAME=fileio
+APPNAME = fileio
 
 include ../Make.rules
 

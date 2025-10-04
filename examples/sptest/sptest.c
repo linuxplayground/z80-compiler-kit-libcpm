@@ -53,8 +53,8 @@ void print()
   memset(txt,0,64);
   sprintf(txt, "sp:%u X:%u Y:%u ecb:%u mag:%u", 
           cur_sp + 1,
-          sprites[cur_sp].x,
-          sprites[cur_sp].y,
+          sprites[cur_sp].x & 0xFF,
+          sprites[cur_sp].y & 0xFF,
           (sprites[cur_sp].color & 0x80) ? 1 : 0,
           mag
   );
@@ -122,6 +122,19 @@ void main()
       case 'm': // toggle magnification
         mag = !mag;
         tms_set_reg(1, 0xE2 | mag);
+        break;
+
+      case 'a':
+        sprites[cur_sp].x --;
+        break;
+      case 's':
+        sprites[cur_sp].y ++;
+        break;
+      case 'd':
+      sprites[cur_sp].x ++;
+        break;
+      case 'w':
+        sprites[cur_sp].y --;
         break;
     }
 
