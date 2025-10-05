@@ -18,7 +18,7 @@
 *    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
 *    USA
 *
-* https://github.com/linuxplayground/z80-retro-libcpm.git
+* https://github.com/linuxplayground/z80-compiler-kit-libcpm
 *
 *****************************************************************************
 */
@@ -37,7 +37,7 @@ extern int8_t _brk(void *addr);
 extern void *_sbrk(uintptr_t incr);
 
 /* return the absolute value of provided int */
-extern int abs(int j);
+extern int abs(int v);
 
 /* Exit with a code.  Prints code if non-zero */
 extern void exit(uint8_t code);

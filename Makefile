@@ -17,7 +17,7 @@
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
 #    USA
 #
-# https://github.com/linuxplayground/z80-retro-libcpm.git
+# https://github.com/linuxplayground/z80-compiler-kit-libcpm
 #
 #****************************************************************************
 TOP=.
@@ -45,8 +45,6 @@ docs:
 
 install: ./install.sh
 	./install.sh $(INSTALLDIR)
-uninstall:
-	rm -fr $(INSTALLDIR)
 
 world: clean all
 	make -C examples all

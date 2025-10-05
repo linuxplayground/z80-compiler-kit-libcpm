@@ -2,6 +2,8 @@
 
 ## Compile and Install
 
+See [INSTALL.md](./docs/INSTALL.md) for more detailed docs.
+
 - Clone
 - make
 - make install
@@ -20,13 +22,11 @@ There are example projects in the library that have working Make scripts.  These
 use the source tree of the library, (this repo) rather than the installed
 location.
 
-An example Makefile.template is given in the skeleton folders.
-
-The `make install` scripts automatically create the `Makefile` from the
-`Makefile.template` in the skeleton_retro and skeleton_nouveau directories.
+If you have installed the library, then you can find skeleton projects in the
+`INSTALLDIR`.  By default this is `${HOME}/dev/libcpm`.
 
 You should be able to copy a skeleton directory to any place on the same system
 and compile your code from there.
 
-<-- vim: set ft=markdown ts=4 sw=4 et tw=80 cc=80: -->
+<!-- vim: set ft=markdown ts=4 sw=4 et tw=80 cc=80: -->
 

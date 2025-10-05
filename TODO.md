@@ -6,9 +6,9 @@ The order of this list is completely meaningless.
     - [ ] Finalize IO ports for Retro and Nouveau to support ROM WBW
     - [x] Rework build system to build all the targets at once or just specific
         targets
-    - [ ] Rework build system to have target specific source files.  This is needed
+    - [x] Rework build system to have target specific source files.  This is needed
     - [x] Install scripts
-    - [ ] Work on improving documentation - it's currently a MESS!
+    - [x] Work on improving documentation - it's currently a MESS!
     for NABU support.
 - [ ] TARGET: NABU
     - [ ] Write NABU support functions - ISR for keyboard and joystick.
