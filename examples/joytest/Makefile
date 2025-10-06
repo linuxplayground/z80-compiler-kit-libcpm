@@ -1,6 +1,8 @@
 TOP=../..
+include $(TOP)/Make.default
+-include $(TOP)/Make.local
 
-APPNAME=joytest
+APPNAME = joytest
 
 include ../Make.rules
 
