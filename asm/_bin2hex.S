@@ -29,29 +29,34 @@
 ; convert 8-bit value into hexadecimal and update the buffer with the two ascii
 ; characters
 _bin2hex:
-  ld    ix,0
-  add   ix,sp
-  ld    e,(ix+2)
-  ;ld    d,(ix+3) ; val in e (don't need d)
-  ld    l,(ix+4)
-  ld    h,(ix+5) ; *buf in hl
+  ld    hl,2    ; skip past the return address
+  add   hl,sp   ; hl points to the first parameter
+  ld    a,(hl)  ; value
+  inc   hl      ; inc hl to the next parameter
   inc   hl
-  ld    a,e
-  call  num2
+  ld    e,(hl)  ; low byte of *buf in e
+  inc   hl
+  ld    d,(hl)  ; high byte of *buf in d
+  ex    de,hl   ; hl = *buf
+
+  ld    e,a     ; save value in e
+  inc   hl      ; increment buf to print low nibble
+  call  num2    ; calculate and print low nibble
   dec   hl
-  ld    a,e
-num1:
+  ld    a,e     ; restore value from e
+                ; fall through
+num1:           ; shift high nibble down to low nibble
   rra
   rra
   rra
   rra
-num2:
+num2:           ; magic hex converion.
   and   0x0f
   add   a,0x90
   daa
   adc   a,0x40
   daa
-  ld    (hl),a
+  ld    (hl),a  ; save ascii char in *buf
   ret
 
 
