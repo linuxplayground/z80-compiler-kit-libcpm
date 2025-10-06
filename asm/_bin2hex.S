@@ -29,31 +29,29 @@
 ; convert 8-bit value into hexadecimal and update the buffer with the two ascii
 ; characters
 _bin2hex:
-  pop   bc  ; return
-  pop   de  ; val
-  pop   hl  ; pointer to buffer to write into
-
-  push  hl
-  push  de
-  push  bc
-
-  ld    a,e
-  srl   a
-  srl   a
-  srl   a
-  srl   a
-  call  hexdump_nib
-  ld    a,e
-  and   0x0f
-
-hexdump_nib:
-  add   a,0x30
-  cp    0x3A    ; '9' + 1
-  jp    m,hexdump_num
-  add   a,0x07  ; 'A' - '9' - 1
-hexdump_num:
-  ld    (hl),a
+  ld    ix,0
+  add   ix,sp
+  ld    e,(ix+2)
+  ;ld    d,(ix+3) ; val in e (don't need d)
+  ld    l,(ix+4)
+  ld    h,(ix+5) ; *buf in hl
   inc   hl
+  ld    a,e
+  call  num2
+  dec   hl
+  ld    a,e
+num1:
+  rra
+  rra
+  rra
+  rra
+num2:
+  and   0x0f
+  add   a,0x90
+  daa
+  adc   a,0x40
+  daa
+  ld    (hl),a
   ret
 
 
