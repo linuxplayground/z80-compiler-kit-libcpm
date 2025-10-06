@@ -13,4 +13,4 @@ libcpm.a: $(OBJS)
 	$(AR) qc $(TOP)/build/arch/$(ARCH)/$@ `$(LORDER) $(OBJS) | tsort`
 
 clean:
-	rm -fr $(TOP)/build/arch/RETRO/*
+	rm -fr $(TOP)/build/arch/NOUVEAU/*

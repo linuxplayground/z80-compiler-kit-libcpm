@@ -11,6 +11,16 @@ Just run `make`
 The library and crt0.o files will be in `build/arch/<ARCH>/`  IE:
 `build/arch/retro/libcpm.a`
 
+### CONFIGURATION
+
+Copy `Make.default` to `Make.local` and edit.  Then you can build for specific
+targets.
+
+> Note: To build the library, you do `make nouveau` or `make retro` or `make` to
+> bulid them both.
+
+The ARCH in `Make.default` is for building the examples.
+
 ## Examples
 
 > NOTE: This library uses the word "architecture", "arch" and "ARCH" to refer to
@@ -19,17 +29,6 @@ The library and crt0.o files will be in `build/arch/<ARCH>/`  IE:
 
 The examples are short programs that demonstrate the various utilities available
 in the library.
-
-To compile them, you must first select the target architecture.  You can find a
-list of available target architectures in `examples/Make.default`.  By default,
-the RETRO target is selected.  You can override this by copying
-`exambles/Make.default` to `examples/Make.local` and commenting and uncommenting
-to select the target architecture you want.
-
-Once you have selected the target architecture, you can run `make` inside the
-`examples` directory.  This will build all the examples and you can find them in
-`build/arch/<ARCH>/examples/` where `<ARCH>` is the name of the target
-architecture you configured in `Make.local`.
 
 ## INSTALL
 

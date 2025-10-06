@@ -1,2 +1,4 @@
 INSTALLDIR=$(HOME)/dev/libcpm
 
+ARCH=RETRO
+#ARCH=NOUVEAU

@@ -1,6 +1,3 @@
-include $(TOP)/examples/Make.default
--include $(TOP)/examples/Make.local
-
 INCLUDES=-I. -I$(TOP)/include/arch/$(ARCH)
 include $(TOP)/Make.rules
 
