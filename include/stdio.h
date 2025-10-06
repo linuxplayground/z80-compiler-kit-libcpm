@@ -50,4 +50,5 @@ int printf(const char *format, ...);
  */
 int sprintf(char *dst, const char *format, ...);
 
+void bin2hex(uint8_t value, char *buffer);
 #endif //_STDIO_H

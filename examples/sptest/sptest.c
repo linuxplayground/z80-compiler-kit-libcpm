@@ -38,20 +38,17 @@ uint8_t status = 0;
 uint8_t temp;
 
 void print() {
-  memset(&tms_buf[22 * 32], ' ',
-         32); // clear the second to last line of the buffer.
-  memset(txt, 0, 64);
-  sprintf(txt, "%c%c%c %u [ 0x%x ]", (status & 0x80) ? 'V' : '-',
-          (status & 0x40) ? '5' : '-', (status & 0x20) ? 'C' : '-',
-          status & 0x1F, status);
-  tms_puts_xy(0, 22, txt);
+  tms_put_char(0, 22, (status & 0x80) ? 'V' : '-'); //VSYNC flag
+  tms_put_char(1, 22, (status & 0x40) ? '5' : '-'); //5S flag
+  tms_put_char(2, 22, (status & 0x20) ? 'C' : '-'); //Collision flag
 
-  memset(&tms_buf[23 * 32], ' ', 32); // clear the last line of the buffer.
-  memset(txt, 0, 64);
-  sprintf(txt, "sp:%u X:%u Y:%u ecb:%u mag:%u", cur_sp,
-          sprites[cur_sp].x & 0xFF, sprites[cur_sp].y & 0xFF,
-          (sprites[cur_sp].color & 0x80) ? 1 : 0, mag);
-  tms_puts_xy(0, 23, txt);
+  bin2hex(status, &tms_buf[22*32+8]);
+
+  bin2hex(sprites[cur_sp].x & 0xFF, &tms_buf[22*32+19]);
+  bin2hex(sprites[cur_sp].y & 0xFF, &tms_buf[22*32+26]);
+
+  tms_put_char(4, 23, (sprites[cur_sp].color & 0x80) ? 'X' : '-'); //ECB
+  tms_put_char(10, 23, (mag) ? 'X' : '-'); //MAG
 }
 
 void main() {
@@ -61,6 +58,12 @@ void main() {
   tms_load_spr(sprite_patterns, 5 * 4 * 8);
 
   tms_fill_buf(' ');
+                //    0        10        20        30
+                //    01234567890123456789012345678901
+  tms_puts_xy(0, 22, "... [ 0x.. ] - X=0x.. Y=0x..");
+                //    0        10        20        30
+                //    01234567890123456789012345678901
+  tms_puts_xy(0, 23, "ECB:. MAG:.");
 
   // do this 3 times because timings are still not quite right on the retro.
   tms_wait();
@@ -166,7 +169,6 @@ void main() {
     print();
 
     jcur = jnext;
-    tms_wait();
     status = tms_wait();
     tms_g1flush(tms_buf);
     tms_flush_sprites();
