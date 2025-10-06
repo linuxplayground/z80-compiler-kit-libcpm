@@ -166,7 +166,7 @@ void main() {
     print();
 
     jcur = jnext;
-
+    tms_wait();
     status = tms_wait();
     tms_g1flush(tms_buf);
     tms_flush_sprites();
