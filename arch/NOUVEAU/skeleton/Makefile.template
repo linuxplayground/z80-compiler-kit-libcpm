@@ -18,8 +18,8 @@ APPNAME=main
 
 all: clean $(APPNAME).com
 
-$(APPNAME).bin: $(APPNAME).o $(CRT0)
-	$(LD) $(LDFLAGS) -o $@ $< $(LDLIBS)
+$(APPNAME).bin: $(CRT0) $(APPNAME).o
+	$(LD) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 $(APPNAME).com: $(APPNAME).bin
 	dd if=$^ of=$@ skip=1 bs=256

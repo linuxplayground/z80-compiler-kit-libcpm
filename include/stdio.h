@@ -50,5 +50,10 @@ int printf(const char *format, ...);
  */
 int sprintf(char *dst, const char *format, ...);
 
-void bin2hex(uint8_t value, char *buffer);
+/* Add the ASCII representation of both nibbles of an unsigned byte `b`
+ * the buffer pointed to by `*buf`
+ *
+ * UNSAFE as there are no bounds checks.
+ */
+void bin2hex(uint8_t b, char *buf);
 #endif //_STDIO_H

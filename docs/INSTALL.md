@@ -47,22 +47,21 @@ default value for the installation directory.  This is where the `lib` and
 override this by copying `Make.default` to `Make.local` and changing the value
 of `INSTALLDIR`.
 
-This is what the installation directory will look like (files not shown) after
-running `make install`.
+This is what the installation directory will look like after running `make
+install`.
 
 ```text
-➜  libcpm tree
 .
 ├── examples
 │   └── arch
 │       ├── nouveau
 │       │   └── skeleton
-│               ├── main.c
-│               └── Makefile
+│       │       ├── Makefile
+│       │       └── main.c
 │       └── retro
 │           └── skeleton
-│               ├── main.c
-│               └── Makefile
+│               ├── Makefile
+│               └── main.c
 ├── include
 │   ├── arch
 │   │   ├── NOUVEAU
@@ -94,7 +93,7 @@ running `make install`.
             ├── crt0.o
             └── libcpm.a
 
-15 directories, 25 files
+15 directories, 26 files
 ```
 
 ## UNINSTALL
@@ -107,4 +106,3 @@ you used the default path, this will be at `${HOME}/dev/libcpm`
 An example *skeleton* application is provided with pre-configured Makefiles
 that can be copied to start a new project anywhere on your system.
 
-<!-- vim: tw=80 cc=80 ft=markdown: -->
