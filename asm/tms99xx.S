@@ -49,7 +49,7 @@ _tms_set_reg:
   push  hl
   push  bc
 
-  ld    c,_IO_TMSREG
+  ld    c,IO_TMSREG
   out   (c),e
   ld    a,l
   or    0x80
@@ -58,7 +58,7 @@ _tms_set_reg:
 
 ;void tms_set_w_addr(uint16_t addr);
 _tms_w_addr:
-  ld    c,_IO_TMSREG
+  ld    c,IO_TMSREG
   out   (c),l
   ld    a,h
   or    0x40
@@ -67,7 +67,7 @@ _tms_w_addr:
 
 ;void tms_r_addr(uint16_t addr);
 _tms_r_addr:
-  ld    c,_IO_TMSREG
+  ld    c,IO_TMSREG
   out   (c),l
   out   (c),h
   ret
@@ -75,7 +75,7 @@ _tms_r_addr:
 ; void tms_put(uint8_t c);
 _tms_put:
   ld    a,l
-  out   (_IO_TMSRAM),a
+  out   (IO_TMSRAM),a
   push  hl
   pop   hl
   push  hl
@@ -86,7 +86,7 @@ ret
 
 ; uint8_t tms_get();
 _tms_get:
-  in    a,(_IO_TMSRAM)
+  in    a,(IO_TMSRAM)
   ld    l,a
   ld    h,0
   push  hl
@@ -99,10 +99,10 @@ _tms_get:
 
 ; uint8_t tms_wait();
 _tms_wait:
-  in    a,(_IO_JOY0)   ; read the /INT status via bodge wire 
+  in    a,(IO_JOY0)   ; read the /INT status via bodge wire 
   and   0x02           ; check U6, pin 4 (D1)
   jr    nz,_tms_wait
-  in    a,(_IO_TMSREG) ; read the VDP status register to reset the IRQ
+  in    a,(IO_TMSREG) ; read the VDP status register to reset the IRQ
   ld    (_tms_status),a
   ld    l,a
   ld    h,0
@@ -140,14 +140,14 @@ _tms_mcflush:
 
 tms_write_fast:
   ld    a,e
-  out   (_IO_TMSREG),a
+  out   (IO_TMSREG),a
   ld    a,d
   or    0x40
-  out   (_IO_TMSREG),a
+  out   (IO_TMSREG),a
 
   ld    d,b
   ld    e,c
-  ld    c,_IO_TMSRAM
+  ld    c,IO_TMSRAM
 ; goldilocks
   ld    b,e
   inc   e

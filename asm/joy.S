@@ -21,7 +21,7 @@
 ; https://github.com/linuxplayground/z80-compiler-kit-libcpm
 ;
 ;****************************************************************************
-
+#ifndef NABU
 #include "io.h"
 
   .export _joy
@@ -33,13 +33,13 @@ _joy:
   ld  a,l
   or  a
   jr  nz,joy1
-  ld  c,_IO_JOY0
+  ld  c,IO_JOY0
   jr  readjoy
 joy1:
-  ld  c,_IO_JOY1
+  ld  c,IO_JOY1
 readjoy:
   in  a,(c)
   ld  l,a
   ld  h,0
   ret
-
+#endif

@@ -40,7 +40,7 @@ _ay_write:
   push  hl
   push  bc
 
-  ld    c,_IO_AYREG
+  ld    c,IO_AYREG
   out   (c),l
   inc   c
   ld    a,e
