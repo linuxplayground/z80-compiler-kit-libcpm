@@ -1,3 +1,4 @@
+// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -23,20 +24,4 @@
 *****************************************************************************
 */
 
-#include <fcntl.h>
-#include <string.h>
-#ifdef NABU
-#include <nabu.h>
-#endif
-
-uint8_t errno = 0;
-FILE sys_open_files[MAX_OPEN_FILES];
-
-void _init_sys()
-{
-  errno = 0;
-  memset(sys_open_files, 0, sizeof(FILE)*MAX_OPEN_FILES);
-#ifdef NABU
-  init_nabu();
-#endif
-}
+extern void init_nabu();

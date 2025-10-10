@@ -2,6 +2,7 @@ AS=/opt/fcc/bin/asz80
 AR=/usr/bin/ar
 CC=/opt/fcc/bin/fcc
 CPP=/usr/bin/cpp -undef -nostdinc
+#CPP=${HOME}/thirdparty/Fuzix-Compiler-Kit/cpp
 LD=/opt/fcc/bin/ldz80
 LORDER=/opt/fcc/bin/lorderz80
 
