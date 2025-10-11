@@ -21,37 +21,19 @@
 ; https://github.com/linuxplayground/z80-compiler-kit-libcpm
 ;
 ;****************************************************************************
-#ifndef NABU
 .export retcpm
-stacktop equ 0xD400
-#endif
 
   .code
-#ifdef NABU
-  ld    hl,0x0006
+  ld    hl,(0x0006)
+  ld    bc,0x800
+  sbc   hl,bc
   dec   hl
   ld    sp,hl
+  #ifdef NABU
+  call  init_nabu
+  #endif
   call  __init_sys
   call  _main
-  jp    0
-  ret
-#else
-  ld    hl, 0
-  add   hl,sp
-  ld    (oldstack),hl
-
-  ld    sp,stacktop
-
-  call  __init_sys
-  call  _main
-
-  pop   de
 retcpm:
-  ld    hl,_tms_buf
-  call  _free
+  jp    0
 
-  ld    sp,(oldstack)
-  ret
-
-oldstack: .ds 2
-#endif

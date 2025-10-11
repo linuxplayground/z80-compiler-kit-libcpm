@@ -4,6 +4,8 @@
 -I
 include
 -I
+include/arch/RETRO/
+-I
 /opt/fcc/lib/z80/include
 -nostdlib
 -fno-builtin

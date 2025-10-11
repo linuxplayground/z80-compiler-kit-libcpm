@@ -27,6 +27,7 @@
 #include "io.h"
 
   .export _ay_write
+  .export _ay_read
 
   .code
 
@@ -41,8 +42,19 @@ _ay_write:
   push  bc
 
   ld    c,IO_AYREG
-  out   (c),l
-  inc   c
+  ld    a,l
+  out   (c),a
+  ld    c,IO_AYDATA
   ld    a,e
   out   (c),a
   ret
+
+;uint8_t ay_read(uint8_t reg);
+_ay_read:
+  ld    a,l
+  out   (IO_AYREG),a
+  in    a,(IO_AYDATA)
+  ld    l,a
+  ld    h,0
+  ret
+

@@ -30,6 +30,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+extern void __builtin_out(uint8_t port, uint8_t value);
+extern uint8_t __builtin_in(uint8_t port);
+
 /* Malloc and Free are transcribed from "The C Programming Language - Second
  * Edition" by Brian W. Kernighan and Dennis M. Ritchie
  */

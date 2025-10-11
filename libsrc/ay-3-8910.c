@@ -25,8 +25,10 @@
 */
 
 #include <ay-3-8910.h>
-#include <ay-notes.h>
 #include <stdint.h>
+
+extern unsigned char notes_course[89];
+extern unsigned char notes_fine[89];
 
 void ay_play_note_delay(uint8_t key, uint8_t channel, uint16_t delay) {
   // channel must be 0, 1 or 2 for A, B or C

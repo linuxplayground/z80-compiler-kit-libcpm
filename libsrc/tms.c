@@ -30,7 +30,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <io.h>
 
 char *tms_buf = NULL;
 
@@ -51,6 +51,7 @@ void tms_load_pat(char *pattern, size_t len)
   char *e = pattern  + len;
   tms_w_addr(tms_patt_tbl);
   do {
+    //__builtin_out(IO_TMSRAM, *p);
     tms_put(*p);
   } while (p++ < e);
 }
@@ -61,6 +62,7 @@ void tms_load_col(char *color, size_t len)
   char *e = color  + len;
   tms_w_addr(tms_color_tbl);
   do {
+    //__builtin_out(IO_TMSRAM, *p);
     tms_put(*p);
   } while (p++ < e);
 }

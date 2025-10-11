@@ -30,11 +30,14 @@
   .export _tms_put
   .export _tms_get
   .export _tms_wait
-  .export _tms_status
   .export _tms_g1flush
   .export _tms_g2flush
   .export _tms_mcflush
   .export _tms_txtflush
+
+#ifndef NABU
+  .export _tms_status
+#endif
 
 #include "io.h"
   .code
@@ -58,18 +61,30 @@ _tms_set_reg:
 
 ;void tms_set_w_addr(uint16_t addr);
 _tms_w_addr:
+#ifdef NABU
+  di
+#endif
   ld    c,IO_TMSREG
   out   (c),l
   ld    a,h
   or    0x40
   out   (c),a
+#ifdef NABU
+  ei
+#endif
   ret
 
 ;void tms_r_addr(uint16_t addr);
 _tms_r_addr:
+#ifdef NABU
+  di
+#endif
   ld    c,IO_TMSREG
   out   (c),l
   out   (c),h
+#ifdef NABU
+  ei
+#endif
   ret
 
 ; void tms_put(uint8_t c);
@@ -82,7 +97,7 @@ _tms_put:
   pop   hl
   push  hl
   pop   hl
-ret
+  ret
 
 ; uint8_t tms_get();
 _tms_get:
@@ -99,6 +114,17 @@ _tms_get:
 
 ; uint8_t tms_wait();
 _tms_wait:
+#ifdef NABU
+  ld    a,(_tms_is_ready)
+  or    a
+  jr    z,_tms_wait
+  xor   a
+  ld    (_tms_is_ready), a
+  ld    a,(_tms_status)
+  ld    l,a
+  ld    h,0
+  ret
+#else
   in    a,(IO_JOY0)   ; read the /INT status via bodge wire 
   and   0x02           ; check U6, pin 4 (D1)
   jr    nz,_tms_wait
@@ -107,8 +133,8 @@ _tms_wait:
   ld    l,a
   ld    h,0
   ret
-
 _tms_status: .ds 1
+#endif
 
 ; Make sure that tms_wait is called immediately prior to thes flush routines.
 
@@ -135,16 +161,22 @@ _tms_txtflush:
 _tms_mcflush:
   ld    de,0x800
   ld    bc,0x600
+
   ;jp    tms_write_fast
   ; FALL THROUGH
 
 tms_write_fast:
+#ifdef NABU
+  di
+#endif
   ld    a,e
   out   (IO_TMSREG),a
   ld    a,d
   or    0x40
   out   (IO_TMSREG),a
-
+#ifdef NABU
+  ei
+#endif
   ld    d,b
   ld    e,c
   ld    c,IO_TMSRAM
@@ -156,6 +188,15 @@ tms_write_fast:
   inc   d
   ;call  _tms_wait
 tms_wrfastlp:
+;  #ifdef NABU
+  outi
+  jp    nz,tms_wrfastlp
+  dec   d
+  jp    nz,tms_wrfastlp
+  ret
+
+;  #else
+#if 0
   ld    a,(hl)  ; 6
   out   (c),a   ; <=== 5.5uS between outs
 
@@ -176,4 +217,5 @@ tms_wrfastlp:
   dec   d
   jr    nz,tms_wrfastlp
   ret
+#endif
 

@@ -21,15 +21,31 @@
 ; https://github.com/linuxplayground/z80-compiler-kit-libcpm
 ;
 ;****************************************************************************
-#ifndef NABU
 #include "io.h"
 
   .export _joy
 
   .code
-
 ; uint8_t joy(uint8_t i);
 _joy:
+#ifdef NABU
+; This NABU Code only returns values for Joystick 0 and Joystick 1.
+; More work is needed to support joysticks 3 & 4
+  ld  a,l
+  or  a
+  jr  nz,joy1
+  ld  a,(_joySt0)
+  ld  l,a
+  ld  h,0
+  ret
+joy1:
+  ld  a,(_joySt1)
+  ld  l,a
+  ld  h,0
+  ret
+
+#else
+
   ld  a,l
   or  a
   jr  nz,joy1
@@ -42,4 +58,5 @@ readjoy:
   ld  l,a
   ld  h,0
   ret
+
 #endif

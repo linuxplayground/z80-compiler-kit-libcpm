@@ -1,11 +1,13 @@
 #include <ay-3-8910.h>
 #include <ay-notes.h>
+#include <tms_patterns.h>
 #include <cpm.h>
 #include <tms.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 /*
  * Tempo is 104 bbm using 1/60 FPS we can roughly time the song like this.
@@ -120,7 +122,6 @@ uint8_t waits[LENGTH] = {
   1
 };
 
-
 void wait(uint8_t d) {
   // sustain a note for 'd' x EIGHTH fames.
   for (i=0; i<d; i++) {
@@ -141,10 +142,20 @@ void wait(uint8_t d) {
 void main()
 {
   printf("\r\n");
-  ay_write(7,0xFE);       //enable channel A tone only 0b11111110
+  ay_write(7,0x7E);       //enable channel A tone only 0b01111110
   ay_write(8,0x1F);         //set channel A volume to 12
-  tms_init_g1(GRAY, BLACK, false, false); // need this to ensure VPD interrupt is set
-  printf("Solid notes: No envelope\r\n");
+  tms_init_g1(WHITE, BLACK, false, false); // need this to ensure VPD interrupt is set
+
+  tms_load_pat(tms_patterns, 0x400);
+  tms_load_col(tms_g1_colors, 32);
+  memset(tms_buf, 0x20, 768);
+  tms_wait();
+  tms_g1flush(tms_buf);
+
+  tms_puts_xy(2,6,"Solid notes, no decay");
+  tms_wait();
+  tms_g1flush(tms_buf);
+
   for (t=0; t < LENGTH; ++t)
   {
     ay_write(8,VOL);
@@ -154,10 +165,16 @@ void main()
   printf("\r\n");
   ay_write(8,0);      // silence channel A
 
-  printf("2 second intermission\r\n");
+  tms_puts_xy(2,8,"Short intermission");
+  tms_wait();
+  tms_g1flush(tms_buf);
+
   for (t=0; t<120; t++) tms_wait();
 
-  printf("Now the same tune but with evnelopes\r\n");
+  tms_puts_xy(2,10,"Now with decay notes");
+  tms_wait();
+  tms_g1flush(tms_buf);
+
   for (t=0; t<LENGTH; ++t)
   {
     ay_play_note_delay(notes[t], 0, waits[t]*DECAY);
@@ -165,6 +182,10 @@ void main()
   }
   ay_write(8,0);      // silence channel A
 
-  printf("It's only a demo.  Doesn't have to be perfect\r\n");
+  tms_puts_xy(2,12,"Exiting...");
+  tms_wait();
+  tms_g1flush(tms_buf);
+
+  for (t=0; t<120; t++) tms_wait();
 }
 

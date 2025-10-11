@@ -30,7 +30,11 @@ _exit:
   jr    z,done
   call  PRINT_HEX
 done:
+#ifndef NABU
   jp    retcpm
+#else
+  jp    0
+#endif
 
 ; Assume the unsigned char to print is in register A
 PRINT_HEX:

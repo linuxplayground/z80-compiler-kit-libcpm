@@ -34,8 +34,8 @@
  * The worksheet for these values is in the docs directory.
  */
 
-#ifndef _AYNOTES
-#define _AYNOTES
+#ifndef _AYNOTES_H
+#define _AYNOTES_H
 
 /*
  * These are the course and fine register values for the 3 tone channels.
@@ -46,6 +46,7 @@
  *
  * The worksheet for these values is in the docs directory.
  */
+
 
 unsigned char notes_course[89] = {
    0x00 // 0 
@@ -231,4 +232,4 @@ unsigned char notes_fine[89] = {
   ,0x1A //88  C8
 };
 
-#endif //_AYNOTES
+#endif //_AYNOTES_H

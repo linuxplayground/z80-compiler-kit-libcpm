@@ -25,7 +25,7 @@ TOP=.
 include Make.default
 -include Make.local
 
-all:: retro nouveau
+all:: retro nouveau nabu
 
 retro:
 	make -C arch/RETRO
@@ -33,12 +33,16 @@ retro:
 nouveau:
 	make -C arch/NOUVEAU
 
+nabu:
+	make -C arch/NABU
+
 examples:
 	make -C examples
 
 clean::
 	make -C arch/RETRO clean
 	make -C arch/NOUVEAU clean
+	make -C arch/NABU clean
 
 docs:
 	make -C docs

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cpm.h>
 #include <joy.h>
+#include <nabu.h>
 
 void main()
 {

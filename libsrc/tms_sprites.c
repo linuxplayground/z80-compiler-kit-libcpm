@@ -33,6 +33,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <tms.h>
+#include <io.h>
 
 Sprite sprites[32];
 

@@ -1,4 +1,3 @@
-// vim: set ts=2 sw=2:
 /*
 *****************************************************************************
 *
@@ -24,4 +23,14 @@
 *****************************************************************************
 */
 
-extern void init_nabu();
+#ifndef _NABU_H
+#define _NABU_H
+
+#include <stdint.h>
+#include <stdbool.h>
+
+bool is_key_pressed();
+char get_char();
+
+#endif //_NABU_H
+
