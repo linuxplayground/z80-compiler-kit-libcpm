@@ -51,9 +51,9 @@
 ; CLOBBERS: AF
 ;===============================================================================
 ay_read:
-        out     (IO_AYREG),a
-        in      a,(IO_AYDATA)
-        ret
+  out   (IO_AYREG),a
+  in    a,(IO_AYDATA)
+  ret
 
 ;===============================================================================
 ; Write a value to the AY-3-8910 register
@@ -62,11 +62,11 @@ ay_read:
 ; CLOBBERS: none
 ;===============================================================================
 ay_write:
-        ld      a,b
-        out     (IO_AYREG),a
-        ld      a,c
-        out     (IO_AYDATA),a
-        ret
+  ld    a,b
+  out   (IO_AYREG),a
+  ld    a,c
+  out   (IO_AYDATA),a
+  ret
 
 
 init_nabu:
@@ -76,10 +76,10 @@ init_nabu:
   di    ; disable interrupts
 
   im    2
-#ifdef ISRKBDEN
+
   ld    hl, isrKeyboard
   ld    (0xff00+4), hl
-#endif
+
   ld    hl, isrVdp
   ld    (0xff00+6), hl
 

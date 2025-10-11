@@ -29,8 +29,24 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-bool is_key_pressed();
-char get_char();
+/* NOTE: For these functions to work the keyboar interrupt service routine must
+ * have been setup.  I have an outstanding request with DJ Sures who maintains
+ * CloudCPM to ask if the joystick status can be returned by the bios into
+ * special / magic addresses.  That way we can continue to use CPM for keybaord
+ * routines and still access joystick data.
+ */
+
+/* Return true if a key is pressed, false otherwise */
+bool nb_kbhit();
+
+/* Returns the last characater in the kbd buffer.  If no characater then
+ * returns 0
+ */
+char nb_getc();
+
+/* Returns the status of a joystick given by 0<=j<=3
+ */
+uint8_t nb_getj(uint8_t j);
 
 #endif //_NABU_H
 
