@@ -354,4 +354,13 @@ function which returns the current status of a joystick given by the parameter.
 
     - uint8_t joy(uint8_t i);
 
+## Rand
+
+- [rand.h](../include/rand.h)
+
+Psuedo random number generator.
+
+    - void srand(uint16_t seed);
+    - uint16_t rand();
+
 <!-- vim: set ft=markdown tw=80 cc=80: -->
