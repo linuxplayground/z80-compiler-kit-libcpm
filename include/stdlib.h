@@ -68,4 +68,9 @@ void *malloc(size_t size);
  */
 void puts(char *s);
 
+/* Disable interrupts*/
+void di();
+
+/* Enable interrupts */
+void ei();
 #endif //_STDLIB_H

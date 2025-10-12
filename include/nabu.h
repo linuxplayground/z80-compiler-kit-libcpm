@@ -44,9 +44,5 @@ bool nb_kbhit();
  */
 char nb_getc();
 
-/* Returns the status of a joystick given by 0<=j<=3
- */
-uint8_t nb_getj(uint8_t j);
-
 #endif //_NABU_H
 

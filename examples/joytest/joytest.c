@@ -1,25 +1,29 @@
 #include <stdio.h>
-#include <cpm.h>
 #include <joy.h>
+#include <stdlib.h>
 #include <nabu.h>
 
 void main()
 {
+  char c;
+  bool running = true;
   uint8_t j0 = 0xFF;
   uint8_t j1 = 0xFF;
+  printf("\r\nJOYSTICK TESTER: (ESCAPE TO QUIT)\r\n");
 
-  printf("\n\nJOYSTICK TESTER: (ESCAPE TO QUIT)\n\n");
-
-  while (cpm_rawio() != 0x1b)
+  while (running)
   {
+    if (nb_kbhit()) {
+      c = nb_getc();
+      printf("\r\nKEY: %x = %c", c, c);
+      if (c == 0x1b) {
+        running = false;
+      }
+    }
     j0 = joy(0);
     if (j0 != j1)
     {
-      printf("LEFT  %s - ",  (j0 & JOY_MAP_LEFT) ?   "UP  " :  "DOWN");
-      printf("RIGHT %s - ",  (j0 & JOY_MAP_RIGHT) ?  "UP  " :  "DOWN");
-      printf("UP    %s - ",  (j0 & JOY_MAP_UP) ?     "UP  " :  "DOWN");
-      printf("DOWN  %s - ",  (j0 & JOY_MAP_DOWN) ?   "UP  " :  "DOWN");
-      printf("BTN   %s\n",   (j0 & JOY_MAP_BUTTON) ? "UP  " :  "DOWN");
+      printf("\r\nJOY: %x",j0);
       j1 = j0;
     }
   }

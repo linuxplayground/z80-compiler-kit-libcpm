@@ -93,6 +93,9 @@ init_nabu:
   ld    c,a
   ld    b,IO_PORTA
   call  ay_write
+  xor   a
+  ld    (_kbdBufReadPos),a
+  ld    (_kbdBufWritePos),a
   ei    ; enable interrupts
   ret
 
@@ -107,78 +110,81 @@ isrVdp:
   reti
 
 isrKeyboard:
-  push  af
-  push  bc
-  in    a,(IO_KEYBOARD) ; a=inkey
-  ld    b,a         ; save inkey
-  cp    0x80
-  jr    nc,isrKb1   ; if a >= 0x80 then check if A <= 0x83
-  jp    isrKbJoy    ; else go to joystick checks
-isrKb1:
-  cp    0x84
-  jr    nc,isrKbJoy ; if a >= 0x84 then joystick
-                    ; else
-  ld    (_lastKbIntVal),a ; save inkey into lastKbIntVal
-  jp    isrKbExit   ; return from interrupt
-isrKbJoy:
-  ; if inkey < 0x90 || inkey > 0x95
-  ld    a,b         ; a=inkey
-  cp    0x90        ; a < 0x90
-  jr    c,isrKbJoy1
-  cp    0x96        ; a >= 0x96 (> 0x95)
-  jr    nc,isrKbJoy1
-  jp    isrKbExit     ; else exit
-isrKbJoy1:
-  ld    a,(_lastKbIntVal)
-  ; switch(lastKeyboardIntVal)
-  cp    0x80
-  jr    nz,isrKbJoy2
-  ld    b,a
-  ld    (_joySt0),a   ; joySt0 = inkey
-  jp    isrKbExit
-isrKbJoy2:
-  cp    0x81
-  jr    nz,isrKbJoy3
-  ld    b,a
-  ld    (_joySt1),a   ; joySt1 = inkey
-  jp    isrKbExit
-isrKbJoy3:
-  cp    0x82
-  jr    nz,isrKbJoy4
-  ld    b,a
-  ld    (_joySt2),a   ; joySt2 = inkey
-  jp    isrKbExit
-isrKbJoy4:
-  cp    0x83
-  jr    nz,isrKbJoy5
-  ld    b,a
-  ld    (_joySt3),a   ; joySt3 = inkey
-  jp    isrKbExit
-isrKbJoy5:
-  ; default (not joystick so just save inkey into the buffer at kbdBufWritePos0
-  push  hl
+        push	bc
+        push	de
+        push	hl
+        push	af
+        push	iy
 
-  ld    a,(_kbdBufWritePos)
-  ld    hl,_kbdBuffer
-  ; add HL + A
-  ld    a,l
-  ld    l,a
-  adc   a,h
-  sub   l
-  ld    h,l
-  ; hl points at _kbdBuffer[_kbdBufWritePos]
-  ld    a,b
-  ld    (hl),a    ; save inkey into kbdBuffer
-
-  ld    a,(_kbdBufWritePos)
-  inc   a
-  ld    (_kbdBufWritePos),a ; kbdBuWritePos ++
-
-  pop   hl
-isrKbExit:
-  pop   bc
-  pop   af
-  ei
+        ld	iy,0
+        in	a,(IO_KEYBOARD)
+        ld	c,a
+        sub	0x80
+        jr	c,isrkb_1
+        ld	a,0x83
+        sub	c
+        jr	c,isrkb_1
+        ld	iy,_lastKbIntVal
+        ld	(iy+0),c
+        jr	isrkb_exit
+isrkb_1:
+        ld	a,c
+        sub	0x90
+        jr	c,isrkb_2
+        ld	a,0x95
+        sub	c
+        jr	nc,isrkb_exit
+isrkb_2:
+        ld	a,(_lastKbIntVal+0)
+        cp	0x80
+        jr	z,isrkb_3
+        cp	0x81
+        jr	z,isrkb_4
+        cp	0x82
+        jr	z,isrkb_5
+        cp	0x83
+        jr	z,isrkb_6
+        jr	isrkb_7
+isrkb_3:
+        ld	iy,_lastKbIntVal
+        ld	(iy+0),0x00
+        ld	hl,_joySt0
+        ld	(hl),c
+        jr	isrkb_exit
+isrkb_4:
+        ld	iy,_lastKbIntVal
+        ld	(iy+0),0x00
+        ld	hl,_joySt1
+        ld	(hl),c
+        jr	isrkb_exit
+isrkb_5:
+        ld	iy,_lastKbIntVal
+        ld	(iy+0),0x00
+        ld	hl,_joySt2
+        ld	(hl),c
+        jr	isrkb_exit
+isrkb_6:
+        ld	iy,_lastKbIntVal
+        ld	(iy+0),0x00
+        ld	hl,_joySt3
+        ld	(hl),c
+        jr	isrkb_exit
+isrkb_7:					; not a joystick. Add key press to buffer
+        ld	hl,_kbdBuffer+0			; increment buffer write position.
+        ld	de,(_kbdBufWritePos)
+        ld	d,0
+        add	hl,de
+        ld	(hl),c
+        ld	a,(_kbdBufWritePos)
+        inc	a
+        ld	(_kbdBufWritePos),a
+isrkb_exit:
+        pop	iy
+        pop	af
+        pop	hl
+        pop	de
+        pop	bc
+        ei
   reti
 
 origint:                  .ds 1

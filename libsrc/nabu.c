@@ -37,7 +37,7 @@ extern uint8_t joySt3;
 
 bool nb_kbhit()
 {
-  return ~(kbdBufReadPos==kbdBufWritePos);
+  return kbdBufReadPos!=kbdBufWritePos;
 }
 
 char nb_getc()
@@ -45,13 +45,3 @@ char nb_getc()
   return kbdBuffer[kbdBufReadPos++];
 }
 
-uint8_t nb_getj(uint8_t j)
-{
-  switch (j) {
-    case 0: return joySt0; break;
-    case 1: return joySt1; break;
-    case 2: return joySt2; break;
-    case 3: return joySt3; break;
-    default: break;
-  }
-}
