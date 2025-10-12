@@ -6,8 +6,8 @@ CPP=/usr/bin/cpp -undef -nostdinc
 LD=/opt/fcc/bin/ldz80
 LORDER=/opt/fcc/bin/lorderz80
 
-CFLAGS=-mz80 -O2 -I $(TOP)/include -I /opt/fcc/lib/z80/include
-CPPFLAGS=-I$(INCLUDES) -D$(ARCH)
+CFLAGS=-mz80 -O2
+CPPFLAGS=-I$(INCLUDES) -I$(TOP)/include -D$(ARCH)
 LDFLAGS=-b -C0x100
 BUILD_DIR=$(TOP)/build/arch/$(ARCH)
 # can't use BUILD_DIR here because examples might override it.

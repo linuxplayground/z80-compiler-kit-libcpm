@@ -1,4 +1,4 @@
-INCLUDES=-I. -I$(TOP)/include/arch/$(ARCH)
+INCLUDES=$(TOP)/include/arch/$(ARCH)
 include $(TOP)/Make.rules
 
 BUILD_DIR=$(TOP)/build/arch/$(ARCH)/examples/$(APPNAME)

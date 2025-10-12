@@ -33,4 +33,3 @@ $(CLEAN_DIRS):
 $(COPY_DIRS):
 	$(MAKE) -C $(@:copy-%=%) copy
 
-

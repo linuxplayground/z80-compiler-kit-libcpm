@@ -22,7 +22,7 @@
 *
 *****************************************************************************
 */
-
+#ifdef NABU
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -44,4 +44,4 @@ char nb_getc()
 {
   return kbdBuffer[kbdBufReadPos++];
 }
-
+#endif

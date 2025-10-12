@@ -4,5 +4,4 @@ include $(TOP)/Make.default
 
 APPNAME = joytest
 include ../Make.rules
-CFLAGS := $(CFLAGS) -D NABU
 
