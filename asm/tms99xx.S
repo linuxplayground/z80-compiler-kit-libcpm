@@ -188,34 +188,9 @@ tms_write_fast:
   inc   d
   ;call  _tms_wait
 tms_wrfastlp:
-;  #ifdef NABU
   outi
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
   ret
-
-;  #else
-#if 0
-  ld    a,(hl)  ; 6
-  out   (c),a   ; <=== 5.5uS between outs
-
-  nop           ; 4
-  nop           ; 4
-  nop           ; 4
-
-  nop           ; 4
-  nop           ; 4
-  nop           ; 4
-
-  nop           ; 4
-  nop           ; 4
-  nop           ; 4
-
-  inc   hl      ; 13
-  djnz  tms_wrfastlp
-  dec   d
-  jr    nz,tms_wrfastlp
-  ret
-#endif
 
