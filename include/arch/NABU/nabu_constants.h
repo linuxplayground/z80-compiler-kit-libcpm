@@ -1,11 +1,5 @@
 #define IO_CONTROL             0x00
 
-#define JOY_MAP_LEFT           0x01
-#define JOY_MAP_DOWN           0x02
-#define JOY_MAP_RIGHT          0x04
-#define JOY_MAP_UP             0x08
-#define JOY_MAP_BUTTON         0x10
-
 #define CONTROL_ROMSEL         0x01
 #define CONTROL_VDOBUF         0x02
 #define CONTROL_STROBE         0x04
