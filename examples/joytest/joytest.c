@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <joy.h>
 #include <stdlib.h>
-
-#ifdef NABU
-#include <nabu.h>
-#else
 #include <cpm.h>
-#endif
 
 
 void main()
@@ -19,14 +14,9 @@ void main()
 
   while (running)
   {
-#ifdef NABU
-    if (nb_kbhit()) {
-      c = nb_getc();
-#else
     c = cpm_rawio();
     if (c)
     {
-#endif
       printf("\r\nKEY: %x = %c", c, c);
       if (c == 0x1b) {
         running = false;

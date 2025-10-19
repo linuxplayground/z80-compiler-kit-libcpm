@@ -27,16 +27,7 @@
 #define _JOY_H
 
 #include <stdint.h>
-
-/* bitmask for joystick ports on the 2063-Z80-Retro-VDP board.
- */
-#define JOY_MAP_LEFT      0x04//0b00000100
-#define JOY_MAP_RIGHT     0x20//0b00100000
-#define JOY_MAP_UP        0x80//0b10000000
-#define JOY_MAP_DOWN      0x40//0b01000000
-#define JOY_MAP_BUTTON    0x01//0b00000001
-
-
+#include <io.h>
 /* Read the value of one of the joysticks
  *
  * i == 0 -->> J3 (Z80-Retro! 2063 VDP / Atari Joystick daughter board)

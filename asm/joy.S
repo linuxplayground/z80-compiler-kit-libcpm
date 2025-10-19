@@ -33,13 +33,11 @@ _joy:
 ; More work is needed to support joysticks 3 & 4
   ld  a,l
   or  a
-  jr  nz,joy1
-  ld  a,(_joySt0)
-  ld  l,a
-  ld  h,0
-  ret
-joy1:
-  ld  a,(_joySt1)
+  ld  hl,IO_JOY1
+  add a,l
+  ld  a,(hl)
+  xor 0xFF
+  or  0xE0
   ld  l,a
   ld  h,0
   ret

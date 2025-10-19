@@ -31,14 +31,6 @@
 #include "nabu_constants.h"
 
   .export init_nabu
-  .export _lastKbIntVal
-  .export _kbdBufReadPos
-  .export _kbdBufWritePos
-  .export _joySt0
-  .export _joySt1
-  .export _joySt2
-  .export _joySt3
-  .export _kbdBuffer
   .export _tms_is_ready
   .export _tms_status
 
@@ -76,10 +68,6 @@ init_nabu:
   di    ; disable interrupts
 
   im    2
-
-  ld    hl, isrKeyboard
-  ld    (0xff00+4), hl
-
   ld    hl, isrVdp
   ld    (0xff00+6), hl
 
@@ -93,9 +81,6 @@ init_nabu:
   ld    c,a
   ld    b,IO_PORTA
   call  ay_write
-  xor   a
-  ld    (_kbdBufReadPos),a
-  ld    (_kbdBufWritePos),a
   ei    ; enable interrupts
   ret
 
@@ -109,95 +94,8 @@ isrVdp:
   ei
   reti
 
-isrKeyboard:
-        push	bc
-        push	de
-        push	hl
-        push	af
-        push	iy
-
-        ld	iy,0
-        in	a,(IO_KEYBOARD)
-        ld	c,a
-        sub	0x80
-        jr	c,isrkb_1
-        ld	a,0x83
-        sub	c
-        jr	c,isrkb_1
-        ld	iy,_lastKbIntVal
-        ld	(iy+0),c
-        jr	isrkb_exit
-isrkb_1:
-        ld	a,c
-        sub	0x90
-        jr	c,isrkb_2
-        ld	a,0x95
-        sub	c
-        jr	nc,isrkb_exit
-isrkb_2:
-        ld	a,(_lastKbIntVal+0)
-        cp	0x80
-        jr	z,isrkb_3
-        cp	0x81
-        jr	z,isrkb_4
-        cp	0x82
-        jr	z,isrkb_5
-        cp	0x83
-        jr	z,isrkb_6
-        jr	isrkb_7
-isrkb_3:
-        ld	iy,_lastKbIntVal
-        ld	(iy+0),0x00
-        ld	hl,_joySt0
-        ld	(hl),c
-        jr	isrkb_exit
-isrkb_4:
-        ld	iy,_lastKbIntVal
-        ld	(iy+0),0x00
-        ld	hl,_joySt1
-        ld	(hl),c
-        jr	isrkb_exit
-isrkb_5:
-        ld	iy,_lastKbIntVal
-        ld	(iy+0),0x00
-        ld	hl,_joySt2
-        ld	(hl),c
-        jr	isrkb_exit
-isrkb_6:
-        ld	iy,_lastKbIntVal
-        ld	(iy+0),0x00
-        ld	hl,_joySt3
-        ld	(hl),c
-        jr	isrkb_exit
-isrkb_7:					; not a joystick. Add key press to buffer
-        ld	hl,_kbdBuffer+0			; increment buffer write position.
-        ld	de,(_kbdBufWritePos)
-        ld	d,0
-        add	hl,de
-        ld	(hl),c
-        ld	a,(_kbdBufWritePos)
-        inc	a
-        ld	(_kbdBufWritePos),a
-isrkb_exit:
-        pop	iy
-        pop	af
-        pop	hl
-        pop	de
-        pop	bc
-        ei
-  reti
 
 origint:                  .ds 1
-_lastKbIntVal:            .ds 1
-_kbdBufReadPos:           .ds 1
-_kbdBufWritePos:          .ds 1
-_joyStatus:               .ds 2
-_kbdBuffer:               .ds 0xff
-_joySt0:                  .ds 1
-_joySt1:                  .ds 1
-_joySt2:                  .ds 1
-_joySt3:                  .ds 1
-
 _tms_is_ready:            .ds 1
 _tms_status:              .ds 1
 
