@@ -29,12 +29,10 @@
 ; uint8_t joy(uint8_t i);
 _joy:
 #ifdef NABU
-; This NABU Code only returns values for Joystick 0 and Joystick 1.
-; More work is needed to support joysticks 3 & 4
   ld  a,l
   or  a
-  ld  hl,IO_JOY1
-  add a,l
+  ld  hl,IO_JOY1  ; relies on J2, J3 and J4 all in sequence at special ram
+  add a,l         ; addresses
   ld  a,(hl)
   xor 0xFF
   or  0xE0
