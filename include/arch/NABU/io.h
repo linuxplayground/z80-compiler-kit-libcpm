@@ -11,10 +11,10 @@
 #define IO_AYREG     0x41
 #define IO_AYDATA    0x40
 
-#define JOY_MAP_LEFT      0xE1
-#define JOY_MAP_DOWN      0xE2
-#define JOY_MAP_RIGHT     0xE4
-#define JOY_MAP_UP        0xE8
-#define JOY_MAP_BUTTON    0xF0
+#define JOY_MAP_LEFT      0x01
+#define JOY_MAP_DOWN      0x02
+#define JOY_MAP_RIGHT     0x04
+#define JOY_MAP_UP        0x08
+#define JOY_MAP_BUTTON    0x10
 
 
