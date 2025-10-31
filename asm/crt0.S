@@ -24,14 +24,15 @@
 .export retcpm
 
   .code
+#ifndef NABU
+  di    ; disable interrupts on everything.
+#endif
   ld    hl,(0x0006)
-  ld    bc,0x800
-  sbc   hl,bc
   dec   hl
   ld    sp,hl
-  #ifdef NABU
+#ifdef NABU
   call  init_nabu
-  #endif
+#endif
   call  __init_sys
   call  _main
 retcpm:
