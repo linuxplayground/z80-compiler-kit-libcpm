@@ -14,5 +14,13 @@ void srand(uint16_t seed);
  */
 uint16_t rand();
 
+
+// Seed data for fastrand. Default is 0x6969
+extern uint16_t rdata;
+/*
+ * Return a uin8_t pseudo random number using a faster but less random algorythm.
+ */
+uint8_t fastrand();
+
 #endif// _RAND_H
 
