@@ -40,17 +40,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-
-#define IO_AYDATA             0x40
-#define IO_AYREG              0x41
-
-#define AY_MIX_TONE_A         0b01111110
-#define AY_MIX_TONE_B         0b01111101
-#define AY_MIX_TONE_C         0b01111011
-#define AY_MIX_NOISE_A        0b01110111
-#define AY_MIX_NOISE_B        0b01101111
-#define AY_MIX_NOISE_C        0b01011111
-#define AY_MIX_ALL_OFF        0b01111111
+#define AY_MIX_TONE_A         0x7E //0b01111110
+#define AY_MIX_TONE_B         0x7D //0b01111101
+#define AY_MIX_TONE_C         0x7B //0b01111011
+#define AY_MIX_NOISE_A        0x77 //0b01110111
+#define AY_MIX_NOISE_B        0x6F //0b01101111
+#define AY_MIX_NOISE_C        0x5F //0b01011111
+#define AY_MIX_ALL_OFF        0x7F //0b01111111
 
 // these are actually indexes into the PERIOD table below.
 #define AY_CHANNEL_A          0x00
