@@ -25,7 +25,6 @@
 *****************************************************************************
 */
 
-#include <cpm.h>
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -45,7 +44,7 @@ int format_integer(char *dst, int16_t val, uint8_t base, uint8_t s) {
     uitoa(val, _buf);
 
   for (j = 0; _buf[j] != '\0'; j++) {
-    if (dst == NULL) cpm_conout(_buf[j]);
+    if (dst == NULL) putchar(_buf[j]);
     else *dst++ = _buf[j];
     l++;
   }
@@ -69,7 +68,7 @@ int _printf(char *dst, const char *format) {
       if (format[i] == 'c') {
         c = va_arg(arg_list, unsigned char);
         if (dst == NULL)
-          cpm_conout(c);
+          putchar(c);
         else
           *dst++ = c;
         len++;
@@ -79,7 +78,7 @@ int _printf(char *dst, const char *format) {
         str = va_arg(arg_list, char *);
         for (j = 0; str[j] != '\0'; j++) {
           if (dst == NULL)
-            cpm_conout(str[j]);
+            putchar(str[j]);
           else
             *dst++ = str[j];
           len++;
@@ -116,7 +115,7 @@ int _printf(char *dst, const char *format) {
       }
       /* other formatters */
     } else {
-      if (dst == NULL) cpm_conout(format[i]);
+      if (dst == NULL) putchar(format[i]);
       else *dst++ = format[i];
       len++;
     }

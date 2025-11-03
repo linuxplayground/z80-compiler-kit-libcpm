@@ -23,15 +23,9 @@
 *****************************************************************************
 */
 
-#include <cpm.h>
-#include <fcntl.h>
+#include "cpm.h"
 
-size_t f_size(int8_t fd) {
-  if (fd < 3) {
-    errno = EINVAL;
-    return 0;
-  }
-  cpm_f_size(&sys_open_files[fd-3].fcb);
-  return sys_open_files[fd-3].fcb.rn;
+void putchar(char c) {
+  if (c == '\n') putchar('\r');
+  cpm_conout(c);
 }
-

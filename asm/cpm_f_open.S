@@ -9,6 +9,5 @@
 _cpm_f_open:
   ld    c,0x0f
   ex    de,hl
-  call  5
-  ret
+  jp    5
 

@@ -5,8 +5,10 @@
 ;****************************************************************************
 
   .export _cpm_constat
+  .export _kbhit
+
   .code
+_kbhit:
 _cpm_constat:
   ld    c,0xb
-  call  5
-  ret
+  jp    5

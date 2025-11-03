@@ -9,5 +9,4 @@
 _cpm_readstr:
   ld    c,0xa
   ex    de,hl
-  call  5
-  ret
+  jp    5
