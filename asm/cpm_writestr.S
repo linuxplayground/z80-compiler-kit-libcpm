@@ -7,9 +7,6 @@
   .export _cpm_writestr
   .code
 _cpm_writestr:
-  push  bc
   ld    c,9
   ex    de,hl
-  call  5
-  pop   bc
-  ret
+  jp    5

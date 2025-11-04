@@ -9,6 +9,5 @@
 _cpm_conout:
   ld    c,2
   ex    de,hl
-  call  5
-  ret
+  jp    5
 

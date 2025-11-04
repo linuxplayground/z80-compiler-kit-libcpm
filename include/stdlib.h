@@ -64,7 +64,17 @@ void uitoa(uint16_t val, char *str);
  */
 void *malloc(size_t size);
 
-/* Print a zero terminated C string using CPM conout
+/* returns true if a character is pending.
+ * Alias to cpm_const()
+ */
+extern bool kbhit();
+
+/* print a single ascii character to the console.
+ * translate `\n` to `\r\n`
+ */
+void putchar(char c);
+
+/* Print a zero terminated C string using putchar
  */
 void puts(char *s);
 

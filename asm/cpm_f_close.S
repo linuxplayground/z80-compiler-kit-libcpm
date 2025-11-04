@@ -9,5 +9,4 @@
 _cpm_f_close:
   ld    c,0x10
   ex    de,hl
-  call  5
-  ret
+  jp    5

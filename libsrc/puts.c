@@ -23,10 +23,10 @@
 *****************************************************************************
 */
 
-#include "cpm.h"
+#include <stdlib.h>
 
 void puts(char *s) {
   do {
-    cpm_conout(*s);
+    putchar(*s);
   } while (*s++ != 0);
 }

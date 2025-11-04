@@ -9,5 +9,4 @@
 _cpm_f_randrec:
   ld    c,0x25
   ex    de,hl
-  call  5
-  ret
+  jp    5

@@ -10,8 +10,10 @@ The order of this list is completely meaningless.
     - [X] Install scripts
     - [X] Work on improving documentation - it's currently a MESS!
     for NABU support.
-- [ ] TARGET: NABU
-    - [X] Write NABU support functions - ISR for keyboard and joystick.
-    - [ ] NABU - cpm_rawio needs to be updated to support how NABU / CloudCPM works
-        together for Joystick Input.
+- [x] TARGET: NABU
+    - [x] NABU Memory mapped IO for joystick status.
+
+- [ ] stdlib
+    - [x] kbhit ?
+    - [x] putchar / outch - do translation of `\n` to `\r\n`
 

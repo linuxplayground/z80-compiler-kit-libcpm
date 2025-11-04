@@ -9,5 +9,4 @@
 _cpm_f_size:
   ld    c,0x23
   ex    de,hl
-  call  5
-  ret
+  jp    5

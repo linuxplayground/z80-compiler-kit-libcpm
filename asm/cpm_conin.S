@@ -8,6 +8,5 @@
   .code
 _cpm_conin:
   ld    c,1
-  call  5
-  ret
+  jp    5
 
