@@ -10,11 +10,11 @@ listed all the CPM functions here.  They are well documented in the [cpm.h](../i
 file.
 
 This is not intended to be a fully featured standard library set for CPM and the
-Fuzix-Compiler-Kit.  Rather, it's meant to make development with C on the
+FUZIX-Compiler-Kit.  Rather, it's meant to make development with C on the
 Z80-Retro! and Z80-Nouveau platforms easier to manage without adding a
 significant amount of overhead and bloat.
 
-Compilation is fast on a modern desktop PC and the Fuzix compiler is easy to
+Compilation is fast on a modern desktop PC and the FUZIX compiler is easy to
 install and use.
 
 So while this is not a fully featured C development environment, I think there
@@ -27,9 +27,9 @@ server or on GitHub by raising an issue.
 
 - [cpm.h](../lib/cpm.h)
 
-Almost all the cpm functions are available in the [cpm.h](../include/cpm.h)
+Almost all the CPM functions are available in the [cpm.h](../include/cpm.h)
 header file.  They are all prefixed with `cpm_` and are simple wrappers for the
-standard BDOS functions.  Use these functions for low-level CP/M integration
+standard BDOS functions.  Use these functions for low-level CPM integration
 where the *stdlib*, *fcntl* and *stdio* routines are not complete enough or fail
 your requirements in some other way.
 
@@ -51,18 +51,20 @@ an 8-bit system.
     - void free(void *ptr);
     - void itoa(int16_t val, char *str, uint8_t radix);
     - void uitoa(uint16_t val, char *str);
+    - void putchar(char c); Translates \n to \r\n
     - void puts(char *s);
+    - bool kbhit(); Alias to cpm_const()
 
 
 ## FCNTL
 
 - [fcntl.h](../lib/fcntl.h)
 
-File abastraction for CPM file IO.  There can only be 4 files open at once.
+File abstraction for CPM file IO.  There can only be 4 files open at once.
 
 ```c
 enum t_flags {
-O_NULL,
+  O_NULL,
   O_CREAT,
 };
 ```
@@ -84,8 +86,8 @@ the FCB management to make CPM BDOS calls.  Each open file has its own FCB.
 This is why the 4 open file limit exists.  The more files open at once, the more
 memory must be reserved.
 
-> Note: The FILE type also carries a pointer to an initialised dma block of
-> memory which means there shouldn't ever be a situation where dma operations
+> Note: The FILE type also carries a pointer to an initialized DMA block of
+> memory which means there shouldn't ever be a situation where DMA operations
 > for one file conflict with those of another.
 
     - int write(uint8_t fd, void *buf, size_t count);
@@ -113,11 +115,11 @@ addressable range.
 - [cpm.h](../lib/cpm.h)
 
 Rather than bake a whole bunch of extra functionality into crt0, I have decided
-that standard arguments can be called indepentently of the main() routine.  In
-otherwords, this library does not automatically populate `argc` and `**argv`
+that standard arguments can be called independently of the main() routine.  In
+other words, this library does not automatically populate `argc` and `**argv`
 into the `main()` parameters.
 
-To process commandline arguments you can do something like this:
+To process command line arguments you can do something like this:
 
 ```c
 #include <cpm.h>
@@ -343,7 +345,7 @@ The notes themselves are then organised into two arrays of 8 bit values.  A
 course period and a fine period.  The `ay_play_note_delay` routine accepts a
 `key` value as an input.  This key is the index of the notes arrays.
 
-The [ay-notes.h](../include/ay-notes.h) headerfile should make this clear.
+The [ay-notes.h](../include/ay-notes.h) header file should make this clear.
 
 ## Joystick
 
@@ -358,9 +360,10 @@ function which returns the current status of a joystick given by the parameter.
 
 - [rand.h](../include/rand.h)
 
-Psuedo random number generator.
+Pseudo random number generator.
 
     - void srand(uint16_t seed);
     - uint16_t rand();
+    - uint8_t fastrand(); much faster but less effective random number generator
 
 <!-- vim: set ft=markdown tw=80 cc=80: -->

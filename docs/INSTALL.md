@@ -1,8 +1,8 @@
 # BUILD AND INSTALL
 
-## DEPENDANCIES
+## DEPENDENCIES
 
-Please make sure you have [installed](./COMPILER-KIT.md) the Fuzix-Compiler-Kit
+Please make sure you have [installed](./COMPILER-KIT.md) the FUZIX-Compiler-Kit
 before continuing.
 
 ## BUILD
@@ -17,14 +17,14 @@ Copy `Make.default` to `Make.local` and edit.  Then you can build for specific
 targets.
 
 > Note: To build the library, you do `make nouveau` or `make retro` or `make` to
-> bulid them both.
+> build them both.
 
 The ARCH in `Make.default` is for building the examples.
 
 ## Examples
 
 > NOTE: This library uses the word "architecture", "arch" and "ARCH" to refer to
-> the concept of a target platform.  That might be symantically incorrect so
+> the concept of a target platform.  That might be semantically incorrect so
 > please don't be confused.
 
 The examples are short programs that demonstrate the various utilities available
