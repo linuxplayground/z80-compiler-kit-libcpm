@@ -23,7 +23,7 @@ void main() {
 
   char *msg_begin = "SPACE to begin then ESC to quit";
   // Write something to the console.
-  puts("Hello, World!\r\n");
+  puts("Hello, World!\n");
 
   tms_init_g1(WHITE, DARK_YELLOW, true, false);
   tms_load_pat(tms_patterns, 0x400);

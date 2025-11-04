@@ -5,6 +5,6 @@
 
 void main()
 {
-  printf("\r\nExiting with a non zero exit code\n\r");
+  printf("\nExiting with a non zero exit code\n");
   exit(0x69);
 }

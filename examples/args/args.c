@@ -13,15 +13,15 @@ void main()
 
   for (i=0; i<argc; i++)
   {
-    puts("\r\n");
+    puts("\n");
     puts(argv[i]);
   }
-  puts("\r\n");
+  puts("\n");
 
   printf("argc = %d\n", argc);
 
   printf("argv[argc] = %s\n", (argv[argc] == 0) ? "NULL" : "NOT NULL"); // dereference a null pointer
-  puts("\r\npress a key\r\n");
+  puts("\npress a key\n");
   for (;;)
   {
     c = cpm_rawio();

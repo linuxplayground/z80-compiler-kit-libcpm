@@ -15,29 +15,29 @@ void main()
   char *buf1;
   char *buf2;
 
-  puts("\r\nMalloc and Free tests");
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  puts("\nMalloc and Free tests");
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
 
-  puts("\r\n\r\nAllocating buf1. (2048)");
+  puts("\n\nAllocating buf1. (2048)");
   buf1 = malloc(2048);    // Allocate 2048 bytes
-  printf("\r\nAddress of buf1 is: 0x%x",(uintptr_t)buf1);
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
-  puts("\r\n\r\nAllocating buf2. (1024)");
+  printf("\nAddress of buf1 is: 0x%x",(uintptr_t)buf1);
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  puts("\n\nAllocating buf2. (1024)");
   buf2 = malloc(1024);
-  printf("\r\nAddress of buf2 is: 0x%x",(uintptr_t)buf2);
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  printf("\nAddress of buf2 is: 0x%x",(uintptr_t)buf2);
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
 
-  puts("\r\n\r\nFreeing buf1");
+  puts("\n\nFreeing buf1");
   free(buf1);
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
 
-  puts("\r\n\r\nAllocate buf1 again. 1024");
+  puts("\n\nAllocate buf1 again. 1024");
   buf1 = malloc(1024);
-  printf("\r\nAddress of buf1 is: 0x%x",(uintptr_t)buf1);
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  printf("\nAddress of buf1 is: 0x%x",(uintptr_t)buf1);
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
 
-  puts("\r\nFree buf2");
+  puts("\nFree buf2");
   free(buf2);
-  printf("\r\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+  printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
 }
 
