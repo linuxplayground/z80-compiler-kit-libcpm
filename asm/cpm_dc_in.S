@@ -4,9 +4,9 @@
 ;    See: https://www.seasip.info/Cpm/bdosfunc.html
 ;****************************************************************************
 
-  .export _cpm_rawio
+  .export _cpm_dc_in
   .code
-_cpm_rawio:
+_cpm_dc_in:
   ld    c,6
   ld    e,0xFF
   call  5

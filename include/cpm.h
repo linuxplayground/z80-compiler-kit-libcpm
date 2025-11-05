@@ -66,7 +66,12 @@ extern char cpm_conin();
 /* Returns characater if one is available else zero
  * processed.  This is a nonblocking call.
  */
-extern bool cpm_rawio();
+extern char cpm_dc_in();
+
+/* Output a character direct via BIOS CONOUT
+ */
+extern void cpm_dc_out(char c);
+
 
 
 /* CPM Writestr expects chars to be terminated with a `$` */

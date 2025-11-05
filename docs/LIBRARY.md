@@ -33,7 +33,7 @@ standard BDOS functions.  Use these functions for low-level CPM integration
 where the *stdlib*, *fcntl* and *stdio* routines are not complete enough or fail
 your requirements in some other way.
 
-Throughout the examples, you will see examples of `cpm_rawio()` used to collect
+Throughout the examples, you will see examples of `cpm_dc_in()` used to collect
 keyboard input.  This is useful in games where a blocking input is not desired.
 
 ## STDLIB

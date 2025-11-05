@@ -93,7 +93,7 @@ void g1() {
 
   running = true;
   while (running) {
-    c = cpm_rawio();
+    c = cpm_dc_in();
     if (c) {
       switch (c) {
       case 0x1B:
