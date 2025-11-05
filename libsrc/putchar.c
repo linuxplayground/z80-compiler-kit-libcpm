@@ -26,6 +26,6 @@
 #include "cpm.h"
 
 void putchar(char c) {
-  if (c == '\n') putchar('\r');
+  if (c == '\n') cpm_conout('\r');
   cpm_conout(c);
 }

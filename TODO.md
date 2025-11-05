@@ -3,13 +3,12 @@
 The order of this list is completely meaningless.
 
 - [ ] General
-    - [ ] Finalize IO ports for Retro and Nouveau to support ROM WBW
+    - ~[ ] Finalize IO ports for Retro and Nouveau to support ROM WBW~
     - [X] Rework build system to build all the targets at once or just specific
         targets
-    - [X] Rework build system to have target specific source files.  This is needed
+    - [X] Rework build system to have target specific source files.
     - [X] Install scripts
     - [X] Work on improving documentation - it's currently a MESS!
-    for NABU support.
 - [x] TARGET: NABU
     - [x] NABU Memory mapped IO for joystick status.
 
