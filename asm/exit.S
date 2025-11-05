@@ -27,10 +27,7 @@
 _exit:
   ld    a,l
   or    a
-  jr    z,done
-  call  PRINT_HEX
-done:
-  jp    retcpm
+  jp    z,0               ; warmboot without printing if exit(0);
 
 ; Assume the unsigned char to print is in register A
 PRINT_HEX:
@@ -45,7 +42,7 @@ PRINT_HEX:
   and   0x0f              ; isolate low nibble
   call  nibble_to_ascii   ; convert and print low nibble
 
-  ret
+  jp    0                 ; done - warmboot.
 
 nibble_to_ascii:
   cp    0xa               ; compare with 10

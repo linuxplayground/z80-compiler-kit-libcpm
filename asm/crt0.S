@@ -21,8 +21,6 @@
 ; https://github.com/linuxplayground/z80-compiler-kit-libcpm
 ;
 ;****************************************************************************
-.export retcpm
-
   .code
 #ifndef NABU
   di    ; disable interrupts on everything.
@@ -35,6 +33,5 @@
 #endif
   call  __init_sys
   call  _main
-retcpm:
   jp    0
 

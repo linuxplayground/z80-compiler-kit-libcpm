@@ -8,7 +8,7 @@ void rawouts(char *s) {
 }
 
 
-void main()
+int main()
 {
   puts("Press a key to clear the screen\n");
   while (!cpm_dc_in());
@@ -21,4 +21,5 @@ void main()
   //reset the colour
   rawouts("\e[0m");
   puts("Text was reset to default.\n");
+  return -1;
 }

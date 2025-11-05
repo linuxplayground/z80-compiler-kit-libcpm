@@ -1,4 +1,3 @@
-# Exit
+# CPMDCOUT
 
-Very simple demonstration showing that the hex value of an exit code is
-printed to the console when a program exits with a non-zero exit code.
+Very simple demonstration showing how to use cpm_dc_out and cpm_dc_in to work with the raw console.
