@@ -14,7 +14,7 @@ void main()
 
   while (running)
   {
-    c = cpm_rawio();
+    c = cpm_dc_in();
     if (c)
     {
       printf("\nKEY: %x = %c", c, c);

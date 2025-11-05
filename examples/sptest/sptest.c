@@ -95,7 +95,7 @@ void main() {
 
   while (running) {
     // press escape to quit
-    c = cpm_rawio();
+    c = cpm_dc_in();
     switch (c) {
     case 0x1b:
       running = false;

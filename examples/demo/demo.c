@@ -50,7 +50,7 @@ void main() {
   tms_g1flush(tms_buf);
 
   // wait for space bar
-  while (cpm_rawio() != ' ');
+  while (cpm_dc_in() != ' ');
   velx = SPEED;
   vely = SPEED;
 
@@ -58,7 +58,7 @@ void main() {
   y = sprites[0].y;
   acii = 0x20;
   ticks = 0;
-  while (cpm_rawio() != 0x1b) {
+  while (cpm_dc_in() != 0x1b) {
     y += vely;
     x += velx;
 

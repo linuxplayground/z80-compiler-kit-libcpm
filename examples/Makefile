@@ -8,7 +8,8 @@ SUBDIRS = \
 					exit \
 					ay38910 \
 					sprites \
-					sptest
+					sptest \
+					cpmdcout
 
 CLEAN_DIRS=$(SUBDIRS:%=clean-%)
 ALL_DIRS=$(SUBDIRS:%=all-%)

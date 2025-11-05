@@ -24,7 +24,7 @@ void main()
   puts("\npress a key\n");
   for (;;)
   {
-    c = cpm_rawio();
+    c = cpm_dc_in();
     if (c) break;
   }
   printf("You pressed : %c\n", c);
