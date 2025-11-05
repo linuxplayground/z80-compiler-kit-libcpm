@@ -28,5 +28,7 @@ If you have installed the library, then you can find skeleton projects in the
 You should be able to copy a skeleton directory to any place on the same system
 and compile your code from there.
 
+The library is [documented here](./docs/LIBRARY.md).
+
 <!-- vim: set ft=markdown ts=4 sw=4 et tw=80 cc=80: -->
 

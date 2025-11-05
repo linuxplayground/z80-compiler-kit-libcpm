@@ -23,6 +23,22 @@ is enough there to be enable development of some fairly advanced programs.
 If you have questions or concerns, please raise them on the Z80-Retro! Discord
 server or on GitHub by raising an issue.
 
+## Main Signature
+
+The signature of the main entry point is `int main()`.
+
+The following points apply:
+
+- the return value is ignored by CP/M 2.2
+- `exit(uint8_t)` is provided in `stdlib` if you want to explicitly exit the
+program.  If the exit code given is 0, the program returns to CP/M normally.  If
+the value is non-zero, the library will print the HEX value before returning to
+CP/M.
+- arguments are not populated into `argc` and `argv[]`.
+    - If you want to work with arguments, you can do so explicitly with the
+    `uint8_t cpm_parse_args(char **argv, uint8_t max_args);` function.  An
+    example of this is provided in the [args example](../examples/args/args.c).
+
 ## CPM
 
 - [cpm.h](../lib/cpm.h)
