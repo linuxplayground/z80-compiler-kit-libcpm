@@ -4,8 +4,6 @@
 #include <cpm.h>
 #include <tms.h>
 #include <stdint.h>
-#include <stdlib.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -139,7 +137,7 @@ void wait(uint8_t d) {
 }
 
 
-void main()
+int main()
 {
   printf("\r\n");
   ay_write(7,0x7E);       //enable channel A tone only 0b01111110
@@ -187,5 +185,6 @@ void main()
   tms_g1flush(tms_buf);
 
   for (t=0; t<120; t++) tms_wait();
+  return 0;
 }
 

@@ -21,5 +21,5 @@ int main()
   //reset the colour
   rawouts("\e[0m");
   puts("Text was reset to default.\n");
-  return -1;
+  return 0;
 }

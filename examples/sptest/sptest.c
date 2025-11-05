@@ -1,7 +1,6 @@
 #include <cpm.h>
 #include <joy.h>
 #include <stdio.h>
-#include <string.h>
 #include <tms.h>
 #include <tms_patterns.h>
 
@@ -51,7 +50,7 @@ void print() {
   tms_put_char(10, 23, (mag) ? 'X' : '-'); //MAG
 }
 
-void main() {
+int main() {
   tms_init_g1(GRAY, DARK_YELLOW, true, mag);
   tms_load_pat(tms_patterns, 0x400);
   tms_load_col(colors, 32);
@@ -173,4 +172,6 @@ void main() {
     tms_g1flush(tms_buf);
     tms_flush_sprites();
   }
+
+  return 0;
 }

@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 #define MAX_ARGS 16
-void main()
+
+int main()
 {
   char *argv[MAX_ARGS];
   char c;
@@ -37,4 +38,5 @@ void main()
   printf("signed abs(-150) %d.\n", abs(-150));
   printf("signed MAX_INT %d.\n", 65535);
   printf("unsigned MAX_INT %u.\n", 65535);
+  return 0;
 }

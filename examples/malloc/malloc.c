@@ -10,7 +10,7 @@
  *
  * They are no perfect though.  So use carefully.
 */
-void main()
+int main()
 {
   char *buf1;
   char *buf2;
@@ -39,5 +39,7 @@ void main()
   puts("\nFree buf2");
   free(buf2);
   printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+
+  return 0;
 }
 

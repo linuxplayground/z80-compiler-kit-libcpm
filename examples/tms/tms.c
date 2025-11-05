@@ -123,4 +123,7 @@ void g1() {
   }
 }
 
-void main() { g1(); }
+int main() { 
+  g1();
+  return 0;
+}

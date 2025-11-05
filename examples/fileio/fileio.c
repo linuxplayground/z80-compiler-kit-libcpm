@@ -8,7 +8,7 @@
  * Read it back again.
  */
 
-void main() {
+int main() {
   int8_t new_file;
   size_t i, n;
   size_t records;
@@ -57,5 +57,5 @@ void main() {
   close(new_file); // Closing the file to free up file handler resources.
   // free ram thats no longer being used.
   free(bigbuf2);
-  exit(0);
+  return 0;
 }

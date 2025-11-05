@@ -27,7 +27,6 @@
 */
 
 #include <cpm.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <tms.h>
 
@@ -61,7 +60,7 @@ void plot_circle (int xm, int ym, int r, uint8_t c)
    } while (x < 0);
 }
 
-void main() {
+int main() {
   char c;
   uint8_t x;
   uint8_t y;
@@ -80,4 +79,6 @@ void main() {
   plot_circle(127,191/2,191/2,MEDIUM_RED);
   plot_circle(127,191/2,191/2-1,MEDIUM_RED);
   plot_circle(127,191/2,191/2-2,MEDIUM_RED);
+
+  return 0;
 }

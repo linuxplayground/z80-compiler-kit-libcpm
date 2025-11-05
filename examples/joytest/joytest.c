@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <joy.h>
-#include <stdlib.h>
 #include <cpm.h>
 
 
-void main()
+int main()
 {
   char c;
   bool running = true;
@@ -29,4 +28,6 @@ void main()
       j1 = j0;
     }
   }
+
+  return 0;
 }

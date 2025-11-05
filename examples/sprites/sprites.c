@@ -14,7 +14,7 @@ char colors[32] = {
   0x6e, 0x6e, 0x6e, 0x6e, 0x6e, 0x4e, 0x4e, 0x4e 
 };
 
-void main()
+int main()
 {
   uint8_t i;
   uint8_t c = 1;
@@ -70,4 +70,6 @@ void main()
   tms_wait();
 
   printf("\r\nStatus after flushing sprites is: 0x%x\r\n", tms_status);
+
+  return 0;
 }
