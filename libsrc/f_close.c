@@ -25,16 +25,17 @@
 
 #include <cpm.h>
 #include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
+#include <errno.h>
 
 int8_t close(int8_t fd) {
+  FILE *f;
   if ((fd-3) > MAX_OPEN_FILES) {
     errno = EINVAL;
     return -1;
   }
-  cpm_f_close(&sys_open_files[fd-3].fcb);
-  sys_open_files[fd-3].used=false;
+  f = &sys_open_files[fd-3];
+  cpm_f_close(f->fcb);
+  f->used=false;
   return 0;
 }
 

@@ -29,6 +29,7 @@
 
 enum F_ERRNO {
   EOK,    // used to indicate that stuff worked.
+  ENOMEM, // Not enough memory error.  (I am sure this is the wrong word)
   EBADF,  // The provided file descriptor is not a valid open file descriptor.
   EINVAL, // An invalid argument was provided.
   EIO,    // general IO error used when CPM fails to read or write.

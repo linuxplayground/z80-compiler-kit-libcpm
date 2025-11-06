@@ -25,6 +25,7 @@
 
 #include <cpm.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <string.h>
 
 int read(int8_t fd, void *buf, size_t count) {
@@ -54,7 +55,7 @@ int read(int8_t fd, void *buf, size_t count) {
     n = count;
     for (;;) {
       cpm_f_dmaoff(f->dma);
-      result = cpm_f_read(&f->fcb);
+      result = cpm_f_read(f->fcb);
       if (result > 1) {
         errno = EIO;
         return 0;
@@ -69,7 +70,7 @@ int read(int8_t fd, void *buf, size_t count) {
       // do the remainder (if it exists)
       memset(f->dma, 0, 128);
       cpm_f_dmaoff(f->dma);
-      result = cpm_f_read(&f->fcb);
+      result = cpm_f_read(f->fcb);
       if (result > 1) {
         errno = EIO;
         return 0;

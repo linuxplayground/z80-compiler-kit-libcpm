@@ -27,7 +27,6 @@
 #define _H_FCNTL
 
 #include <stdint.h>
-#include <errno.h>
 #include <cpm.h>
 
 #define stdin 0
@@ -46,8 +45,8 @@ enum t_flags {
  * ops and a boolean to indicate if the file is in use or not.
  */
 typedef struct s_file {
-  FCB fcb;
-  char dma[128];
+  FCB *fcb;
+  char *dma;
   bool used;
 } FILE;
 

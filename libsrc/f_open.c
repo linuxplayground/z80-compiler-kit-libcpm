@@ -24,6 +24,7 @@
 */
 
 #include <cpm.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,6 +44,19 @@ uint8_t get_free_idx() {
   return idx;
 }
 
+int8_t filealloc(FILE *f) {
+  f->fcb = malloc(sizeof(FCB));
+  if (f->fcb == NULL)
+    return -1;
+  memset(f->fcb, 0, sizeof(FCB));
+  f->dma = malloc(128);
+  if (f->dma == NULL)
+    return -1;
+  memset(f->dma, 0, 128);
+
+  return 0;
+}
+
 int8_t creat(const char *pathname, uint8_t mode) {
   uint8_t result;
   FILE *f;
@@ -53,10 +67,14 @@ int8_t creat(const char *pathname, uint8_t mode) {
     errno = EBADF;
     return -1;
   }
-  f = &sys_open_files[idx-3];
+  f = &sys_open_files[idx - 3];
 
-  memset(f, 0, sizeof(FILE));
-  if (!set_fcb_file(&f->fcb, pathname)) {
+  if (filealloc(f)) {
+    errno = ENOMEM;
+    return -1;
+  }
+
+  if (!set_fcb_file(f->fcb, pathname)) {
     errno = EINVAL;
     return -1;
   }
@@ -74,32 +92,34 @@ int8_t open(const char *pathname, uint8_t mode) {
     return -1;
   }
 
-  f = &sys_open_files[idx-3];
-  memset(f, 0, sizeof(FILE));
+  f = &sys_open_files[idx - 3];
+  if (filealloc(f)) {
+    errno = ENOMEM;
+    return -1;
+  }
 
-  if (!set_fcb_file(&f->fcb, pathname)) {
+  if (!set_fcb_file(f->fcb, pathname)) {
     errno = EINVAL;
     return -1;
   }
 
-  // we succesfully parsed the filename.  Search for the file.
-  result = cpm_f_sfirst(&f->fcb);
+  // we successfully parsed the file name.  Search for the file.
+  result = cpm_f_sfirst(f->fcb);
   if ((result == 0xFF) && (mode == O_CREAT)) {
     // need to create the file if O_CREAT
     idx = creat(pathname, 0);
-    result = cpm_f_make(&f->fcb);
+    result = cpm_f_make(f->fcb);
     if (result == 0xFF) {
       errno = EINVAL;
       return -1;
     }
   }
   // need to open the file.
-  result = cpm_f_open(&f->fcb);
+  result = cpm_f_open(f->fcb);
   if (result == 0xFF) {
     errno = EINVAL;
     return -1;
-  }
-  else {
+  } else {
     f->used = 1;
     return idx;
   }

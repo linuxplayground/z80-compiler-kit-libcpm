@@ -25,13 +25,16 @@
 
 #include <cpm.h>
 #include <fcntl.h>
+#include <errno.h>
 
 size_t f_size(int8_t fd) {
+  FILE *f;
   if (fd < 3) {
     errno = EINVAL;
     return 0;
   }
-  cpm_f_size(&sys_open_files[fd-3].fcb);
-  return sys_open_files[fd-3].fcb.rn;
+  f = &sys_open_files[fd-3];
+  cpm_f_size(f->fcb);
+  return f->fcb->rn;
 }
 

@@ -25,6 +25,7 @@
 
 #include <fcntl.h>
 #include <string.h>
+#include <errno.h>
 
 int write(int8_t fd, void *buf, size_t count) {
   size_t n = 0;
@@ -54,7 +55,7 @@ int write(int8_t fd, void *buf, size_t count) {
     for (;;) {
       memcpy(f->dma, buf, 128);
       cpm_f_dmaoff(f->dma);
-      result = cpm_f_write(&f->fcb);
+      result = cpm_f_write(f->fcb);
       if (result > 1) {
         errno = EIO;
         return 0;
@@ -70,7 +71,7 @@ int write(int8_t fd, void *buf, size_t count) {
       memset(f->dma, 0, 128);
       memcpy(f->dma, buf, n);
       cpm_f_dmaoff(f->dma);
-      result = cpm_f_write(&f->fcb);
+      result = cpm_f_write(f->fcb);
       if (result > 1) {
         errno = EIO;
         return 0;
