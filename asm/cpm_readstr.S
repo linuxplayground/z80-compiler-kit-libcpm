@@ -7,6 +7,9 @@
   .export _cpm_readstr
   .code
 _cpm_readstr:
+  push  bc
   ld    c,0xa
   ex    de,hl
-  jp    5
+  call  5
+  pop   bc
+  ret

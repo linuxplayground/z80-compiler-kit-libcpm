@@ -7,7 +7,10 @@
   .export _cpm_dc_out
   .code
 _cpm_dc_out:
+  push  bc
   ld    c,6
   ex    de,hl
-  jp    5
+  call  5
+  pop   bc
+  ret
 

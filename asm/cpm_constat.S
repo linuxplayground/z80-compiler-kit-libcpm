@@ -10,5 +10,8 @@
   .code
 _kbhit:
 _cpm_constat:
+  push  bc
   ld    c,0xb
-  jp    5
+  call  5
+  pop   bc
+  ret
