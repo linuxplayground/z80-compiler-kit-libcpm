@@ -52,11 +52,15 @@ _tms_set_reg:
   push  hl
   push  bc
 
+  push  bc
+
   ld    c,IO_TMSREG
   out   (c),e
   ld    a,l
   or    0x80
   out   (c),a
+
+  pop   bc
   ret
 
 ;void tms_set_w_addr(uint16_t addr);
@@ -64,11 +68,13 @@ _tms_w_addr:
 #ifdef NABU
   di
 #endif
+  push  bc
   ld    c,IO_TMSREG
   out   (c),l
   ld    a,h
   or    0x40
   out   (c),a
+  pop   bc
 #ifdef NABU
   ei
 #endif
@@ -79,9 +85,11 @@ _tms_r_addr:
 #ifdef NABU
   di
 #endif
+  push  bc
   ld    c,IO_TMSREG
   out   (c),l
   out   (c),h
+  pop   bc
 #ifdef NABU
   ei
 #endif
