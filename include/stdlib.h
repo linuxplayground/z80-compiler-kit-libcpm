@@ -69,15 +69,6 @@ void *malloc(size_t size);
  */
 extern bool kbhit();
 
-/* print a single ascii character to the console.
- * translate `\n` to `\r\n`
- */
-void putchar(char c);
-
-/* Print a zero terminated C string using putchar
- */
-void puts(char *s);
-
 /* Disable interrupts*/
 void di();
 

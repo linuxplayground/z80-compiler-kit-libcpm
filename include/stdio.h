@@ -30,6 +30,19 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+/* wait for a character and return it */
+char getchar();
+
+/* print a single ascii character to the console.
+ * translate `\n` to `\r\n`
+ */
+void putchar(char c);
+
+/* Print a zero terminated C string using putchar
+ */
+void puts(char *s);
+
+
 /* This printf implimentation is tiny.  It only supports a few  format
  * specifiers at this time.
  *
