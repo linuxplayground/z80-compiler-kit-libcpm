@@ -182,7 +182,6 @@ the full list.
     - char *strchr(const char *str, int8_t c);
     - char *strrchr(const char *s, int c);
     - char *strcpy(char *dst, const char *src);
-    - size_t strlcat(char *dst, const char *src, size_t size);
     - size_t strlen(const char *s);
     - char *strtok(char *s, const char *delim);
     - size_t strspn(const char *s, const char *accept);
