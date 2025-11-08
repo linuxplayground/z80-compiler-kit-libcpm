@@ -8,7 +8,9 @@
   .export _kbhit
 
   .code
+; bool kbhit();
 _kbhit:
+; bool cpm_constat();
 _cpm_constat:
   push  bc
   ld    c,0xb

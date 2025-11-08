@@ -6,10 +6,14 @@
 
   .export _cpm_f_make
   .code
+;extern uint_fast8_t cpm_f_make(FCB *fcb);
 _cpm_f_make:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
   push  bc
   ld    c,0x16
-  ex    de,hl
   call  5
   ld    l,a
   ld    h,0

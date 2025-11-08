@@ -6,6 +6,7 @@
 
   .export _cpm_drv_allreset
   .code
+;extern uint_fast8_t cpm_drv_allreset()
 _cpm_drv_allreset:
   push  bc
   ld    c,0x0d

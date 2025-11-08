@@ -6,11 +6,16 @@
 
   .export _cpm_dc_out
   .code
+; void cpm_dc_out(uint_fast8_t c);
 _cpm_dc_out:
+  ld    hl,2
+  add   hl,sp
+  ld    e,(hl)  ;c
+
   push  bc
   ld    c,6
-  ex    de,hl
   call  5
   pop   bc
+
   ret
 

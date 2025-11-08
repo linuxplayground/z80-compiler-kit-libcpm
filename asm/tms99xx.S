@@ -148,18 +148,21 @@ _tms_status: .ds 1
 
 ; extern void tms_g1flush(char *buf);
 _tms_g1flush:
+  push  bc
   ld    de, 0x1400
   ld    bc, 0x300
   jp    tms_write_fast
 
 ; extern void tms_g2flush(char *buf);
 _tms_g2flush:
+  push  bc
   ld    de, 0x3800
   ld    bc, 0x300
   jp    tms_write_fast
 
 ; extern void tms_g2flush(char *buf);
 _tms_txtflush:
+  push  bc
   ld    de, 0x800
   ld    bc, 960
   jp    tms_write_fast
@@ -167,6 +170,7 @@ _tms_txtflush:
 ; void tms_mcflush(char *buf);
 ; make sure to run tms_wait first
 _tms_mcflush:
+  push  bc
   ld    de,0x800
   ld    bc,0x600
 
@@ -200,5 +204,6 @@ tms_wrfastlp:
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
+  pop   bc
   ret
 

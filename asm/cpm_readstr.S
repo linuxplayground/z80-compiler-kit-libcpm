@@ -6,10 +6,14 @@
 
   .export _cpm_readstr
   .code
+;extern void cpm_readstr(char *buf);
 _cpm_readstr:
+  pop   hl  ; ret
+  pop   de  ; *buf
+  push  de
+  push  hl
   push  bc
   ld    c,0xa
-  ex    de,hl
   call  5
   pop   bc
   ret

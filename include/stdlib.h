@@ -43,7 +43,7 @@ extern void *_sbrk(uintptr_t incr);
 extern int abs(int v);
 
 /* Exit with a code.  Prints code if non-zero */
-extern void exit(uint8_t code);
+extern void exit(uint_fast8_t code);
 
 /* Free the memory pointed to by p */
 void free(void *p);

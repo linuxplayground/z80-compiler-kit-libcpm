@@ -6,6 +6,7 @@
 
   .export _cpm_drv_get
   .code
+;extern uint_fast8_t cpm_drv_get();
 _cpm_drv_get:
   push  bc
   ld    c,0x19

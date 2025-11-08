@@ -6,10 +6,14 @@
 
   .export _cpm_writestr
   .code
+;extern void cpm_writestr(char *s);
 _cpm_writestr:
+  pop   hl  ; ret
+  pop   de  ; *s
+  push  de
+  push  hl
   push  bc
   ld    c,9
-  ex    de,hl
   call  5
   pop   bc
   ret

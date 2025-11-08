@@ -1,4 +1,4 @@
-; vim: set ft=z80:
+; vim: set ft=z80 ts=2 sw=2 et:
 ;
 ; This code is copied and adapted from the HIGH-TECH-C Compiler for Z80
 ; https://github.com/agn453/HI-TECH-Z80-C/blob/master/gen/SBRK.AS
@@ -13,13 +13,21 @@
   .code
 
 __brk:
+  pop   de            ; return
+  pop   hl            ; argument
+  push  hl
+  push  de
+
   ld    (memtop),hl
   ld    hl,0
   ret
 
 __sbrk:
+  pop   hl            ; return
+  pop   de            ; argument
+  push  de
+  push  hl
   push  bc            ; preserve BC
-  ex    de,hl         ; move argument into DE
 
   ld    hl,(memtop)   ; is memtop = 0
   ld    a,l

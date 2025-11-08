@@ -6,6 +6,7 @@
 
   .export _cpm_dc_in
   .code
+;uint_fast8_t cpm_dc_in()
 _cpm_dc_in:
   push  bc
   ld    c,6

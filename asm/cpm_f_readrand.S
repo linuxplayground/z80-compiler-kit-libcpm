@@ -6,10 +6,14 @@
 
   .export _cpm_f_readrand
   .code
+;extern uint_fast8_t cpm_f_readrand(FCB *fcb);
 _cpm_f_readrand:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
   push  bc
   ld    c,0x21
-  ex    de,hl
   call  5
   ld    l,a
   ld    h,0

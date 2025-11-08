@@ -44,11 +44,9 @@ _ay_write:
   push  bc
 
   ld    c,IO_AYREG
-  ld    a,l
-  out   (c),a
+  out   (c),l
   ld    c,IO_AYDATA
-  ld    a,e
-  out   (c),a
+  out   (c),e
   pop   bc
 
   ret
