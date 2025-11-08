@@ -24,13 +24,19 @@
 */
 
 #include <fcntl.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
-uint8_t errno = 0;
+extern uint8_t _bss[];
+extern uint8_t _bss_size[];
+
+uint8_t errno;
 FILE sys_open_files[MAX_OPEN_FILES];
 
 void _init_sys()
 {
-  errno = 0;
-  memset(sys_open_files, 0, sizeof(FILE)*MAX_OPEN_FILES);
+  _brk(_bss + (size_t)_bss_size);
+  memset(_bss, 0, (size_t)_bss_size);
 }
+

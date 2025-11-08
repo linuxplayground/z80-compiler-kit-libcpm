@@ -9,7 +9,7 @@ LORDER=/opt/fcc/bin/lorderz80
 INCLUDES:=-I$(INCLUDES) -I$(TOP)/include
 CFLAGS=-mz80 -O2
 CPPFLAGS=$(INCLUDES) -D$(ARCH)
-LDFLAGS=-b -C0x100
+LDFLAGS=-b -C0x100 -m $(BUILD_DIR)/$(APPNAME).map
 BUILD_DIR=$(TOP)/build/arch/$(ARCH)
 # can't use BUILD_DIR here because examples might override it.
 LDLIBS=$(TOP)/build/arch/$(ARCH)/libcpm.a /opt/fcc/lib/z80/libz80.a

@@ -201,6 +201,8 @@ tms_write_fast:
   ;call  _tms_wait
 tms_wrfastlp:
   outi
+  ex    de,hl
+  ex    de,hl
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
