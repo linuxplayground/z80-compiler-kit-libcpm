@@ -10,10 +10,19 @@
  *
  * They are no perfect though.  So use carefully.
 */
+
+extern uint8_t _bss[];
+extern uint8_t _bss_size[];
+
 int main()
 {
   char *buf1;
   char *buf2;
+
+  printf("\nBSS:");
+  printf("\n\tSTART: 0x%x", (size_t)_bss);
+  printf("\n\tSIZE: 0x%x", (size_t)_bss_size);
+  printf("\n\tEND: 0x%x", (size_t)_bss_size + _bss);
 
   puts("\nMalloc and Free tests");
   printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
@@ -39,6 +48,9 @@ int main()
   puts("\nFree buf2");
   free(buf2);
   printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
+
+  free(buf1);
+
 
   return 0;
 }

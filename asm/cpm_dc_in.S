@@ -6,11 +6,14 @@
 
   .export _cpm_dc_in
   .code
+;uint_fast8_t cpm_dc_in()
 _cpm_dc_in:
+  push  bc
   ld    c,6
   ld    e,0xFF
   call  5
   ld    l,a
   ld    h,0
+  pop   bc
   ret
 

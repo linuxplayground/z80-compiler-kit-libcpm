@@ -7,8 +7,7 @@ CFLAGS=-O2 -mz80 -I INSTALLDIR/include
 LDFLAGS=-b -C0x100
 LDLIBS=\
 	INSTALLDIR/lib/arch/RETRO/libcpm.a \
-	/opt/fcc/lib/z80/libz80.a \
-	/opt/fcc/lib/z80/libc.a
+	/opt/fcc/lib/z80/libz80.a
 
 CRT0=INSTALLDIR/lib/arch/RETRO/crt0.o
 

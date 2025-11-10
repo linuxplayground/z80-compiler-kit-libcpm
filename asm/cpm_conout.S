@@ -6,8 +6,16 @@
 
   .export _cpm_conout
   .code
+; void conout(uint_fast8_t c);
 _cpm_conout:
+  ld    hl,2
+  add   hl,sp
+  ld    e,(hl)
+
+  push  bc
   ld    c,2
-  ex    de,hl
-  jp    5
+  call  5
+  pop   bc
+
+  ret
 

@@ -6,7 +6,14 @@
 
   .export _cpm_f_close
   .code
+;extern uint_fast8_t cpm_f_close(FCB *fcb);
 _cpm_f_close:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
+  push  bc
   ld    c,0x10
-  ex    de,hl
-  jp    5
+  call  5
+  pop   bc
+  ret

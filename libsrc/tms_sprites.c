@@ -35,7 +35,40 @@
 #include <tms.h>
 #include <io.h>
 
-Sprite sprites[32];
+Sprite sprites[32] = {
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 },
+  { 0xD0, 0, 0, 0 }
+};
 
 void tms_flush_sprites() {
   uint8_t i;
@@ -51,13 +84,10 @@ void tms_flush_sprites() {
 }
 
 void tms_init_sprites() {
-  memset(sprites, 0, 128);
   sprites[0].y = 0xD0;
   sprites[0].x = 0x00;
   sprites[0].pattern = 0x00;
   sprites[0].color = 0x80;
-
-  tms_w_addr(tms_sp_patt_tbl);
   tms_flush_sprites();
 }
 

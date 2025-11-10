@@ -28,31 +28,30 @@
   .code
 ; uint8_t joy(uint8_t i);
 _joy:
+  ld    hl,2
+  add   hl,sp
+  ld    a,(hl)
+  push  bc
 #ifdef NABU
-  ld  a,l
-  or  a
-  ld  hl,IO_JOY1  ; relies on J2, J3 and J4 all in sequence at special ram
-  add a,l         ; addresses
-  ld  a,(hl)
-  xor 0xFF
-  or  0xE0
-  ld  l,a
-  ld  h,0
-  ret
-
+  and   0x03        ; joystick can be 0-3
+  ld    hl,IO_JOY1  ; relies on J2, J3 and J4 all in sequence at special ram
+  add   a,l         ; addresses - I KNOW this does not wrap.
+  ld    a,(hl)
+  xor   0xFF
+  or    0xE0
+  ld    l,a
+  ld    h,0
 #else
-
-  ld  a,l
-  or  a
-  jr  nz,joy1
-  ld  c,IO_JOY0
-  jr  readjoy
+  or    a
+  jr    nz,joy1
+  ld    c,IO_JOY0
+  jr    readjoy
 joy1:
-  ld  c,IO_JOY1
+  ld    c,IO_JOY1
 readjoy:
-  in  a,(c)
-  ld  l,a
-  ld  h,0
-  ret
-
+  in    a,(c)
+  ld    l,a
+  ld    h,0
 #endif
+  pop   bc
+  ret

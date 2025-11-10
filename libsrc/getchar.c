@@ -23,10 +23,10 @@
 *****************************************************************************
 */
 
-#include <stdio.h>
+#include "cpm.h"
 
-void puts(char *s) {
-  do {
-    putchar(*s);
-  } while (*s++ != 0);
+char getchar() {
+  char ch;
+  while ( 0 == ( ch = cpm_dc_in() ) ) ;
+  return ch;
 }

@@ -58,7 +58,7 @@ bool set_fcb_file(FCB *fcb, const char *filename);
  */
 
 /* Write char C to the terminal */
-extern void cpm_conout(char c);
+extern void cpm_conout(uint_fast8_t c);
 
 /* Wait for character from the terminal, blocks */
 extern char cpm_conin();
@@ -70,7 +70,7 @@ extern char cpm_dc_in();
 
 /* Output a character direct via BIOS CONOUT
  */
-extern void cpm_dc_out(char c);
+extern void cpm_dc_out(uint_fast8_t c);
 
 
 
@@ -96,27 +96,27 @@ extern bool cpm_constat();
  * returns 0FFh if there is a file present whose name begins with a $,
  * otherwise 0.
  */
-uint8_t cpm_drv_allreset();
+extern uint_fast8_t cpm_drv_allreset();
 
 /* Selectively reset drives by given bitmap.
  * MSB = drive P, LSB = drive A
  * Returnes 0 if OK, else 0xFF if error
  */
-uint8_t cpm_drv_reset(size_t bitmap);
+extern uint_fast8_t cpm_drv_reset(size_t bitmap);
 
 /* Sets the currently selected drive to the drive
  * logs in the disc. Returns 0 if successful or 0FFh if error.
  */
-uint8_t cpm_drv_set(uint8_t drive);
+extern uint_fast8_t cpm_drv_set(uint_fast8_t drive);
 
 /* returns currently selected drive. 0 => A; 1 => B etc.
  */
-uint8_t cpm_drv_get();
+extern uint_fast8_t cpm_drv_get();
 
 /* Set the current user number.  num should be 0-15.
  * Returns set number.
  */
-uint8_t cpm_f_usernum(uint8_t num);
+extern uint_fast8_t cpm_f_usernum(uint_fast8_t num);
 
 /* Opens a file to read or read/write.
  * The FCB is a 36-byte data structure, most of which is maintained by CP/M.
@@ -125,24 +125,24 @@ uint8_t cpm_f_usernum(uint8_t num);
  * if sequential access is to be used. On return from this function, A is 0FFh
  * for error, or 0-3 for success.
  */
-uint8_t cpm_f_open(FCB *fcb);
+extern uint_fast8_t cpm_f_open(FCB *fcb);
 
 /* closes a file, and writes any pending data.
  * This function should always be
  * used when a file has been written to. On return from this function, result is
  * 0FFh for error, or 0-3 for success.*/
-uint8_t cpm_f_close(FCB *fcb);
+extern uint_fast8_t cpm_f_close(FCB *fcb);
 
 /* Deletes all directory entries matching the specified filename.
  * The name can contain ? marks. Returns A=0FFh if error, otherwise 0-3
  */
-uint8_t cpm_f_delete(FCB *fcb);
+extern uint_fast8_t cpm_f_delete(FCB *fcb);
 
 /* Creates the file specified.
  * Returns 0xFF if directory is full.  If file exists already the default
  * action is to return to the command prompt... ??
  */
-uint8_t cpm_f_make(FCB *fcb);
+extern uint_fast8_t cpm_f_make(FCB *fcb);
 
 /* Renames the file specified to the new name, stored at FCB+16. This function
  * cannot rename across drives so the "drive" bytes of both filenames should be
@@ -153,13 +153,13 @@ uint8_t cpm_f_make(FCB *fcb);
  * with the desired new name.
  * TODO: Check that this is accurate.
  */
-uint8_t cpm_f_rename(FCB *fcb);
+extern uint_fast8_t cpm_f_rename(FCB *fcb);
 
 /* Set DMA offset
  * Set the Direct Memory Access address; a pointer to where CP/M should read or
  * write data.
  */
-void cpm_f_dmaoff(char *dma);
+extern void cpm_f_dmaoff(char *dma);
 
 /* Search for file.
  * Search for the first occurrence of the specified file; the filename should
@@ -171,7 +171,7 @@ void cpm_f_dmaoff(char *dma);
 
  Returns A=0FFh if error
 */
-uint8_t cpm_f_sfirst(FCB *fcb);
+extern uint_fast8_t cpm_f_sfirst(FCB *fcb);
 
 /* Search for File
  * This function should only be executed immediately after function f_sfirst or
@@ -179,7 +179,7 @@ uint8_t cpm_f_sfirst(FCB *fcb);
  * have been used. Behaves exactly as number f_sfirst, but finds the next
  * occurrence of the specified file after the one returned last time.
  */
-uint8_t cpm_f_snext(FCB *fcb);
+extern uint_fast8_t cpm_f_snext(FCB *fcb);
 
 /* Load a 128 byte record at the previously specified DMA address. Values
  * returned are:
@@ -189,7 +189,7 @@ uint8_t cpm_f_snext(FCB *fcb);
  *   10: (CP/M) media changed,
  *   0FFh: hardware error.
  */
-uint8_t cpm_f_read(FCB *fcb);
+extern uint_fast8_t cpm_f_read(FCB *fcb);
 
 /* Write a 128 byte record from the previously defined DMA address. Values
  * returned are:
@@ -199,17 +199,17 @@ uint8_t cpm_f_read(FCB *fcb);
  *   9: invalid FCB,
  *  10: (CP/M) media changed
  */
-uint8_t cpm_f_write(FCB *fcb);
+extern uint_fast8_t cpm_f_write(FCB *fcb);
 
 /* Set the random record count bytes of the FCB to the number of 128-byte
  * records in the file.
  */
-void cpm_f_size(FCB *fcb);
+extern void cpm_f_size(FCB *fcb);
 
 /* Update the random record count bytes of the FCB to the number of the last
  * record read/written by the sequential I/O calls.
  */
-void cpm_f_randrec(FCB *fcb);
+extern void cpm_f_randrec(FCB *fcb);
 
 /* Random access read record.
  * Read the record specified in the random record count area of the FCB, at the
@@ -224,7 +224,7 @@ void cpm_f_randrec(FCB *fcb);
  * 9: Invalid FCB
  * 10: Media changed (CP/M);
  */
-uint8_t cpm_f_readrand(FCB *fcb);
+extern uint_fast8_t cpm_f_readrand(FCB *fcb);
 
 /* Random access write record.
  * Write the record specified in the random record count area of the FCB, at
@@ -244,19 +244,19 @@ uint8_t cpm_f_readrand(FCB *fcb);
  * written and the file may contain a gap; attempting to read this gap may give
  * "reading unwritten data" errors, or nonsense
  */
-uint8_t cpm_f_writerand(FCB *fcb);
+extern uint_fast8_t cpm_f_writerand(FCB *fcb);
 
 /* Write random zero fill
  * Same as f_writerand but if the write was to a newly allocated disc block,
  * the remainder of the block is filled with zeroes.
  */
-uint8_t cpm_f_writezf(FCB *fcb);
+extern uint_fast8_t cpm_f_writezf(FCB *fcb);
 
 /* Returns count of arguments parsed and fills the arguments into the argv
  * array.  Max args is the maximum number of tokens to return.  This should
  * probably match the size of the argv array you declare before calling this
  * function.
  */
-uint8_t cpm_parse_args(char **argv, uint8_t max_args);
+extern uint_fast8_t cpm_parse_args(char **argv, uint_fast8_t max_args);
 
 #endif //_CPM_H

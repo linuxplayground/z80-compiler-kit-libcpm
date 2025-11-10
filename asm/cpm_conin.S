@@ -6,7 +6,11 @@
 
   .export _cpm_conin
   .code
+; uint_fast8_t conin();
 _cpm_conin:
+  push  bc
   ld    c,1
-  jp    5
+  call  5
+  pop   bc
+  ret
 

@@ -1,5 +1,5 @@
 #include <cpm.h>
-#include <stdlib.h>
+#include <stdio.h>
 
 void rawouts(char *s) {
   do {
@@ -10,11 +10,15 @@ void rawouts(char *s) {
 
 int main()
 {
+  char ch;
   puts("Press a key to clear the screen\n");
-  while (!cpm_dc_in());
+  ch = getchar();
   // Clear screen
   rawouts("\e[2J\e[H");
   puts("Screen was cleared\n");
+  puts("You pressed: ");
+  putchar(ch);
+  putchar('\n');
   // Set text to bright green
   rawouts("\e[32m");
   puts("Text was set to green\n");

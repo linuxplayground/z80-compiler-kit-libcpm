@@ -38,20 +38,18 @@ char toupper(char c);
  * a header is not provided for them.  So one is provided here.
  */
 
-extern void *memcpy(void *dst, void *src, size_t n);
-extern void *memset(void *dest, uint8_t c, size_t n);
-extern int8_t memcmp(void *s1, void *s2, size_t n);
+void *memcpy(void *dst, void *src, size_t len);
+void *memset(void *dest, int data, size_t len);
+int memcmp(const void *s1, const void *s2, size_t n);
 
-extern int8_t strcmp(const char *s1, const char *s2);
-extern int8_t strncmp(const char *s1, const char *s2, size_t n);
+int strcmp(const char *s1, const char *s2);
+int strncmp(const char *s1, const char *s2, size_t n);
 
-extern char *strchr(const char *str, int8_t c);
-extern char *strrchr(const char *s, int c);
-extern char *strcpy(char *dst, const char *src);
+char *strchr(const char *s, int c);
+char *strrchr(const char *s, int c);
+char *strcpy(char *dst, const char *src);
 
-extern size_t strlcat(char *dst, const char *src, size_t size);
-
-extern size_t strlen(const char *s);
+size_t strlen(const char *s);
 
 char *strtok(char *s, const char *delim);
 size_t strspn(const char *s, const char *accept);

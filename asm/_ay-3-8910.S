@@ -41,12 +41,14 @@ _ay_write:
   push  hl
   push  bc
 
+  push  bc
+
   ld    c,IO_AYREG
-  ld    a,l
-  out   (c),a
+  out   (c),l
   ld    c,IO_AYDATA
-  ld    a,e
-  out   (c),a
+  out   (c),e
+  pop   bc
+
   ret
 
 ;uint8_t ay_read(uint8_t reg);

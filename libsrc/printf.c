@@ -30,10 +30,11 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-/* -1 returned means erro of some sort */
+void putchar(char c);
 
 static char _buf[16]; // largest number is 15 digits long
 
+/* -1 returned means erro of some sort */
 int format_integer(char *dst, int16_t val, uint8_t base, uint8_t s) {
   uint8_t l;
   uint8_t j;

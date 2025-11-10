@@ -6,10 +6,16 @@
 
   .export _cpm_f_writerand
   .code
+;extern uint_fast8_t cpm_f_writerand(FCB *fcb);
 _cpm_f_writerand:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
+  push  bc
   ld    c,0x22
-  ex    de,hl
   call  5
   ld    l,a
   ld    h,0
+  pop   bc
   ret

@@ -52,11 +52,15 @@ _tms_set_reg:
   push  hl
   push  bc
 
+  push  bc
+
   ld    c,IO_TMSREG
   out   (c),e
   ld    a,l
   or    0x80
   out   (c),a
+
+  pop   bc
   ret
 
 ;void tms_set_w_addr(uint16_t addr);
@@ -64,11 +68,13 @@ _tms_w_addr:
 #ifdef NABU
   di
 #endif
+  push  bc
   ld    c,IO_TMSREG
   out   (c),l
   ld    a,h
   or    0x40
   out   (c),a
+  pop   bc
 #ifdef NABU
   ei
 #endif
@@ -79,9 +85,11 @@ _tms_r_addr:
 #ifdef NABU
   di
 #endif
+  push  bc
   ld    c,IO_TMSREG
   out   (c),l
   out   (c),h
+  pop   bc
 #ifdef NABU
   ei
 #endif
@@ -140,18 +148,21 @@ _tms_status: .ds 1
 
 ; extern void tms_g1flush(char *buf);
 _tms_g1flush:
+  push  bc
   ld    de, 0x1400
   ld    bc, 0x300
   jp    tms_write_fast
 
 ; extern void tms_g2flush(char *buf);
 _tms_g2flush:
+  push  bc
   ld    de, 0x3800
   ld    bc, 0x300
   jp    tms_write_fast
 
 ; extern void tms_g2flush(char *buf);
 _tms_txtflush:
+  push  bc
   ld    de, 0x800
   ld    bc, 960
   jp    tms_write_fast
@@ -159,6 +170,7 @@ _tms_txtflush:
 ; void tms_mcflush(char *buf);
 ; make sure to run tms_wait first
 _tms_mcflush:
+  push  bc
   ld    de,0x800
   ld    bc,0x600
 
@@ -189,8 +201,11 @@ tms_write_fast:
   ;call  _tms_wait
 tms_wrfastlp:
   outi
+  ex    de,hl
+  ex    de,hl
   jp    nz,tms_wrfastlp
   dec   d
   jp    nz,tms_wrfastlp
+  pop   bc
   ret
 

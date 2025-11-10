@@ -6,11 +6,17 @@
 
   .export _cpm_f_read
   .code
+;extern uint_fast8_t cpm_f_read(FCB *fcb);
 _cpm_f_read:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
+  push  bc
   ld    c,0x14
-  ex    de,hl
   call  5
   ld    l,a
   ld    h,0
+  pop   bc
   ret
 

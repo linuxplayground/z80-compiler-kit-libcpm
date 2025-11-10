@@ -25,7 +25,9 @@
   .export _exit
   .code
 _exit:
-  ld    a,l
+  ld    hl,2
+  add   hl,sp
+  ld    a,(hl)
   or    a
   jp    z,0               ; warmboot without printing if exit(0);
 
@@ -53,6 +55,8 @@ is_digit:
   add   a, '0'            ; convert to 0-9
 print_char:
   ld    l,a
+  push  hl
   call  _cpm_conout
+  pop   hl
   ret
 

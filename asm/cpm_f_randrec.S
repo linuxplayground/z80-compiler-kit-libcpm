@@ -6,7 +6,14 @@
 
   .export _cpm_f_randrec
   .code
+;extern void cpm_f_randrec(FCB *fcb);
 _cpm_f_randrec:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
+  push  bc
   ld    c,0x25
-  ex    de,hl
-  jp    5
+  call  5
+  pop   bc
+  ret

@@ -6,10 +6,16 @@
 
   .export _cpm_f_rename
   .code
+;extern uint_fast8_t cpm_f_rename(FCB *fcb);
 _cpm_f_rename:
+  pop   hl  ; return
+  pop   de  ; *fcb
+  push  de
+  push  hl
+  push  bc
   ld    c,0x17
-  ex    de,hl
   call  5
   ld    l,a
   ld    h,0
+  pop   bc
   ret
