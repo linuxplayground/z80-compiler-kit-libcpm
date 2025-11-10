@@ -50,12 +50,16 @@ void tms_load_pat(char *pattern, size_t len)
   char *p = pattern;
   char *e = pattern  + len;
   tms_w_addr(tms_patt_tbl);
+#ifdef NABU
   di();
+#endif
   do {
     //__builtin_out(IO_TMSRAM, *p);
     tms_put(*p);
   } while (p++ < e);
+#ifdef NABU
   ei();
+#endif
 }
 
 void tms_load_col(char *color, size_t len)
@@ -63,12 +67,16 @@ void tms_load_col(char *color, size_t len)
   char *p = color;
   char *e = color  + len;
   tms_w_addr(tms_color_tbl);
+#ifdef NABU
   di();
+#endif
   do {
     //__builtin_out(IO_TMSRAM, *p);
     tms_put(*p);
   } while (p++ < e);
+#ifdef NABU
   ei();
+#endif
 }
 
 void tms_put_char(uint8_t x, uint8_t y, char c)
