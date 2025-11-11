@@ -26,7 +26,7 @@
   di    ; disable interrupts on everything.
 #endif
   ld    hl,(0x0006)
-  dec   hl
+  ;dec   hl
   ld    sp,hl
 #ifdef NABU
   call  init_nabu

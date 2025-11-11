@@ -19,10 +19,26 @@ int main()
   char *buf1;
   char *buf2;
 
-  printf("\nBSS:");
+  uint16_t *bdosptr= (uint16_t *)0x0006;
+  uint16_t bdosval= *bdosptr;
+
+  uint16_t *biosptr = (uint16_t *)0x0001;
+  uint16_t biosval= *biosptr;
+
+
+  puts("\nBIOS:");
+  printf("\n\tBEGINNING OF BIOS: 0x%x", biosval);
+
+
+  puts("\nBBDOS:");
+  printf("\n\tTop of heap: 0x%x", bdosval);
+
+  puts("\nBSS:");
   printf("\n\tSTART: 0x%x", (size_t)_bss);
   printf("\n\tSIZE: 0x%x", (size_t)_bss_size);
   printf("\n\tEND: 0x%x", (size_t)_bss_size + _bss);
+
+  puts("\n");
 
   puts("\nMalloc and Free tests");
   printf("\nBreakline is at 0x%x", (uintptr_t)_sbrk(0));
